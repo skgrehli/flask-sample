@@ -153,7 +153,24 @@ def register():
                 # user = list(User.find({"email": email}, {"_id": 0}))
                 return  jsonify({"status":200,"response": response,"message":"","error":False,"registedfrom":registeredfrom})
             else:
-                return jsonify(
+                emailhash = CommonUtils.getHashValue()
+                result = User.update({"userid": userid, "token": token, "email": request.json['email']}, {"$set": {
+                    "emailhash": emailhash
+                }})
+                # Send email verification
+                reset_password_link = str(URL) + "emailverify/" + str(emailhash)
+
+                subject = "Your jobwork.io Account Email Verification"
+                msg = Message(subject, sender=("JobWork", "support@jobwork.io"), recipients=[email])
+                msg.html = render_template('/emailTemplates/email_verification_template.html',
+                                           name=firstname, resetLink=reset_password_link, email=email)
+                mail.send(msg)
+                EmailTracks.insert(
+                    {"emailtrackid": CommonUtils.generateRandomNo(EmailTracks, "emailtrackid"), "userid": userid,
+                     "email": request.json['email'], "subject": subject, "emailtext": msg.html,
+                     "createdatetime": datetime.now(), "updatedatetime": datetime.now()})
+
+            return jsonify(
                     {"status": 200, "response": {}, "message": "verification mail sent", "error": False, "registedfrom": registeredfrom})
 
         elif userdata[0]['emailverified'] == False:
@@ -204,7 +221,24 @@ def register():
                 response=userDataResponse(email)
                 return  jsonify({"status":200,"response": response,"message":"existed now updated","error":False,"registedfrom":registeredfrom})
             else:
-                return jsonify(
+                emailhash = CommonUtils.getHashValue()
+                result = User.update({"userid": userid, "token": token, "email": request.json['email']}, {"$set": {
+                    "emailhash": emailhash
+                }})
+                # Send email verification
+                reset_password_link = str(URL) + "emailverify/" + str(emailhash)
+
+                subject = "Your jobwork.io Account Email Verification"
+                msg = Message(subject, sender=("JobWork", "support@jobwork.io"), recipients=[email])
+                msg.html = render_template('/emailTemplates/email_verification_template.html',
+                                           name=firstname, resetLink=reset_password_link, email=email)
+                mail.send(msg)
+                EmailTracks.insert(
+                    {"emailtrackid": CommonUtils.generateRandomNo(EmailTracks, "emailtrackid"), "userid": userid,
+                     "email": request.json['email'], "subject": subject, "emailtext": msg.html,
+                     "createdatetime": datetime.now(), "updatedatetime": datetime.now()})
+
+            return jsonify(
                     {"status": 200, "response": {}, "message": "mail id exist but not verified yet verification mail sent", "error": True, "registedfrom": registeredfrom})
 
 

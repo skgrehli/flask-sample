@@ -10,6 +10,7 @@ from flask_mail import Mail, Message
 from jobwork.middleware.authentication import authentication
 from jobwork.constants import Constants
 import  smtplib
+from jobwork.utils.get_data_by_emailhash import userDataResponse
 jw_email = Blueprint('jw_email', __name__, url_prefix='')
 
 
@@ -38,8 +39,18 @@ def sendMail():
     return jsonify({'status': 200, 'message': 'Send Successfully.'})
 
 
+@jw_email.route('/getuserby/emailhash',methods=['POST'])
+def userByHash():
+    emailhash=request.json['emailhash']
+    response=userDataResponse(emailhash)
+    if len(response)!=0:
+        return jsonify({"status": 200, "response": response, "message": "", "error": False})
+    else:
+        return jsonify(
+            {"status": 200, "response": response, "message": "empty", "error": True})
 
-@jw_email.route('/emailverify__<hashvalue>')
+
+@jw_email.route('/emailverify/<hashvalue>')
 def emailverifyhash(hashvalue):
     getuserdata = User.find_one({"emailhash" : hashvalue, "emailverified" :False}, {"_id" :0})
     if getuserdata is not None:
@@ -64,7 +75,7 @@ def verify_email():
                                                                                                             "emailhash": emailhash
                                                                                                         }})
         # Send email verification
-        reset_password_link = str(URL)+"emailverify__"+str(emailhash)
+        reset_password_link = str(URL)+"emailverify/"+str(emailhash)
 
         subject = "Your SAVEonJOBS.comAccount Email Verification"
         msg = Message(subject, sender=("SAVEonJOBS", "noreply@saveonjobs.com"), recipients=[email])
