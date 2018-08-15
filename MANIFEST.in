@@ -1,1 +1,1 @@
-recursive-include jobwork.io-master/templates *
+recursive-include jobwork/templates *
