@@ -19,11 +19,16 @@ def userlogin():
         if email is not None and password is not None:
             salt = ""
 
-            userdata = User.find_one({"email" :email ,"isadmin" :False ,"active" :True,"emailverified":True})
+            userdata = User.find_one({"email" :email ,"isadmin" :False})# ,"active" :True,"emailverified":True})
+            if userdata['active']==False:
+                return jsonify({"status": 205, "response": {}, "message": "your active is not active", "error": True})
+            if userdata['emailverified'] == False:
+                return jsonify({"status": 206, "response": {}, "message": "your email is not verified", "error": True})
+
             #print (userdata)
             # if userData.count == 0 :
             # 	userdata = user.find_one({"signupJSON.mobile":int(email),"isadmin":False,"active":True})
-            if userdata is not None:
+            if userdata is not None and userdata['active']==True and userdata['emailverified']==True :
                 salt = userdata['salt']
                 password = hashlib.md5(password.encode('utf-8')).hexdigest() + salt
                 #return jsonify({"ok": 1})
@@ -48,11 +53,11 @@ def userlogin():
                     response =userDataResponse(email)
                     return jsonify({"status": 200, "response": response, "message": "", "error": False})
                 else:
-                    return jsonify({'status' :201 ,"response": {}, 'message' : 'Invalid username and Password.',"error": True})
+                    return jsonify({'status' :201 ,"response": {}, 'message' : 'Invalid username and Password.',"error": False})
             else:
-                return jsonify({'status' :202 ,"response": {}, 'message' : 'Invalid username.',"error": True})
+                return jsonify({'status' :202 ,"response": {}, 'message' : 'Invalid username.',"error": False})
         else:
-            return jsonify({'status' :203,"response": {}, 'message' :"Email or Password not be null.","error": True})
+            return jsonify({'status' :203,"response": {}, 'message' :"Email or Password not be null.","error": False})
 
 
     except Exception as e:

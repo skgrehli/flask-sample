@@ -239,7 +239,7 @@ def register():
                      "createdatetime": datetime.now(), "updatedatetime": datetime.now()})
 
             return jsonify(
-                    {"status": 200, "response": {}, "message": "mail id exist but not verified yet verification mail sent", "error": True, "registedfrom": registeredfrom})
+                    {"status": 200, "response": {}, "message": "mail id exist but not verified yet verification mail sent", "error": False, "registedfrom": registeredfrom})
 
 
         elif regtype!=0:
@@ -255,7 +255,7 @@ def register():
 
             else:
                 message="account already registered from " + user[0]['registeredfrom']
-                return jsonify({"status":200,"messsage":message,"registedfrom":user[0]['registeredfrom'],"response": {},"error":True})
+                return jsonify({"status":200,"messsage":message,"registedfrom":user[0]['registeredfrom'],"response": {},"error":False})
                 #user = list(User.find({"email": email}, {"_id": 0}))
             if verify==True:
 
@@ -265,7 +265,7 @@ def register():
                 print((response))
                 return jsonify({"status":200,"response": response,"message":"","error":False,"registedfrom":user[0]['registeredfrom']})
         else:
-            return jsonify({"status":200,"messsage":"email id already used","response": {},"error":True,"registedfrom":userdata[0]['registeredfrom']})
+            return jsonify({"status":200,"messsage":"email id already used","response": {},"error":False,"registedfrom":userdata[0]['registeredfrom']})
     except Exception as  e:
         return json.dumps(e, indent=4, default=json_util.default)
 
