@@ -18,7 +18,8 @@ def userlogin():
 
         if email is not None and password is not None:
             salt = ""
-            userdata = User.find_one({"email" :email ,"isadmin" :False ,"active" :True})
+
+            userdata = User.find_one({"email" :email ,"isadmin" :False ,"active" :True,"emailverified":True})
             #print (userdata)
             # if userData.count == 0 :
             # 	userdata = user.find_one({"signupJSON.mobile":int(email),"isadmin":False,"active":True})
