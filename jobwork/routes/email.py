@@ -47,7 +47,7 @@ def userByHash():
         return jsonify({"status": 200, "response": response, "message": "", "error": False})
     else:
         return jsonify(
-            {"status": 200, "response": response, "message": "empty", "error": True})
+            {"status": 200, "response": response, "message": "empty", "error": False})
 
 
 @jw_email.route('/emailverify/<hashvalue>')
