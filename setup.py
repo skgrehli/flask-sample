@@ -11,10 +11,7 @@ setup(
               'jobwork.templates.front_saveonjobs', 'jobwork.middleware'],
 
 
-    package_data={
-        'mypackage': ['templates/*.html', 'templates/**/*.html']
-    },
-
+    include_package_data=True,
     url='',
     license='',
     author='BALRAJ SINGH',
