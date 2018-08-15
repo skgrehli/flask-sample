@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Profile</title>
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+</head>
+
+<body ng-app="sojApp" >
+
+<div ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+  <!-- ************************************************************************************** -->
+
+</div>
+
+
+<div ng-controller="profileCtrl">
+
+
+<!--content start-->
+<div class="container">
+
+  <div class="Category_listing">
+  <!-- -----------------Profile---------------- --> 
+         <div class="container-fluid padding animated fadeInRight Category_listing" id="" style="">
+          <!-- ----whitebox--- -->
+           <div class="col-md-12 col-sm-12 col-xs-12 whitebox auto-height" id="forum-list">
+            <div class="timeline">
+            
+                <!--<button type="button" class="edit-profile btn btn-success">Edit</button>-->
+                <!-- ----attribiutes--- --> 
+                 
+                 <!-- ----attribiutes--- -->           
+            </div>
+            
+            <!-- ----Profile pic & details--- --> 
+            <div class="me">
+                <div class="dp" style="background:url({&userdataArray.picurlPath&}) no-repeat center center #fff; background-size:cover;">                
+                </div>
+                
+                <div class="other-details">
+                    <h2>{& userdataArray.firstname &} {& userdataArray.lastname &}</h2>
+                    <p class="text-fields"><i class="fa fa-map-marker"></i> {& userdataArray.cityname &}</p>
+                    <!-- <p>Last online 43 mins ago</p> -->
+                   <!-- <ul>
+                        <li data-toggle="modal" data-target="#request-call"><img src="static/front_end/images/phone-white.svg" /></li>
+                        <li data-toggle="modal" data-target="#request-chat"><img src="static/front_end/images/chat-white.svg" /></li>
+                    </ul>-->
+                </div>
+            </div>
+             <!-- ----Profile pic & details--- --> 
+             
+             <!-- ----Tabs--- -->
+              <div class="tabs">
+                   <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#your_tech-details">TECHNICAL DETAILS</a></li>
+                    <li><a data-toggle="tab" href="#your_gen-details">GENERAL DETAILS</a></li>
+                  </ul>
+              </div>
+             <!-- ----Tabs--- -->
+             
+             
+             <!-- ----Tab Content--- -->
+              <div class="tab-content container-fluid">
+              
+                <!--Technical Details-->
+                <div id="your_tech-details" class="tab-pane fade in active">
+
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>About</p>
+                        <b>{& userdataArray.aboutme &}</b>
+                    </div>
+                                      
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio Skills">
+                        <p>Skills</p>
+                        <b ng-repeat="skill in userdataArray.skillName">{& skill &}</b>
+                        
+                      <!--  <p>Transportation</p>
+                        <b>Online</b> <b>walk</b> <b>Car</b> -->
+                        
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>Over all ratings</p>
+                        <b class="ratings">
+                            <uib-rating class="fa fa-star" ng-model="userdataArray.userrating" read-only=true ></uib-rating>
+                        </b>
+                    </div>
+                    
+                    
+                     <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <a href="#"><b style="padding: 9px 18px; background: #e94e38; margin: 12px auto; color: #fff;" ng-if="report_user_data == true" ng-click="report_user(userdataArray.userid)">Report this member</b></a>
+                    </div>
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12 bio">
+                        
+                        <b class="verify">
+                        <p>Verification</p>
+                        <ul>
+                            <li ng-if="userdataArray.proJSON.mobileverified == true"><i class="fa icon_round fa-mobile" aria-hidden="true" ></i> <span>Mobile</span> </li>
+                            <li ng-if="userdataArray.proJSON.facebookapproved == true"><i class="fa icon_round fa-round fa-facebook" aria-hidden="true" ></i> <span> Facebook </span> </li>
+                            <li ng-if="userdataArray.proJSON.policeverification == true"><i class="fa icon_round fa-gavel" aria-hidden="true" ></i> <span> Police </span> </li>
+                            <li ng-if="userdataArray.proJSON.professionalcertificationverified == true"><i class="fa icon_round fa-briefcase" aria-hidden="true" ></i> <span>PRO</span> </li>
+                        </ul>
+                        
+                        </b>
+                    </div>
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12 bio">
+                    <p>Reviews</p>
+                    
+                        <div class="card" ng-repeat="review in userdataArray.reviewsData">
+                            <div class="rating-ques">
+                                <b>{& review.fullname &}</b>
+                                 <i style="width:100%; padding: 3px 20px 4px; float:left;">{& review.jobtitle &}</i>
+                                 
+                                 <div class="stars">
+                                
+                                    <b class="ratings">
+                                            <uib-rating class="fa fa-star" ng-model="review.rating" read-only=true ></uib-rating>
+                                     </b>
+                                
+                            </div>
+                                 <div class="question">
+                                    <p>{& review.comment &}</p>
+                                </div>
+                            </div> 
+                        </div>
+                      </div>
+                    
+                </div>
+                <!--Technical Details-->
+                
+                
+                <!--gen Details-->
+                <div id="your_gen-details" class="tab-pane fade">
+                  <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>Full Name</p>
+                        <b>{& userdataArray.firstname &} {& userdataArray.lastname &}</b>
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>Mobile Number</p>
+                        <b>+91 - {& userdataArray.mobile &}</b>
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>Location</p>
+                        <b>{& userdataArray.cityname &}</b>
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>Member Since</p>
+                        <b>{& userdataArray.createddatetime &}</b>
+                    </div>
+                    
+                    
+                     <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <a href="#"><b style="padding: 9px 18px; background: #e94e38; margin: 12px auto; color: #fff;" ng-if="report_user_data == true" ng-click="report_user(userdataArray.userid)">Report this member</b></a>
+                    </div>
+                </div>
+                <!--gen Details-->
+                
+              </div>
+             <!-- ----Tab Content--- -->
+             
+            
+           </div>
+          <!-- ----whitebox--- --> 
+         </div>
+    <!-- -----------------Profile---------------- --> 
+    
+    
+   
+    
+        
+               
+    </div><!--Category_listing close-->
+     
+         
+         
+               
+          
+ </div><!--container close-->
+ 
+
+
+
+
+
+
+<!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+<!-- ----------------------- footer close------------------------------------------- -->
+
+        <script>
+            $(document).ready(function() {
+                $.museum($('#content img'));
+            });
+        </script>
+<script>
+function showNextStep(stepNo)
+        {
+			$(".createjob").hide();
+			stepNo++;
+        	$(".create_post"+stepNo).show();
+        }
+		
+var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-28051023-1']);
+          _gaq.push(['_setDomainName', 'muratayfer.com']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+</script>
+
+
+
+
+
+
+
+<!--content close-->      
+
+</body>
+    
+</html>
+
+
+<script type="text/javascript">
+    app.controller('profileCtrl', function($scope,$window,$http,$cookies,$cookieStore,$rootScope,Upload) 
+    {
+      $scope.cookiesuserProfileUrl = $cookieStore.get('cookiesuserProfileUrl');
+      $scope.userProfileUrl = $scope.cookiesuserProfileUrl;
+      $cookieStore.remove('cookiesuserProfileUrl');
+
+      // console.log($scope.userProfileUrl);
+
+      $http({
+              url: "/user/profile/detail",
+              method: "POST",
+              data: {"userProfileUrl":$scope.userProfileUrl}
+          }).success(function(data, status, headers, config) {
+              // console.log(data);
+              $scope.userdataArray = data['data'][0];
+              // console.log($scope.userdataArray);
+              $scope.$digest;
+              
+          }).error(function(data, status, headers, config) {
+          });
+    });
+
+</script>

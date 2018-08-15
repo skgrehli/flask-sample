@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+        <!--  
+         * @Package: Ultra Admin - Responsive Theme
+         * @Subpackage: Bootstrap
+         * @Version: 4.1
+         * This file is part of Ultra Admin Theme.
+        -->
+        <title>Reports | Admin</title>
+        {% include 'meta-tag.html' %}
+
+    <style type="text/css">
+        .active {
+            background-color: rgb(233, 78, 56);
+        }
+    </style>
+
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BEGIN BODY -->
+    <body class=" " ng-app="objectionListing" ng-controller="objectionCtrl" ng-init="changeData()"><!-- START TOPBAR -->
+        {% include 'top-menu.html' %}
+        <!-- END TOPBAR -->
+        <!-- START CONTAINER -->
+        <div class="page-container row-fluid">
+
+            <!-- SIDEBAR - START -->
+           {% include 'side-left.html' %}
+             <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper" style="">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-title">
+
+
+                          <div class="pull-left">
+                               <h1 class="title">Objection</h1>                        
+                          </div>
+
+                            <!--<div class="pull-right hidden-xs">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-basic.html">Tables</a>
+                                    </li>
+                                    <li class="active">
+                                        <strong>Data Tables</strong>
+                                    </li>
+                                </ol>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+
+
+                    <div class="content-body">  
+
+                        <section>
+                            <div class="" style="margin-bottom: 25px;">
+                                <section class="box ">
+                                    <header class="panel_header">
+                                        <h2 class="title pull-left">Filter by Date</h2>
+                                        <div class="actions panel_actions pull-right">
+                                            <!--<i class="box_toggle fa fa-chevron-down"></i>-->
+                                            <!--<i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>-->
+                                            <!--<i class="box_close fa fa-times"></i>-->
+                                        </div>
+                                    </header>
+                                    <div class="content-body">
+                                        <div class="row" style="margin-bottom: 25px;">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <form name="filterDate" id="filterDate" method="POST" novalidate> 
+                                                    <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                        <label class="" style="margin-right: 10px;">Start Date</label>
+                                                        <input type="date" id="startgmtDate" class="form-control" ng-change="changeData()" ng-model="startgmtDate" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                    </div>
+                                                    <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                        <label class="" style="margin-right: 10px;">End Date</label>
+                                                        <input type="date" class="form-control" id="endgmtDate" ng-model="endgmtDate" ng-change="changeData()" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+							<ul class="nav nav-tabs" ng-init = "tab = 1">
+								<li ng-class="{active:tab===1}"><a href ng-click ="tab = 1">Active</a></li>
+								<li ng-class="{active:tab===2}"><a href ng-click ="tab = 2">Archive</a></li>
+							</ul>
+							
+							<div ng-show="tab === 1">
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" ><!--datatable="ng"-->
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">Job Details</th>
+                                            <th style="width: 25%;">Objection</th>
+                                            <th style="width: 10%;">Bidder Details</th>
+                                            <th style="width: 10%;">Status</th>
+                                            <th style="width: 20%;" data-sortable="false">Option</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr ng-repeat="job in jobsList">
+											<!--Job or jobber details-->
+											<td>
+												<span>{& job.jobid &}<b>Title&nbsp;:&nbsp;</b><p>{& job.jobTitle &}&nbsp;</p></span>
+												
+												<span><b>Description&nbsp;:&nbsp;</b><p>{& job.jobDescription &}</p></span>
+												
+												<span>
+													<p><i class="fa fa-comment"></i>
+														<span>{& job.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& job.job_bids_counts &}</span>
+													</p>
+												</span>
+											</td>
+											
+											<!--Objection Message-->
+											<td>
+												<span>{& job.biddreInfoDic[0].objectionremarks &}</span>
+											</td>
+											
+											<!--Bid or Bidder Details-->
+											<td>
+												Name:{& job.biddreInfoDic[0].bidByfirstname&} {& job.biddreInfoDic[0].bidBylastname&}
+												<span>{& job.biddreInfoDic[0].bidByemail&}</span>
+											</td>
+											<!--Bid Completion Status-->
+											<td>
+												<span>{& job.biddreInfoDic[0].completionstatus&}</span>
+											</td>
+											<!--Action-->
+											<td>
+													<span class="btn-group btn-group-xs">
+                                                    <button type="button" class="btn btn-info"  ng-click="toapprove(job.biddreInfoDic[0].bidid, 'rejectedaccepted')" style="width: 90px;">Accept</button>
+													
+                                                    <button type="button" class="btn btn-danger" ng-click="toapprove(job.biddreInfoDic[0].bidid, 'rejectedrejected')" style="width: 90px;">Reject</button>
+													
+                                                    <!--<span ng-if="jobreviewPropertyArray.adminaction == true"><span ng-if="jobreviewPropertyArray.active == true">Approved</span><span ng-if="jobreviewPropertyArray.active == false">Removed</span></span>-->
+													</span>
+											</td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+							<div ng-show="tab === 2">
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" ><!--datatable="ng"-->
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">Job Details</th>
+                                            <th style="width: 25%;">Objection</th>
+                                            <th style="width: 10%;">Bidder Details</th>
+                                            <th style="width: 10%;">Status</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr ng-repeat="job in jobsListArchive">
+											<!--Job or jobber details-->
+											<td>
+												<span>{& job.jobid &}<b>Title&nbsp;:&nbsp;</b><p>{& job.jobTitle &}&nbsp;</p></span>
+												
+												<span><b>Description&nbsp;:&nbsp;</b><p>{& job.jobDescription &}</p></span>
+												
+												<span>
+													<p><i class="fa fa-comment"></i>
+														<span>{& job.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& job.job_bids_counts &}</span>
+													</p>
+												</span>
+											</td>
+											
+											<!--Objection Message-->
+											<td>
+												<span>{& job.biddreInfoDic[0].objectionremarks &}</span>
+											</td>
+											
+											<!--Bid or Bidder Details-->
+											<td>
+												Name:{& job.biddreInfoDic[0].bidByfirstname&} {& job.biddreInfoDic[0].bidBylastname&}
+												<span>{& job.biddreInfoDic[0].bidByemail&}</span>
+											</td>
+											<!--Bid Completion Status-->
+											<td>
+												<span>{& job.biddreInfoDic[0].completionstatus&}</span>
+											</td>
+											
+											
+											
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+							
+					    </section>
+                    </div>
+				</div>
+				 <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+        {% include 'footer.html' %}
+		<script>
+            var app = angular.module('objectionListing', ['datatables']);
+            app.config(function($interpolateProvider) {
+                $interpolateProvider.startSymbol('{&');
+                $interpolateProvider.endSymbol('&}');
+            });
+            app.controller('objectionCtrl', function($scope,$http,$window, DTOptionsBuilder, DTColumnBuilder) 
+            {
+                $scope.startgmtDate = new Date();
+                $scope.startgmtDate.setMonth($scope.startgmtDate.getMonth() - 1);
+                $scope.endgmtDate = new Date();
+                // $scope.startgmtDate.setHours(0,0,0,0);
+                
+                // $scope.endgmtDate.setHours(23,59,59);
+
+                // $scope.startDateTime = $scope.startgmtDate.toUTCString();
+                // $scope.endDateTime = $scope.endgmtDate.toUTCString();
+
+                // // console.log($scope.startDateTime + "," + $scope.endDateTime)
+
+                // utmTime = $scope.startgmtDate.getTimezoneOffset() * 60000;
+
+                // var startTimeInSeconds = ($scope.startgmtDate.getTime())/1000;
+                // var endTimeInSeconds = ($scope.endgmtDate.getTime())/1000;
+				$scope.statusActiveOrArchive='active';
+                $scope.count = 0;
+                $scope.userid = {{session['adminid']}};
+                $scope.token = "{{session['token']}}";
+                // // console.log($scope.count);
+                $scope.isSaveDisabled = false;
+                $scope.isUpdateDisabled = true;
+				$scope.startDateTime = '';
+				$scope.endDateTime = '';
+				 $scope.changeData = function()
+                {
+                    // console.log($scope.startgmtDate + " " + $scope.endgmtDate);
+
+                    $scope.endgmtDatemonth = $scope.endgmtDate.getMonth() + 1;
+                    $scope.endgmtDateday = $scope.endgmtDate.getDate();
+                    $scope.startgmtDatemonth = $scope.startgmtDate.getMonth() + 1;
+                    $scope.startgmtDateday = $scope.startgmtDate.getDate();
+                    
+                    if($scope.startgmtDatemonth < 10)
+                    {
+                        $scope.startgmtDatemonth = "0" + $scope.startgmtDatemonth;
+                    }
+                    if($scope.startgmtDateday < 10)
+                    {
+                        $scope.startgmtDateday = "0" + $scope.startgmtDateday;
+                    }
+                    if($scope.endgmtDatemonth < 10)
+                    {
+                        $scope.endgmtDatemonth = "0" + $scope.endgmtDatemonth;
+                    }
+                    if($scope.endgmtDateday < 10) 
+                    {
+                        $scope.endgmtDateday = "0" + $scope.endgmtDateday;
+                    }
+
+                    // var before = day + '-' + oldmonth + '-' + $scope.startgmtDate.getFullYear();
+                    $scope.startDateTime = $scope.startgmtDateday + '-' + $scope.startgmtDatemonth + '-' + $scope.startgmtDate.getFullYear() + ' ' + '00:00:00';
+
+                    // var today = endgmtDateday + '-' + endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear();
+                    $scope.endDateTime = $scope.endgmtDateday + '-' + $scope.endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear() + ' ' + '23:59:59';
+                
+                    // console.log($scope.startDateTime + " " + $scope.endDateTime);
+
+                    $http({
+                            url: "/objection/list/job",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime,"status":'active'}
+                        }).success(function(data, status, headers, config) {
+                            console.log(data);
+							console.log('JobList',data.jobsList);
+							$scope.jobsList = data.jobsList;
+                           // $scope.userArray = data['data'];
+                            
+
+                        }).error(function(data, status, headers, config) {
+                        });
+						
+					$http({
+							url: "/objection/list/job",
+							method: "POST",
+							data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime,"status":'archive'}
+						}).success(function(data, status, headers, config) {
+							console.log(data);
+							console.log('JobList',data.jobsList);
+							$scope.jobsListArchive = data.jobsList;
+							
+						   // $scope.userArray = data['data'];
+							
+
+						}).error(function(data, status, headers, config) {
+						});
+                    
+                }
+				
+				 $scope.toapprove = function(bidid,status) 
+                    {
+                        console.log(" userid::",$scope.userid, "  token::",$scope.token,"  bidid::",bidid,"  status:",status);
+						console.log($scope.startDateTime);
+						console.log($scope.endDateTime);
+                           $http({
+                                url: "/objection/action",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime,"bidid":bidid,"status":status}
+                            }).success(function(data, status, headers, config) 
+                            {
+                               console.log(data);
+							   $scope.changeData();
+
+                            }).error(function(data, status, headers, config) {
+                               
+                               console.log(data);
+                                // // console.log(status);
+                            });
+                          
+                    };
+				
+               
+			});
+		 </script>
+    </body>
+</html>
+

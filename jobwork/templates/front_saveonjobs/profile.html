@@ -1,0 +1,1185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="sojApp">
+<head>
+
+
+{% include "front_saveonjobs/head_tag.html" %}
+<title ng-controller="NameCtrl" ng-bind="profile_name"></title>
+</head>
+
+<body >
+
+<div ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+  <!-- ************************************************************************************** -->
+
+</div>
+
+
+<div ng-controller="profileCtrl">
+
+<div class="overlay" id="overlay_profile" style="background:url(/static/front_end/images/spin.gif) no-repeat center center #000;z-index:1;position:fixed;color:#000;height:100%;width:100%;opacity: 0.5;" ng-show="spinner" >
+</div>
+
+<!--content start-->
+<div class="container" ng-repeat="userData in userdataArray">
+
+    <div class="Category_listing" >
+    
+    
+    
+      <!-- -----------------Profile---------------- --> 
+         <div class="container-fluid padding animated fadeInRight" id="profile" >
+          <!-- ----whitebox--- -->
+           <div class="col-md-12 col-sm-12 col-xs-12 whitebox auto-height" id="forum-list">
+            <div class="timeline">
+            
+                <button type="button" class="edit-profile btn btn-success" ng-click="showHiddenFields()" ng-if="hidden_fields == false">Edit</button>
+                <button type="button" class="edit-profile btn btn-success" ng-click="RefreshData()" ng-if="hidden_fields == true">Cancel</button>
+                
+                <!-- ----attribiutes--- --> 
+                 
+                 <!-- ----attribiutes--- -->           
+            </div>
+            
+            <!-- ----Profile pic & details--- --> 
+            <div class="me">
+                    <div class="dp" id="dp" style="background:url({&userData.picurlPath&}) no-repeat center center #fff; background-size:cover;">                
+                    </div>
+                    
+                    <div class="other-details">
+                        <h2 class="text-fields" ng-if="text_fields == false" ng-bind="userData.firstname"></h2>
+                        <div class="bio hidden-fields" ng-if="hidden_fields == true">                           
+                            <div class="form-group">
+                             <input type="text" class="form-control Profile_name" ng-model="profile.firstname" style="margin-top: 48px !important;" value="{& userData.firstname &}"> 
+                             <input type="text" class="form-control Profile_lastname" ng-model="profile.lastname" style="margin-top: 48px !important;" value="{& userData.lastname &}">
+                            </div>
+                            <!-- <div class="form-group">
+                             <select class="form-control Profile_location" ng-model="profile.city" ng-change="get_location(profile.city)">
+                                <option ng-repeat="allCityData in userData.allcity" value="{& allCityData.cityid &}" ng-bind="allCityData.city"></option>  
+                             </select>
+                            </div> -->
+                            <input type="file" onchange="angular.element(this).scope().readURL(this,'image')" ngf-select ng-model="profile.image" id="user_image" accept="image/*" name="user_image">
+                        </div>
+                        <p class="text-fields" ng-if="text_fields == false && userData.locationName != ''"><i class="fa fa-map-marker" ng-bind="' '+userData.locationName"></i></p>
+                       <!-- <ul>
+                            <li data-toggle="modal" data-target="#request-call"><img src="static/front_end/images/phone-white.svg" /></li>
+                            <li data-toggle="modal" data-target="#request-chat"><img src="static/front_end/images/chat-white.svg" /></li>
+                        </ul> -->
+                    </div>
+            </div>
+             <!------Profile pic & details-----> 
+             
+             
+             
+             <!-- ----Tab Content--- -->
+              <div class="tab-content container-fluid">
+                <!-- Technical new-->
+                <div id="tech-details" class="tab-pane fade in active">
+                                        
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>Address</p>
+                        <b class="text-fields" ng-if="text_fields == false && userData.addressJSON.address1 != ''" style="width: 100%;float: left;" ng-bind="userData.addressJSON.address1"></b>  
+                        <b class="text-fields" ng-if="text_fields == false && userData.addressJSON.address2 != ''" style="width: 100%;float: left;margin-top: 7px;" ng-bind="userData.addressJSON.address2"></b>                       
+                           <div class="col-md-12 col-sm-12 col-xs-12" ng-if="text_fields == false" style="padding-left:0;">
+                               <b class="text-fields" style="width: 52%;margin-top: 10px;float: left;" ng-if="userData.locationName != ''" ng-bind="userData.locationName"></b>
+                               <b class="text-fields" style="width: 45%;margin-top: 10px;float: right;" ng-if="userData.cityname != ''" ng-bind="userData.cityname"></b>
+                           <b class="text-fields" style="width: 50%;margin-top: 10px;float: left;" ng-if="userData.countryname != ''" ng-bind="userData.countryname"></b> 
+                           <b class="text-fields" style="width: 50%;margin-top: 10px;float: right;" ng-if="userData.addressJSON.pincode != ''" ng-bind="userData.addressJSON.pincode"></b> 
+                        	</div>
+                           
+                        
+                     <div class="form-group hidden-fields" ng-if="hidden_fields == true">
+                          <input type="text" placeholder="address line 1" class="form-control " ng-model="profile.address1" style="max-width: 48% !important;float: left;margin-right: 2%;">
+                          <input type="text" placeholder="address line 2" class="form-control" ng-model="profile.address2" style="max-width: 50% !important;float: right;">
+                        
+                         <div class="col-md-12 col-sm-12 col-xs-12 bio" ng-if="hidden_fields == true" style="padding:0;">
+                           <select ng-model="profile.location" class="text-fields" style="max-width: 48%;margin-top: 10px;float: left;margin-right: 2%;">
+                              <option value="" selected="selected">Select Location</option>
+                              <option ng-repeat="option in locationList" value="{& option.locationid &}" ng-if="option.under != ''">{& option.under &} - {& option.locationname &}</option>
+                              <option ng-repeat="option in locationList" value="{& option.locationid &}" ng-if="option.under == ''">{& option.locationname &}</option>
+                            </select>
+                             <select class="text-fields" ng-model="profile.city" style="max-width: 50%;margin-top: 10px;float: right;" ng-change="get_location(profile.city)">
+                                <option ng-repeat="allCityData in userData.allcity" value="{& allCityData.cityid &}" ng-bind="allCityData.city"></option>  
+                             </select>
+                             <select class="text-fields" ng-model="profile.country" style="max-width: 48%;margin-top: 10px;float: left;" >
+                             	<option value="" selected="selected">Select Country</option>
+                                <option ng-repeat="allCountryData in countryList" value="{& allCountryData.countryid &}" ng-bind="allCountryData.country"></option>  
+                             </select>
+                            <input type="text" class="form-control" placeholder="zip code" ng-model="profile.pincode" value="Pincode" style="max-width: 50%;margin-top: 10px;float: right;">
+                         </div>
+                 
+                     </div><!-- form-group close-->
+  
+                  </div>
+                    
+               <div class="right_profile col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-sm-6 col-xs-12 bio" style="float: left;/* width: 100%; */">
+                        <p>Mobile</p>
+                        <b class="text-fields" ng-if="text_fields == false && userData.isdcode != '' && userData.mobile != ''" ng-bind="'+'+userData.isdcode+'-'+userData.mobile"></b>
+                        <i class="fa fa-check-circle verify-btn text-fields" style="color:green !important;" aria-hidden="true" ng-if="text_fields == false && userData.mobileverified == true && userData.mobile != ''" data-toggle="modal" title="verified"></i>
+                        <i class="fa fa-exclamation-circle verify-btn text-fields" style="color:red !important;cursor: pointer;" aria-hidden="true" ng-if="text_fields == false && userData.mobileverified == false && userData.mobile != '' && userData.mobile != 'None'" data-toggle="modal" ng-click="mobile_verify(userData.mobile,userData.isdcode)" title="click here to verify"></i>
+                        <div class="form-group hidden-fields ng-scope" ng-if="hidden_fields == true">
+                          <input type="number" placeholder="isd" ng-model="profile.code" min="1" size="3" class="international_code" style=""> <input type="text" placeholder="mobile number" ng-model="profile.mobile" class="tel-number" mask="999-999-9999" clean="true" maxlength="12" size="10" style="">
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="col-sm-6 col-xs-12 bio">
+                    <p>Email</p>
+                    <b class="text-fields" ng-bind="userData.email"></b>
+                    <i class="fa fa-check-circle verify-btn text-fields" style="color:green !important;" ng-if="userData.emailverified == true  && userData.email != ''" aria-hidden="true" title="verified"></i>
+                    <i class="fa fa-exclamation-circle verify-btn text-fields" style="color:red !important;cursor: pointer;" ng-if="userData.emailverified == false  && userData.email != ''" aria-hidden="true" ng-click="email_verify(userData.email)" data-toggle="modal" title="click here to send verification email"></i>
+                    <!-- <div class="form-group hidden-fields" ng-if="hidden_fields == true">
+                        <input type="text"  placeholder="email" class="form-control" ng-model="profile.email" value="" style="">
+                    </div> -->
+                            <!-- ngRepeat: skillNameData in userData.skillsJSON -->
+                            <!-- ngIf: hidden_fields == true -->
+                </div>
+                
+
+          
+
+                <div class="col-sm-6 col-xs-12 bio">
+                    <p>DOB</p>
+                    <b class="text-fields" ng-if="text_fields == false" ng-bind="userData.dob"></b>
+                    <div class="form-group hidden-fields" ng-if="hidden_fields == true">
+                        <input type="date" class="form-control" ng-model="profile.dob" value="" style="line-height: 26px;">
+                    </div>
+                            <!-- ngRepeat: skillNameData in userData.skillsJSON -->
+                            <!-- ngIf: hidden_fields == true -->
+                </div>
+                
+                  <div class="col-sm-6 col-xs-12 bio" style="float: left;/* width: 100%; */">
+                      <p>Gender</p>
+                      <b class="text-fields" ng-if="text_fields == false" ng-bind="userData.gender | capitalize"></b>
+                      <div class="form-group hidden-fields" ng-if="hidden_fields == true" style="border-radius: 4px;">
+                        <select class="" style="background: #fff;border-radius: 4px;" ng-model="profile.gender">
+                          <option value=""> </option>
+                          <option value="male"> Male </option>
+                          <option value="female"> Female </option>
+                          </select>
+                      </div>
+                        <!-- ngRepeat: skillNameData in userData.skillsJSON -->
+                        <!-- ngIf: hidden_fields == true -->
+                   </div>
+                    
+                   
+                 </div>
+                    
+                    
+                </div>
+              <!--Technical new close-->
+                <!-- Technical Details -->
+                <div id="tech-details" class="tab-pane fade in active">
+                                        
+                    <div class="col-md-6 col-sm-6 col-xs-12 bio">
+                        <p>About</p>
+                        <b class="text-fields" ng-if="text_fields == false" ng-bind="userData.aboutme"></b>
+                    <div class="form-group hidden-fields" ng-if="hidden_fields == true">
+                     <textarea rows="4" placeholder="Write something about yourself......" cols="50" class="form-control" ng-model="profile.aboutme" value="{& userData.aboutme &}"></textarea>
+                    </div>
+                    
+                    </div>
+                    
+                    <div class="right_profile col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-sm-12 bio Skills">
+                        <p>Skills</p>
+                        <b class="text-fields" ng-if="text_fields == false" ng-repeat="skillNameData in userData.skillsJSON" ng-bind="skillNameData.skillname">&nbsp;</b>
+                        <div class="form-group hidden-fields" ng-if="hidden_fields == true">
+                         <!--  <select class="js-example-basic-multiple" id="js-example-basic-multiple" ng-model = "skills_selected" multiple="multiple">
+                          <option ng-repeat="all_skill in skillData" ng-model="all_skill.skillname" ng-bind="all_skill.skillname"></option>
+                        </select> -->
+                        <ui-select multiple ng-model="profile.skills"  theme="bootstrap" title="Choose a skill">
+                          <ui-select-match placeholder="Select skills..." >{&$item.skillname&}</ui-select-match>
+                          <ui-select-choices repeat="all_skill in skillData | filter: {skillname: $select.search}"><div ng-bind="all_skill.skillname"></div>
+                          </ui-select-choices>
+                        </ui-select>
+
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-12 bio text-fields" ng-if="text_fields == false" style="width: 100%;float: left;">
+                        <p>Over all ratings</p>
+                        <b class="ratings">
+                        <uib-rating class="fa fa-star" ng-model="profile.userrating" read-only=true ></uib-rating></b>
+                    </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12 bio">
+                        
+                        <b class="verify">
+                        <p>Verification <i class="fa fa-info i-verification" aria-hidden="true" style="" data-toggle="modal" data-target="#i-verification"></i></p>
+
+                        <ul >
+                            <!-- <li ng-if="userData.proJSON.creditcardverified == true"><i class="fa icon_round fa-credit-card" aria-hidden="true" ></i> <span> Credit Card</span> </li> -->
+                            <li ng-if="userData.proJSON.mobileverified == true"><i class="fa icon_round fa-mobile" aria-hidden="true" ></i> <span>Mobile</span> </li>
+                            <li ng-if="userData.proJSON.facebookapproved == true"><i class="fa icon_round fa-round fa-facebook" aria-hidden="true" ></i> <span> Facebook </span> </li>
+                            <li ng-if="userData.proJSON.policeverification == true"><i class="fa icon_round fa-gavel" aria-hidden="true" ></i> <span> Police </span> </li>
+                            <li ng-if="userData.proJSON.professionalcertificationverified == true"><i class="fa icon_round fa-briefcase" aria-hidden="true" ></i> <span>PRO</span> </li>
+                        </ul>
+                        
+                        </b>  
+                        
+                        <div class="form-group hidden-fields row" ng-if="hidden_fields == true">
+                        <div class="col-md-6">
+                                <p>Upload police verification documents</p>
+                                <input type="file" onchange="angular.element(this).scope().readURL(this,'police')" ngf-select ng-model="profile.policeverification" name="img">
+                                <div class="verification">
+                                    <div class="verification-img-view">
+                                        <a href="#" class="thumbnail" ng-if="police_img_url.length != 0">
+                                            <img src="{& police_img.src &}" ng-show="" ng-if="police_img.name == 'gif' || police_img.name == 'png' || police_img.name == 'jpeg' || police_img.name == 'jpg'" data-toggle="modal" ng-click="show_image(police_img.src)" ng-repeat="police_img in police_img_url">
+                                            <img src="http://saveonjobs.com/static/front_end/images/pdf.png" ng-if="pro_img.name == 'pdf'" ng-repeat="police_img in police_img_url">
+                                            <img src="http://saveonjobs.com/static/front_end/images/docx.png" ng-if="police_img.name != 'gif' && police_img.name != 'png' && police_img.name != 'jpeg' && police_img.name != 'jpg' && police_img.name != 'pdf'" ng-repeat="police_img in police_img_url">
+                                        </a>
+                                    </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Upload PRO documents</p>
+                                <input type="file" name="img" onchange="angular.element(this).scope().readURL(this,'pro_doc')" ngf-select ng-model="profile.proDocuments" multiple="multiple">
+                                <small class="upload-txt">upload multiple files</small>
+                                <div class="verification">
+                                    <div class="verification-img-view">
+                                        <a href="#" class="thumbnail" ng-if="pro_docs_img_url.length != 0" >
+                                            <img src="{& pro_img.src &}" ng-if="pro_img.name == 'gif' || pro_img.name == 'png' || pro_img.name == 'jpeg' || pro_img.name == 'jpg' " data-toggle="modal" ng-click="show_image(pro_img.src)" ng-repeat="pro_img in pro_docs_img_url">
+                                            <img src="http://saveonjobs.com/static/front_end/images/pdf.png" ng-if="pro_img.name == 'pdf'" ng-repeat="pro_img in pro_docs_img_url">
+                                            <img src="http://saveonjobs.com/static/front_end/images/docx.png" ng-if="pro_img.name != 'gif' && pro_img.name != 'png' && pro_img.name != 'jpeg' && pro_img.name != 'jpg' && pro_img.name != 'pdf'" ng-repeat="pro_img in pro_docs_img_url">
+                                        </a>
+                                    </div>
+                              </div>
+                            </div>
+                      </div>
+                    
+                    </div>
+                    
+                    
+                    
+                    
+ <!-- -----------------Portfolio---------------- --> 
+        
+           
+               <div class="col-sm-12 bio text-fields ng-scope bio" style="width: 100%;float: left;">
+                   <p>Portfolio</p>
+               </div>
+               <div class = "col-sm-12">
+               <div id=''>
+            <div id='content'>
+              <div class="portfolio-img-view">
+                  <a href="#" class="thumbnail">
+                    <img ng-if="text_fields == false" data-toggle="modal" src="{& userData.portfolioDataPath &}{& portfolio.portfolioimage &}" ng-click="show_image(userData.portfolioDataPath+''+portfolio.portfolioimage)" ng-repeat = "portfolio in userData.portfolioData">
+                  </a>
+                </div>
+                <div class="form-group hidden-fields" ng-if="hidden_fields == true">
+                    <p>Portfolio Images</p>
+                    <input type="file" name="img" onchange="angular.element(this).scope().readURL(this,'portfolio_images')" ngf-select ng-model="profile.portfolio" accept="image/*" multiple="multiple">
+                    <small class="upload-txt">upload multiple files</small>
+                    <div class="verification">
+                        <div class="verification-img-view">
+                            <a href="#" class="thumbnail">
+                                <img src="{& port_image.src &}" data-toggle="modal" ng-repeat="port_image in portfolios_img_url" ng-if="port_image.name == 'gif' || port_image.name == 'png' || port_image.name == 'jpeg' || port_image.name == 'jpg'" ng-click="show_image(port_image.src)">
+                            </a>
+                        </div>
+                  </div>
+                </div>
+            </div>
+           
+           
+        </div>
+        </div>
+               
+               <div class="clearfix"></div>
+   <!-- -----------------Portfolio---------------- -->                   
+                    
+                    
+ 
+                    
+                    
+                    <div class="col-sm-12 hidden-fields" ng-if="hidden_fields == true" style="padding-top: 9px;">
+                  <button type="button" class="col-sm-6 col-xs-12 btn btn-primary save-profile" ng-click="saveData()" ng-if="hidden_fields == true">Save profile</button>
+                    <button type="button" class="col-sm-6 col-xs-12 btn btn-primary cancel-profile" ng-click="RefreshData()" ng-if="hidden_fields == true">Cancel</button>
+                </div>
+                    
+                    <!-- <div class="col-md-12 col-sm-12 col-xs-12 bio">
+                    <p>Reviews</p>
+                    
+                        <div class="card">
+                            <div class="rating-ques">
+                                <b>Lawn mowing ASAP</b>
+                                 <i style="width:100%; padding: 3px 20px 4px; float:left;">Phoebe G</i>
+                                 
+                                 <div class="stars">
+                                
+                                    <b class="ratings">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                     </b>
+                                
+                            </div>
+                                 <div class="question">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nibh pellentesque, cursus sapien eget, rutrum augue. In accumsan mi ligula, ut condimentum telus maximus?
+                                    </p>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        <div class="card">
+                            <div class="rating-ques">
+                                <b>Lawn mowing ASAP</b>
+                                 <i style="width:100%; padding: 3px 20px 4px; float:left;">Phoebe G</i>
+                                 
+                                 <div class="stars">
+                                
+                                    <b class="ratings">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                     </b>
+                                
+                            </div>
+                                 <div class="question">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nibh pellentesque, cursus sapien eget, rutrum augue. In accumsan mi ligula, ut condimentum telus maximus?</p>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        <div class="card">
+                            <div class="rating-ques">
+                                <b>Lawn mowing ASAP</b>
+                                 <i style="width:100%; padding: 3px 20px 4px; float:left;">Phoebe G</i>
+                                 
+                                 <div class="stars">
+                                
+                                    <b class="ratings">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                     </b>
+                                
+                            </div>
+                                 <div class="question">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nibh pellentesque, cursus sapien eget, rutrum augue. In accumsan mi ligula, ut condimentum telus maximus?</p>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        <div class="card">
+                            <div class="rating-ques">
+                                <b>Lawn mowing ASAP</b>
+                                 <i style="width:100%; padding: 3px 20px 4px; float:left;">Phoebe G</i>
+                                 
+                                 <div class="stars">
+                                
+                                    <b class="ratings">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                     </b>
+                                
+                            </div>
+                                 <div class="question">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nibh pellentesque, cursus sapien eget, rutrum augue. In accumsan mi ligula, ut condimentum telus maximus?</p>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        <div class="card">
+                            <div class="rating-ques">
+                                <b>Lawn mowing ASAP</b>
+                                 <i style="width:100%; padding: 3px 20px 4px; float:left;">Phoebe G</i>
+                                 
+                                 <div class="stars">
+                                
+                                    <b class="ratings">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                     </b>
+                                
+                            </div>
+                                 <div class="question">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nibh pellentesque, cursus sapien eget, rutrum augue. In accumsan mi ligula, ut condimentum telus maximus?</p>
+                                </div>
+                            </div> 
+                        </div>
+                     </div> -->
+                     
+                     
+      
+      
+                    
+                </div>
+                <!-- Technical Details -->
+                
+              </div>
+             <!-- ----Tab Content--- -->
+             
+            
+           </div>
+          <!-- ----whitebox--- --> 
+         </div>
+    <!-- -----------------Profile---------------- --> 
+    
+    
+   
+    
+        
+               
+    </div><!-- Category_listing close -->
+     
+         
+         
+               
+          
+ </div><!-- container close -->
+ 
+
+
+<!-- verification modal box -->
+  <div class="modal fade" id="i-verification" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Verifications Details</h4>
+        </div>
+        
+        <div class="modal-body">
+        
+          <div class="account-header">
+            <h4>Verifications</h4>
+            <p class="description">Verifications help to build trust in our community and give you more information when deciding who to work with on a task.</p>
+            <p class="description">Verifications icons and badges are issued when specific requirements are met. See below for more information.</p>
+            <div class="profile-complete"><div class="label">Your verifications are 0% complete</div>
+            </div>
+            </div>
+            
+            <div class="id-verify">
+            
+             <h4 style="border-bottom: 1px solid #e6e8ea;padding-bottom: 13px;">ID</h2>
+             <p>
+             <i class="fa fa-mobile" aria-hidden="true" style="color: #fff;background: #333;/* padding: 6px !important; */border-radius: 50%;width: 20px;height: 20px;padding: 2px 7px !important; font-size: 15px !important;"></i> <b>Mobile</b> <br />
+             Verified when you join Save on Jobs, this allows you to receive instant task notifications and to make free calls via Save on Jobs.
+             </p>
+              <p>
+              <i class="fa fa-product-hunt" aria-hidden="true"></i> <b>Save on JobsPRO Badge</b> <br />
+             Earn this Badge by completing a questionnaire interview, which is reviewed by our Customer Support Team.
+             </p>
+              <p> <i class="fa fa-shield" aria-hidden="true"></i> <b>Police Check Badge</b> <br />
+             Provide peace of mind to other members by successfully completing a Police Check.</p>
+             
+           </div>
+           
+           <div class="id-verify" style="margin-top:20px;">
+            
+             <h4 style="border-bottom: 1px solid #e6e8ea;padding-bottom: 13px;">SOCIAL</h2>
+             <p>
+             <i class="fa fa-facebook-official" aria-hidden="true"></i> <b>Facebook</b> <br />
+             Connect your Facebook profile to build your online social reputation.
+             </p>
+              
+              
+           </div>
+           
+            
+        </div>
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--verification modal box close--> 
+
+ <!-- verify modal box -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">Verify Your Number : {& mobile &}</h4>
+        </div>
+        <div class="modal-body" style="">
+        <div class="" style="width: 80%;float: left;text-align: center;margin: 29px 10%;">
+          <lable style="float: left;margin: 11px 11px;"> OTP</lable>
+           <input type="text" class="form-control" value="" ng-model="otp_value" maxlength="6" style="max-width: 80%;float: left;padding: 10px;">
+            </div>
+        </div>
+        <div class="modal-footer" style="width: 26%;margin-top: 31px !important;margin: 6px auto;padding: 22px;">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="mobile_otp_verify(mobile,isd_verify,otp_value)">OK</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- verify modal box close-->
+
+<div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
+              <div class="modal-img" style="width: 100%;">
+                  <div class="modal-body">
+                      <img style="width: 100%;height: 100%;" src="{& lightbox_image &}" alt="" />
+                      <div class="caption">
+                        <p> </p>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+
+<div class="modal fade" id="myModalemail" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">Verify Your Email : {& email &}</h4>
+        </div>
+        <div class="modal-body" style="">
+        <div class="" style="width: 80%;float: left;text-align: center;margin: 29px 10%;">
+          <lable style="float: left;margin: 11px 11px;"> OTP</lable>
+           <input type="text" class="form-control" value="" style="max-width: 80%;float: left;padding: 10px;">
+            </div>
+        </div>
+        <div class="modal-footer" style="width: 26%;margin-top: 31px !important;margin: 6px auto;padding: 22px;">
+          <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- portfolio image body close --> 
+
+
+<button type="button" class="btn btn-info btn-lg" id="modalButtonPost" data-toggle="modal" data-target="#lightbox" style="display: none;">Open Modal</button>
+
+<button type="button" class="btn btn-info btn-lg" id="modalmobile" data-toggle="modal" data-target="#myModal" style="display: none;">Open Modal</button>
+
+<button type="button" class="btn btn-info btn-lg" id="modalemail" data-toggle="modal" data-target="#myModalemail" style="display: none;">Open Modal</button>
+
+<!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+</div>
+
+<script src='static/front_end/js/jquery.museum.js'></script>
+<!-- ----------------------- footer close------------------------------------------- -->
+
+<script type="text/javascript">
+          $(document).ready(function() {
+              $.museum($('#content img'));
+                $(".edit-profile").click(function(){
+                  $(".hidden-fields").show();
+                  $(".text-fields, .edit-profile").hide();
+                });
+                
+                $(".save-profile").click(function(){
+                  $(".text-fields, .edit-profile").show();
+                  $(".hidden-fields, .save-profile").hide();
+                });
+
+        var $lightbox = $('#lightbox');
+            
+            $('[data-target="#lightbox"]').on('click', function(event) {
+                var $img = $(this).find('img'), 
+                    src = $img.attr('src'),
+                    alt = $img.attr('alt'),
+                    css = {
+                        'maxWidth': $(window).width() - 100,
+                        'maxHeight': $(window).height() - 100
+                    };
+            
+                $lightbox.find('.close').addClass('hidden');
+                $lightbox.find('img').attr('src', src);
+                $lightbox.find('img').attr('alt', alt);
+                $lightbox.find('img').css(css);
+            });
+            
+            $lightbox.on('shown.bs.modal', function (e) {
+                var $img = $lightbox.find('img');
+                    
+                $lightbox.find('.modal-dialog').css({'width': $img.width()});
+                $lightbox.find('.close').removeClass('hidden');
+            });
+        
+        $("#js-example-basic-multiple").select2();
+
+          });
+          function showNextStep(stepNo)
+                {
+              $(".createjob").hide();
+              stepNo++;
+                  $(".create_post"+stepNo).show();
+                }
+            
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-28051023-1']);
+          _gaq.push(['_setDomainName', 'muratayfer.com']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+</script>
+
+
+<script type="text/javascript">
+
+       app.controller('NameCtrl', function($scope,$window,$http,$cookies,$cookieStore,$rootScope,Upload) 
+      {
+          $scope.profile_name = $cookieStore.get('cookiesFirstname')+" "+$cookieStore.get('cookiesLastname');
+          console.log($scope.profile_name);
+      });
+
+
+      app.controller('profileCtrl', function($scope,$window,$http,$cookies,$cookieStore,$rootScope,Upload) 
+      {
+   
+      	  $scope.cookiesUserid = $cookieStore.get('cookiesUserid');
+          $scope.cookiesToken = $cookieStore.get('cookiesToken');
+          $scope.cookiesFirstname = $cookieStore.get('cookiesFirstname');
+          $scope.cookiesLastname = $cookieStore.get('cookiesLastname');
+          $scope.cookiesCity = $cookieStore.get('cookiesCity');
+          $scope.cookiesLocation = $cookieStore.get('cookiesLocation');
+
+          $scope.profile_name = $scope.cookiesFirstname+" "+$scope.cookiesLastname;
+          console.log($scope.profile_name);
+      
+          $scope.upload_count = 0;
+          $scope.url = [] ;
+          $scope.police_docs = [];
+          $scope.portfolios = [];
+          $scope.pro_docs = [];
+          $scope.spinner = false;
+          $scope.count = 0;
+          $scope.max = 5;
+          $scope.hidden_fields = false;
+          $scope.text_fields = false;
+          $scope.userid = $scope.cookiesUserid;
+          $scope.token = $scope.cookiesToken ;
+      
+          // console.log($scope.userid + " " + $scope.token);
+          $scope.lightbox_image = "";
+          $scope.portfolios_img_url = [];
+          $scope.police_img_url =[];
+          $scope.pro_docs_img_url =[];
+          $scope.profile_spinner = false;
+
+          //angular.element(".ui-select-match-item btn btn-default btn-xs").width()
+      
+          $scope.flag = false;
+          $scope.createjob_step = 1;
+          $scope.showBudgetDiv = false;
+          
+          $scope.job = {};
+          $scope.profile = {};
+          $scope.profile.dob = "";
+          $scope.profile.dob_date = "";
+          
+
+          $http({
+                  url: "/user/profile/fetch",
+                  method: "POST",
+                  data: {"userid":$scope.userid, "token":$scope.token}
+              }).success(function(data, status, headers, config) {
+                   console.log(data);
+                  $scope.userdataArray = data['data'];
+                   console.log($scope.userdataArray);
+                  angular.forEach($scope.userdataArray, function(value, key) {
+                        $scope.profile.firstname = value.firstname;
+                        $scope.profile.lastname = value.lastname;
+                        $scope.profile.city = (value.addressJSON.city).toString();
+                        $scope.profile.aboutme = value.aboutme;
+                        $scope.profile.skills = value.skillsJSON;
+                        $scope.profile.gender = value.gender;
+                        $scope.profile.address1 = value.addressJSON.address1;
+                        $scope.profile.address2 = value.addressJSON.address2;
+                        $scope.profile.pincode = value.addressJSON.pincode;
+                        $scope.profile.image = value.picurlPath;
+                        $scope.profile.mobile = parseInt(value.mobile);
+
+                        $scope.profile.email = value.email;
+                       // $scope.profile.country = (value.addressJSON.country).toString();
+                         if (value.dob == ""){
+                          $scope.profile.dob = "";
+                        }
+                        else{
+                        $scope.profile.dob = new Date(value.dob);
+                        }
+                        
+                        $scope.profile.code = value.isdcode;
+
+                        // $scope.profile.portfolio = value.certificateJSON;
+                        $scope.profile.userrating = value.userrating;
+
+                       $http({
+        					        url: "/location/list",
+        					        method: "POST",
+        					        data: {"cityid":value.addressJSON.city}
+        					        }).success(function(data, status, headers, config) {
+        					            console.log(data);
+        					            $scope.locationList = data['locationList'];
+        					            $scope.profile.country = (data['country'][0]['countryid']).toString();
+        					            $scope.countryList = data['country'];
+        					           	$scope.profile.location = (value.locationid).toString();
+        					        }).error(function(data, status, headers, config) {
+        					      });
+
+                          if (value.dob != "" && value.dob != undefined){
+                              dateString = new Date(value.dob).toUTCString();
+                              value.dob = dateString.split(' ').slice(1, 4).join(' ')
+                          }
+
+                          if (value.mobile != "" && value.mobile != undefined && value.mobile != 'None'){
+
+                              var mobile = value.mobile.toString();
+
+                              value.mobile = mobile[0]+mobile[1]+mobile[2]+"-"+mobile[3]+mobile[4]+mobile[5]+"-"+mobile[6]+mobile[7]+mobile[8]+mobile[9];
+                              console.log(value.mobile);
+
+                              $scope.mobile = parseInt(value.mobile);
+
+                          }
+
+                    });
+                  $scope.profile.leftuserrating = 5 - $scope.profile.userrating;
+
+                  $scope.$digest;
+                  console.log($scope.profile.userrating,$scope.profile.leftuserrating);     
+              }).error(function(data, status, headers, config) {
+              });
+
+    
+    $scope.upload = function (file,filetype) {
+        //console.log("-- ",file[0])
+      //console.log("-- ",file['$ngfDataUrl'])
+      for (var i=0; i<file.length ; i++){
+        var upload_data = {"myimage":file[i],"userid":$scope.userid, "token":$scope.token,"type":filetype , "certificatecaption" : ""};
+        console.log(upload_data);
+        Upload.upload({
+          url: '/user/update/pic/doc/certificate/portfolio/upload',
+          method: 'POST',
+          data: upload_data
+          
+        }).then(function (resp) { //upload function returns a promise
+          console.log(resp);
+          if(filetype == "profileimage"){
+            $scope.profile.image = resp.data;
+            $scope.profile.image = value.picurlPath;
+                        $rootScope.cookiesPicUrl = value.picurl;
+            }
+          if(filetype == "portfolioimage"){
+              $scope.profile.portfolio.push(resp.data);}
+          $scope.upload_count = $scope.upload_count + 1; 
+        }) 
+      }
+    };
+    
+    $scope.readURL = function (input,type) {
+      var url_data = [] ;
+      var images = [];
+      var k = 0 ;
+      var file_size = 0; 
+      url_data = input.files;
+      if(input.files.length > 10){
+      	return swal("Too many images selected");
+      }
+      if (input.files) {
+        for(i=0;i<input.files.length;i++)
+        {
+          
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            url_data.$ngfDataUrl = e.target.result ;
+            var image = {};
+            var type_array = url_data[k].name.split(".");
+            image.name = type_array[type_array.length-1];
+            image.src = e.target.result;
+            images.push(image);
+            k++;
+          };
+            reader.readAsDataURL(input.files[i]);
+            file_size = Math.round(url_data[i].size/1024);
+	        console.log(file_size,type);
+	        if (type == "image" || type == "police" || type == "portfolio_images"){
+	         	if (file_size > 2048){
+	         		url_data = [];
+	          		return swal("Image size is too big");
+	          	}
+	        }
+	        else{
+	          	if (file_size > 10240){
+	          		url_data[i] = {};
+	          		return swal("Image size is too big");
+	          	}
+          	}  
+        }
+      }
+      console.log("images");
+     console.log(images);
+      
+      if (type == "image"){
+        $scope.url = [];
+        $scope.url = url_data;
+        //console.log("image : "+$scope.url);
+      }
+      else if(type == "police"){
+        $scope.police_docs = [];
+        $scope.police_img_url = "";
+        $scope.police_docs = url_data;
+        $scope.police_img_url = images;
+        //console.log("police : "+$scope.police_docs);
+      }
+      else if(type == "portfolio_images"){
+        $scope.portfolios = [];
+        $scope.portfolios_img_url = "";
+        $scope.portfolios = url_data;
+        $scope.portfolios_img_url = images;
+      }
+      else{
+        $scope.pro_docs = [];
+        $scope.pro_docs_img_url = "";
+        $scope.pro_docs = url_data;
+        $scope.pro_docs_img_url = images;
+        //console.log("pro_docs : "+$scope.pro_docs);
+      }
+      
+    }   
+
+    $scope.show_image = function(image){
+      $scope.lightbox_image = image;
+      angular.element('#modalButtonPost').trigger('click');
+    }
+        
+        
+        $scope.showHiddenFields = function()
+        {
+             $scope.hidden_fields = true;
+             $scope.text_fields = true;
+       $http({
+                  url: "/skills/all/list",
+                  method: "POST",
+                  data: {"userid":$scope.userid, "token":$scope.token}
+              }).success(function(data, status, headers, config) {
+                  console.log(data['skillsList']);
+                  $scope.skillData = data['skillsList'];
+                  $scope.$digest;
+              }).error(function(data, status, headers, config) {
+              });
+       
+        }
+
+        $scope.mobile_verify = function(number,isdcode){
+          $scope.isd_verify = isdcode;
+
+          if ((/^\d+$/.test($scope.profile.mobile))){
+
+            angular.element('#modalmobile').trigger('click');
+             $http({
+                    url: "/user/get/mobile/otp",
+                    method: "POST",
+                    data: {"userid":$scope.userid, "token":$scope.token , "mobile":parseInt($scope.profile.mobile) ,"isdcode":isdcode}
+                }).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.mobile = number;
+                    $scope.$digest;
+                }).error(function(data, status, headers, config) {
+                });
+            }
+          else{
+            swal('Only digits are allowed in mobile');
+            $scope.profile.mobile = $scope.mobile;
+          }
+          
+        }
+
+        $scope.mobile_otp_verify = function(number,isdcode,otp){
+          
+
+          if ((/^\d+$/.test(otp))){
+
+             $http({
+                    url: "/user/verify/mobile/otp",
+                    method: "POST",
+                    data: {"userid":$scope.userid, "token":$scope.token , "mobile":parseInt($scope.profile.mobile) ,"isdcode":isdcode , "mobileotp": parseInt(otp)}
+                }).success(function(data, status, headers, config) {
+                    if (data['status'] == 200){
+                      console.log(data['userdata']);
+                      $scope.otp_value = "";
+                      $scope.userdataArray[0]['mobileverified'] = data['userdata'][0]['mobileverified'];
+                      scope.userdataArray[0]['proJSON']['mobileverified'] = data['userdata'][0]['proJSON']['mobileverified'];
+                      $scope.$digest;
+                    }
+                    else{
+                      swal("Mobile OTP Entered Did Not match");
+                    }
+                }).error(function(data, status, headers, config) {
+                });
+            }
+          else{
+            swal('Only numbers are allowed in otp');
+          }
+          
+        }
+
+         $scope.email_verify = function(email){
+          $scope.email = email;
+          console.log(email);
+          //angular.element('#modalemail').trigger('click');
+           $http({
+                  url: "/user/send/verify/email",
+                  method: "POST",
+                  data: {"userid":$scope.userid, "token":$scope.token,"email":email}
+              }).success(function(data, status, headers, config) {
+                  swal("Login to your email to verify it");
+                  $scope.$digest;
+              }).error(function(data, status, headers, config) {
+              });
+          }
+
+        $scope.get_location = function(city){
+          $http({
+                url: "/location/list",
+                method: "POST",
+                data: {"cityid":city}
+                }).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.locationList = data['locationList'];
+                    $scope.profile.country = data['country'][0]['countryid'].toString();
+                    $scope.countryList = data['country'];
+                    $scope.profile.location = "";
+                }).error(function(data, status, headers, config) {
+              });
+        }
+
+        $scope.RefreshData = function(){
+             $scope.hidden_fields = false;
+             $scope.text_fields = false;
+        }
+
+        $scope.saveData = function()
+        {
+
+          if ($scope.profile.location != undefined && $scope.profile.location != "" && $scope.profile.email != undefined && $scope.profile.email != "" && $scope.profile.firstname != undefined && $scope.profile.firstname != "" && $scope.profile.lastname != undefined && $scope.profile.lastname != "" ){
+
+            upload_data_count = 0;
+            $scope.spinner = true;
+            if ($scope.url.length != 0){
+              $scope.upload($scope.url,"profileimage");
+              upload_data_count += $scope.url.length;
+            }
+            
+            if ($scope.pro_docs.length != 0){
+              $scope.upload($scope.pro_docs,"certificateimage");
+               upload_data_count += $scope.pro_docs.length;
+            }
+            
+            if ($scope.police_docs.length != 0){
+              $scope.upload($scope.police_docs,"police");
+               upload_data_count += $scope.police_docs.length;
+            }
+
+            if ($scope.portfolios.length != 0){
+                $scope.upload($scope.portfolios,"portfolioimage");
+                 upload_data_count += $scope.portfolios.length;
+            }
+      
+        setTimeout(function(){
+
+      // console.log($scope.portfolios.length + $scope.url.length + $scope.pro_docs.length + $scope.police_docs.length,$scope.upload_count);
+      // if (($scope.portfolios.length + $scope.url.length + $scope.pro_docs.length + $scope.police_docs.length) == $scope.upload_count)
+      
+      // {
+      	//$scope.profile_spinner = true;
+        console.log($scope.profile.dob);
+        if($scope.profile.dob == undefined || $scope.profile.dob == "")
+        {
+          $scope.profile.dob == "";
+        }
+        else
+        {
+          //%d-%m-%Y %H:%M:%S
+          var month = $scope.profile.dob.getMonth() + 1; //months from 1-12
+          var day = $scope.profile.dob.getDate();
+          var year = $scope.profile.dob.getFullYear();
+          $scope.profile.dob_date = day+"-"+month+ "-"+year+" 00:00:00";
+        }
+
+            getData = {   
+                    "userid" : $scope.userid,
+                    "token" : $scope.token,
+                    "firstname" : $scope.profile.firstname,
+                    "lastname" : $scope.profile.lastname,
+                    "city" : $scope.profile.city,
+                    "aboutme" : $scope.profile.aboutme,
+                    "skills" : $scope.profile.skills,
+                    "address1" : $scope.profile.address1,
+                    "address2" : $scope.profile.address2,
+                    "pincode" : $scope.profile.pincode,
+                    "location" : $scope.profile.location,
+                    "mobile" : parseInt($scope.profile.mobile),
+                    "email" : $scope.profile.email,
+                    "dob" : $scope.profile.dob_date,
+                    "gender" : $scope.profile.gender,
+                    "isdcode" : $scope.profile.code
+                  }
+
+            // var trimmed64 = s.substring( s.indexOf('64,')+3 , s.length );
+
+            console.log(getData);
+
+            $http({
+                url: "/user/update",
+                method: "POST",
+                data: getData
+              }).success(function(data, status, headers, config) {
+              if (data['status'] == 200)
+              {
+                console.log(data);
+                $scope.userdataArray = data['updateData'];
+                $window.scrollTo(100, 0);
+               
+                 angular.forEach($scope.userdataArray, function(value, key) {
+                            $scope.profile.firstname = value.firstname;
+                            $scope.profile.lastname = value.lastname;
+                            $scope.profile.city = (value.addressJSON.city).toString();
+                            $scope.profile.aboutme = value.aboutme;
+                            $scope.profile.skills = value.skillsJSON;
+                            $scope.profile.gender = value.gender;
+                            $scope.profile.address1 = value.addressJSON.address1;
+                            $scope.profile.address2 = value.addressJSON.address2;
+                            $scope.profile.pincode = value.addressJSON.pincode;
+                            $scope.profile.image = value.picurlPath;
+                            $rootScope.cookiesPicUrl = value.picurl;
+                            $scope.profile.mobile = parseInt(value.mobile);
+                            $scope.profile.email = value.email;
+                             if (value.dob == ""){
+                              $scope.profile.dob = "";
+                            }
+                            else{
+                            $scope.profile.dob = new Date(value.dob);
+                            }
+                            //$scope.profile.country = (value.addressJSON.country).toString();
+                            $scope.profile.code = value.isdcode;
+
+                            // $scope.profile.portfolio = value.certificateJSON;
+                            $scope.profile.userrating = value.userrating;
+
+                            $http({
+    					        url: "/location/list",
+    					        method: "POST",
+    					        data: {"cityid":value.addressJSON.city}
+    					        }).success(function(data, status, headers, config) {
+    					            console.log(data);
+    					            $scope.locationList = data['locationList'];
+    					            $scope.profile.country = (data['country'][0]['countryid']).toString();
+    					            $scope.countryList = data['country'];
+    					           	$scope.profile.location = (value.locationid).toString();
+    					        }).error(function(data, status, headers, config) {
+    					      });
+
+                      if (value.dob != "" && value.dob != undefined){
+                              dateString = new Date(value.dob).toUTCString();
+                              value.dob = dateString.split(' ').slice(1, 4).join(' ')
+                          }
+
+
+                      if (value.mobile != "" && value.mobile != undefined && value.mobile != 'None'){
+
+                        var mobile = value.mobile.toString();
+
+                        value.mobile = mobile[0]+mobile[1]+mobile[2]+"-"+mobile[3]+mobile[4]+mobile[5]+"-"+mobile[6]+mobile[7]+mobile[8]+mobile[9];
+                        console.log(value.mobile);
+
+                      }
+
+                        });
+                      $scope.profile.leftuserrating = 5 - $scope.profile.userrating;
+
+                      
+
+                      
+
+                      $scope.$digest;
+                      console.log($scope.profile.userrating,$scope.profile.leftuserrating);
+              }                  
+                
+              }).error(function(data, status, headers, config) {
+              });
+
+              $scope.hidden_fields = false;
+              $scope.text_fields = false;
+           
+
+              $scope.url = [] ;
+              $scope.police_docs = [];
+              $scope.pro_docs = [];
+              $scope.portfolios = [];
+              $scope.portfolios_img_url = "";
+              $scope.police_img_url = "";
+              $scope.pro_docs_img_url = "";
+            //}
+            $scope.spinner = false;
+
+          
+        },upload_data_count * 15000);
+
+      }
+      else{
+          swal({title:"You cannot leave mandatory fields empty",text: "mandatory fields : Firstname, Lastname, Email, Location",confirmButtonColor: "#e94e38"});
+      }
+
+      console.log(upload_data_count);
+
+      
+    }
+
+
+      });
+</script>
+
+
+
+
+
+
+<!-- content close -->
+
+
+</body>
+</html>

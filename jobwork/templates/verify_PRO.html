@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+        <!--  
+         * @Package: Ultra Admin - Responsive Theme
+         * @Subpackage: Bootstrap
+         * @Version: 4.1
+         * This file is part of Ultra Admin Theme.
+        -->
+        <title>All Users | Admin</title>
+        {% include 'meta-tag.html' %}
+
+    <style type="text/css">
+        .active {
+            background-color: rgb(233, 78, 56);
+        }
+    </style>
+
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BEGIN BODY -->
+    <body class=" " ng-app="categoriesListing" ng-controller="categoriesCtrl" ng-init="changeData()"><!-- START TOPBAR -->
+        {% include 'top-menu.html' %}
+        <!-- END TOPBAR -->
+        <!-- START CONTAINER -->
+        <div class="page-container row-fluid">
+
+            <!-- SIDEBAR - START -->
+           {% include 'side-left.html' %}
+             <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper" style="">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-title">
+
+
+                          <div class="pull-left">
+                               <h1 class="title">All USERS</h1>                        
+                          </div>
+
+                            <!--<div class="pull-right hidden-xs">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-basic.html">Tables</a>
+                                    </li>
+                                    <li class="active">
+                                        <strong>Data Tables</strong>
+                                    </li>
+                                </ol>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+
+
+                    <div class="content-body">  
+
+                        <section>
+                            <div class="" style="margin-bottom: 25px;">
+                                <section class="box ">
+                                    <header class="panel_header">
+                                        <h2 class="title pull-left">Users</h2>
+                                        <div class="actions panel_actions pull-right">
+                                            <!--<i class="box_toggle fa fa-chevron-down"></i>-->
+                                            <!--<i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>-->
+                                            <!--<i class="box_close fa fa-times"></i>-->
+                                        </div>
+                                    </header>
+                                    <div class="content-body">
+                                        <div class="row" style="margin-bottom: 25px;">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <form name="filterDate" id="filterDate" method="POST" novalidate> 
+                                                   <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                        <label class="" style="margin-right: 10px;">Start Date</label>
+                                                        <input type="date" id="startgmtDate" class="form-control" ng-change="changeData()" ng-model="startgmtDate" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                    </div>
+                                                    <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                        <label class="" style="margin-right: 10px;">End Date</label>
+                                                        <input type="date" class="form-control" id="endgmtDate" ng-model="endgmtDate" ng-change="changeData()" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                    </div>
+                                                    <div class="row" style="margin-bottom: 25px;">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        
+                                                           <div class="form-group col-md-3 col-sm-3" style="padding: 0;">
+                                                                <label class="" style="margin-right: 10px;">City</label>
+                                                                <select class="form-control" ng-model="filter.city" ng-change="get_location(filter.city)">
+                                                                    <option value="" selected="selected">All City</option>
+                                                                    <option ng-repeat="allCityData in allcity" value="{& allCityData.cityid &}" ng-bind="allCityData.city"></option>  
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-3 col-sm-3" style="padding: 0;">
+                                                                <label class="" style="margin-right: 10px;">Location</label>
+                                                                <select ng-model="filter.location" class="form-control">
+                                                                  <option value="" selected="selected">All Location</option>
+                                                                  <option ng-repeat="option in locationList" value="{& option.locationid &}" ng-if="option.under != ''">{& option.under &} - {& option.locationname &}</option>
+                                                                  <option ng-repeat="option in locationList" value="{& option.locationid &}" ng-if="option.under == ''">{& option.locationname &}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-3 col-sm-3" style="padding: 0;height: 27px;">
+                                                                <label class="" style="margin-right: 10px;">Skills</label>
+                                                                <select ng-model="filter.skills" class="form-control">
+                                                                    <option ng-repeat="all_skill in skillData" value="{&all_skill.skillid&}">{&all_skill.skillname&}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-3 col-sm-3" style="padding: 0;height: 27px;">
+                                                                <button ng-click="filter_update()" class="btn btn-success" style="margin-top: 28px;margin-left: 18px;">Update</button>
+                                                            </div>
+                                                        </div>
+                                                </div>
+
+                                               </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                           
+                       
+                            <div>
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 15%;">Profile Image</th>
+                                            <th style="width: 15%;">User Profile</th>
+                                            <th style="width: 15%;">Skills</th>
+                                            <th style="width: 35%;">Pro Data</th>
+                                            <th style="width: 20%;" data-sortable="false">Overall Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="userPropertyArray in userproArray">
+                                             <td ng-click="getdetails(userPropertyArray.userid)">
+											 <div>
+                                                <img src="{& userPropertyArray.picurlPath &}" alt="" class="img-circle img-responsive" style="width: 70px !important;height: 70px; margin:5px auto;"> </div>               
+                                                <div class="user_detail_pic_ID">{&userPropertyArray.userid&}</div>
+                                            </td>
+                                            <td ng-click="getdetails(userPropertyArray.userid)"><span><strong>{& userPropertyArray.firstname &}&nbsp;{& userPropertyArray.lastname &}</strong></span><br><span>{& userPropertyArray.email&}</span><br><span ng-if="userPropertyArray.mobile">{& userPropertyArray.mobile &}</span>
+                                            <hr>
+                                            <span ng-if="userPropertyArray.address != '' && userPropertyArray.address != ','">{& userPropertyArray.address &}</span><br><span>{& userPropertyArray.city &},</span><span>&nbsp;{& userPropertyArray.state &}</span><br><span>{& userPropertyArray.country &}</span><span ng-if="userPropertyArray.pincode != ''">&nbsp;-&nbsp;{& userPropertyArray.pincode &}</span>
+                                            </td>
+
+                                            <td>
+                                                <span ng-repeat="skills in userPropertyArray.skillsJSON">
+                                                    <button type="button" class="btn btn-danger" style="background-color: rgb(233, 78, 56);padding: 4px;border-radius: 4px;font-size: 11px;" disabled="">{&skills.skillname&}</button> 
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12" ng-click="getdetails(userPropertyArray.userid)">
+                                                    <span>Facebook Approved</span>
+                                                    <div class="col-md-3" style="float: right;">
+                                                        <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.facebookapproved == true"><button type="button" class="btn btn-success" disabled>Verified</button></span><span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.facebookapproved == false"><button type="button" class="btn btn-danger" disabled>Not Verified</button></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12" ng-click="getdetails(userPropertyArray.userid)">
+                                                    <span>Mobile Verified</span>
+                                                    <div class="col-md-3" style="float: right;">
+                                                        <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.mobileverified == true"><button type="button" class="btn btn-success" disabled>Verified</button></span><span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.mobileverified == false"><button type="button" class="btn btn-danger" disabled>Not Verified</button></span>
+                                                    </div>
+                                                </div>
+                                               <!--  <div class="col-md-12">
+                                                    <span>Credit Card Verified</span>
+                                                    <div class="col-md-3" style="float: right;">
+                                                        <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.creditcardverified == true"><button type="button" class="btn btn-success" disabled>Verified</button></span><span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.creditcardverified == false"><button type="button" class="btn btn-danger" ng-click="verify(userPropertyArray.userid, 'creditcardverified')">Verify</button></span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-md-12">
+                                                    <span><a href="" ng-click="verificationModal('police',userPropertyArray.userid)">Police Verification</a></span>
+                                                    <div class="col-md-3" style="float: right;">
+                                                        <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.policeverification == true"><button type="button" class="btn btn-success" disabled>Verified</button></span><span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.policeverification == false"><button type="button" class="btn btn-info" ng-click="verify(userPropertyArray.userid, 'policeverification')">Verify</button></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <span><a href="" ng-click="verificationModal('pro',userPropertyArray.userid)">Professional Certification Verified</a></span>
+                                                    <div class="col-md-3" style="float: right;">
+                                                        <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.professionalcertificationverified == true"><button type="button" class="btn btn-success" disabled>Verified</button></span><span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.professionalcertificationverified == false"><button type="button" class="btn btn-info" ng-click="verify(userPropertyArray.userid, 'professionalcertificationverified')">Verify</button></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td ng-click="getdetails(userPropertyArray.userid)">
+                                                <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.overallPro == true"><button type="button" class="btn btn-success"  disabled>Verified</button></span>
+                                                <span class="btn-group btn-group-xs" ng-if="userPropertyArray.proJSON.overallPro == false"><button type="button" class="btn btn-danger" disabled>Not Verified</button></span>
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                   <button type="button" class="btn btn-info btn-lg" id="modalButton" data-toggle="modal" data-target="#myModal" style="display: none;">Open Modal</button>
+                   <button type="button" class="btn btn-info btn-lg" id="policemodalButton" data-toggle="modal" data-target="#policeVerificationModal" style="display: none;">Open Modal</button>
+                   <button type="button" class="btn btn-info btn-lg" id="promodalButton" data-toggle="modal" data-target="#proVerificationModal" style="display: none;">Open Modal</button>
+
+                <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h4 class="modal-title" style="text-align: center; color:#fff;"><b>Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-5 ">
+                                        <div class="profile_pic">
+                                            <img src="{& userArrayDetail.picurlPath &}" alt="" class="img-circle img-responsive" >
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-7 profile_text">
+                                        <h2>{& userArrayDetail.firstname &}&nbsp;{& userArrayDetail.lastname &}</h2>
+                                        <p><span ng-if="userArrayDetail.address != '' && userArrayDetail.address != ','">{& userArrayDetail.address &}<br></span><strong><span>{& userArrayDetail.city &},&nbsp;{& userArrayDetail.state &}</span><br><span>{& userArrayDetail.country &}</span><span ng-if="userArrayDetail.pincode != ''">&nbsp;-&nbsp;{& userArrayDetail.pincode &}</span></strong></p>
+
+                                        <p>{& userArrayDetail.email &}</p>
+                                        <p>{& userArrayDetail.mobile &}</p>
+                                        <p><small am-time-ago="userArrayDetail.createdatetimeinseconds"></small></p>
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> About</strong></h5>
+                                        <p><small>{& userArrayDetail.aboutme &}</small></p>
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong>Skills</strong></h5>                    
+                                        <p><small class="text-fields" ng-repeat="skillNameData in userArrayDetail.skillsJSON" >{& skillNameData.skillname &}&nbsp;</small></p>
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Jobs Posted / Bids Counts / Comments Counts</strong></h5>                    
+                                        <p><small>Job Posted : <strong>{& userArrayDetail.total_Jobs &}</strong><br>Bids On : <strong>{& userArrayDetail.totalJObsBids &}</strong><br>Bids and Completed : <strong>{& userArrayDetail.totalJObsBidsCompleted &}</strong><br>Comments : <strong>{& userArrayDetail.totalJobsComments &}</strong></small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Verification Status</strong></h5>                    
+                                        <p><small>
+                                            <ul>
+                                                <!-- <li ng-if="userData.proJSON.creditcardverified == true"><i class="fa icon_round fa-credit-card" aria-hidden="true" ></i> <span> Credit Card</span> </li> -->
+                                                <li ng-if="userArrayDetail.proJSON.mobileverified == true"><i class="fa icon_round fa-mobile" aria-hidden="true" ></i> <span>Mobile</span> </li>
+                                                <li ng-if="userArrayDetail.proJSON.facebookapproved == true"><i class="fa icon_round fa-round fa-facebook" aria-hidden="true" ></i> <span> Facebook </span> </li>
+                                                <li ng-if="userArrayDetail.proJSON.policeverification == true"><i class="fa icon_round fa-gavel" aria-hidden="true" ></i> <span> Police </span> </li>
+                                                <li ng-if="userArrayDetail.proJSON.professionalcertificationverified == true"><i class="fa icon_round fa-briefcase" aria-hidden="true" ></i> <span>PRO</span> </li>
+                                            </ul>
+                                        </small></p>
+                                        <p ng-if="userArrayDetail.proJSON.mobileverified != true && userArrayDetail.proJSON.facebookapproved != true && userArrayDetail.proJSON.policeverification != true && userArrayDetail.proJSON.professionalcertificationverified != true"><small>
+                                            Nothing is Verified.
+                                        </small></p>
+                                        
+                                    </div>                                    
+                                </div>
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Education</strong></h5>                    
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                       
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Work experience</strong></h5>                    
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>                                        
+                                    </div>                                    
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                <!-- Modal -->
+                    <div id="policeVerificationModal" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h5 class="modal-title" style="text-align: center; color:#fff;"><b>Police Verification</b></h5>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-5 text-left">
+                                        <div class="profile_pic">
+                                            <img src="{& userArrayDetail.picurlPath &}" alt="" class="img-circle img-responsive" >
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-7">
+                                        <h2>{& userArrayDetail.firstname &}&nbsp;{& userArrayDetail.lastname &}</h2>
+                                        <p><span ng-if="userArrayDetail.address != '' && userArrayDetail.address != ','">{& userArrayDetail.address &}<br></span><strong><span>{& userArrayDetail.city &},&nbsp;{& userArrayDetail.state &}</span><br><span>{& userArrayDetail.country &}</span><span ng-if="userArrayDetail.pincode != ''">&nbsp;-&nbsp;{& userArrayDetail.pincode &}</span></strong></p>
+
+                                        <p>{& userArrayDetail.email &}</p>
+                                        <p>{& userArrayDetail.mobile &}</p>
+                                        <p><small am-time-ago="userArrayDetail.createdatetimeinseconds"></small></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 emphasis profassional_doc">
+                                        <h5><strong> Police Verification Documents</strong></h5>                    
+                                        <div ng-if="userArrayDetail.certificateJSON.length != 0 && pro_docs.ispoliceverification == true" ng-repeat="pro_docs in userArrayDetail.certificateJSON">
+                                            <a href="/static/front_end/images/documents/{&pro_docs.certificateimageurl &}"><img src="/static/front_end/images/documents/{& pro_docs.certificateimageurl &}" ng-if="pro_docs.type == 'gif' || pro_docs.type == 'png' || pro_docs.type == 'jpeg' || pro_docs.type == 'jpg' " style="cursor: pointer;"></a>
+                                            <a href="/static/front_end/images/documents/{&pro_docs.certificateimageurl &}"><img src="/static/front_end/images/pdf.png" ng-if="pro_docs.type == 'pdf'" style="cursor: pointer;" ng-click="pro_docs.pro_doc_url"></a>
+                                            
+                                            <a href="/static/front_end/images/documents/{&pro_docs.certificateimageurl &}"><img src="/static/front_end/images/docx.png" ng-if="pro_docs.type != 'gif' && pro_docs.type != 'png' && pro_docs.type != 'jpeg' && pro_docs.type != 'jpg' && pro_docs.type != 'pdf'" style="cursor: pointer;" ng-click="pro_docs.pro_doc_url"></a>
+
+                                        </div>
+                                        <div ng-if="userArrayDetail.certificateJSON.length == 0">
+                                            <small>No Data Found.</small>
+                                        </div> 
+                                       
+                                    </div>                                                                    
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                            <button type="button" class="btn btn-success" disabled ng-if="userArrayDetail.proJSON.policeverification == true">Verified</button>
+                            <button type="button" class="btn btn-info" ng-click="verify(userArrayDetail.userid, 'policeverification')" ng-if="userArrayDetail.proJSON.policeverification == false">Verify</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                         
+                <!-- END CONTENT -->
+                <!-- Modal -->
+                    <div id="proVerificationModal" class="modal fade box-align" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h5 class="modal-title" style="text-align: center; color:#fff;"><b>Professional Certification Details</b></h5>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-5 ">                                        
+                                        <div class="profile_pic">
+                                            <img src="{& userArrayDetail.picurlPath &}" alt="" class="img-circle img-responsive" >
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-7">
+                                        <h2>{& userArrayDetail.firstname &}&nbsp;{& userArrayDetail.lastname &}</h2>
+                                        <p><span ng-if="userArrayDetail.address != '' && userArrayDetail.address != ','">{& userArrayDetail.address &}<br></span><strong><span>{& userArrayDetail.city &},&nbsp;{& userArrayDetail.state &}</span><br><span>{& userArrayDetail.country &}</span><span ng-if="userArrayDetail.pincode != ''">&nbsp;-&nbsp;{& userArrayDetail.pincode &}</span></strong></p>
+
+                                        <p>{& userArrayDetail.email &}</p>
+                                        <p>{& userArrayDetail.mobile &}</p>
+                                        <p><small am-time-ago="userArrayDetail.createdatetimeinseconds"></small></p>                                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 emphasis">
+                                        <h5><strong> Professional Certification</strong></h5>
+										
+                                        <div ng-repeat="pro_docs in userArrayDetail.certificateJSON" ng-if="userArrayDetail.certificateJSON.length != 0 && pro_docs.ispoliceverification == false" >
+										<div class="profassional_doc">
+                                            <a href="/static/front_end/images/documents/{&pro_docs.certificateimageurl &}"><img src="/static/front_end/images/documents/{& pro_docs.certificateimageurl &}" ng-if="pro_docs.type == 'gif' || pro_docs.type == 'png' || pro_docs.type == 'jpeg' || pro_docs.type == 'jpg' " style="cursor: pointer;"></a>
+                                            <a href="/static/front_end/images/documents/{&pro_docs.certificateimageurl &}"><img src="/static/front_end/images/pdf.png" ng-if="pro_docs.type == 'pdf'" style="cursor: pointer;" ng-click="pro_docs.pro_doc_url"></a>
+                                            
+                                            <a href="/static/front_end/images/documents/{&pro_docs.certificateimageurl &}"><img src="/static/front_end/images/docx.png" ng-if="pro_docs.type != 'gif' && pro_docs.type != 'png' && pro_docs.type != 'jpeg' && pro_docs.type != 'jpg' && pro_docs.type != 'pdf'" style="cursor: pointer;" ng-click="pro_docs.pro_doc_url"></a>
+                                        </div>
+										</div>
+                                        <div ng-if="userArrayDetail.certificateJSON.length == 0">
+                                            <small>No Data Found.</small>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                            <button type="button" class="btn btn-success" disabled ng-if="userArrayDetail.proJSON.professionalcertificationverified == true">Verified</button>
+                            <button type="button" class="btn btn-info" ng-if="userArrayDetail.proJSON.professionalcertificationverified == false" data-dismiss="modal" ng-click="verify(userArrayDetail.userid, 'professionalcertificationverified')">Verify</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                         
+                <!-- END CONTENT -->
+                
+                <div class="chatapi-windows ">
+    
+    
+                </div>    
+                </div>
+        <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+        {% include 'footer.html' %}
+        
+        <script>
+            var app = angular.module('categoriesListing', ['datatables']);
+            app.config(function($interpolateProvider) {
+                $interpolateProvider.startSymbol('{&');
+                $interpolateProvider.endSymbol('&}');
+            });
+            app.controller('categoriesCtrl', function($scope,$http,$window, DTOptionsBuilder, DTColumnBuilder) 
+            {
+                $scope.startgmtDate = new Date();
+                $scope.startgmtDate.setMonth($scope.startgmtDate.getMonth() - 2);
+                $scope.endgmtDate = new Date();
+
+                $scope.count = 0;
+                $scope.userid = {{session['adminid']}};
+                $scope.token = "{{session['token']}}";
+                // console.log($scope.count);
+                $scope.isSaveDisabled = false;
+                $scope.isUpdateDisabled = true;
+                $scope.filter = {};
+                $scope.filter.city = "";
+                $scope.filter.location = "";
+                $scope.filter.skills = "";
+                $scope.allcity = [];
+
+                $scope.changeData = function()
+                {
+                    // console.log($scope.startgmtDate + " " + $scope.endgmtDate);
+
+                    $scope.endgmtDatemonth = $scope.endgmtDate.getMonth() + 1;
+                    $scope.endgmtDateday = $scope.endgmtDate.getDate();
+                    $scope.startgmtDatemonth = $scope.startgmtDate.getMonth() + 1;
+                    $scope.startgmtDateday = $scope.startgmtDate.getDate();
+                    
+                    if($scope.startgmtDatemonth < 10)
+                    {
+                        $scope.startgmtDatemonth = "0" + $scope.startgmtDatemonth;
+                    }
+                    if($scope.startgmtDateday < 10)
+                    {
+                        $scope.startgmtDateday = "0" + $scope.startgmtDateday;
+                    }
+                    if($scope.endgmtDatemonth < 10)
+                    {
+                        $scope.endgmtDatemonth = "0" + $scope.endgmtDatemonth;
+                    }
+                    if($scope.endgmtDateday < 10) 
+                    {
+                        $scope.endgmtDateday = "0" + $scope.endgmtDateday;
+                    }
+
+                    // var before = day + '-' + oldmonth + '-' + $scope.startgmtDate.getFullYear();
+                    $scope.startDateTime = $scope.startgmtDateday + '-' + $scope.startgmtDatemonth + '-' + $scope.startgmtDate.getFullYear() + ' ' + '00:00:00';
+
+                    // var today = endgmtDateday + '-' + endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear();
+                    $scope.endDateTime = $scope.endgmtDateday + '-' + $scope.endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear() + ' ' + '23:59:59';
+                
+                    // console.log($scope.startDateTime + " " + $scope.endDateTime);
+
+                    $http({
+                        url: "/city/list",
+                        method: "POST",
+                        data: {"userid":$scope.userid, "token":$scope.token}
+                    }).success(function(data, status, headers, config) {
+                        // // console.log(data['data']);
+                        $scope.allcity = data['cityList'];
+
+                        
+
+                    }).error(function(data, status, headers, config) {
+                        //alert("hmmm error");
+                        //$scope.status = status;
+                        //$window.location.href="/";
+                    });
+
+
+                    $http({
+                      url: "/skills/all/list",
+                      method: "POST",
+                      data: {"userid":$scope.userid, "token":$scope.token}
+                    }).success(function(data, status, headers, config) {
+                          $scope.skillData = [];
+                          $scope.skillData.push({"skillid":"","skillname":"Select Skill"});
+                          for (i=0;i<data['skillsList'].length;i++){
+                          $scope.skillData.push(data['skillsList'][i]);}
+                          
+                      }).error(function(data, status, headers, config) {
+                    });
+
+
+                    $http({
+                            url: "/user/list/pro",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            console.log(data['data']);
+                            $scope.userproArray = data['data'];
+                            
+
+                        }).error(function(data, status, headers, config) {
+                            //alert("hmmm error");
+                            //$scope.status = status;
+                            //$window.location.href="/";
+                        });
+
+                }
+
+                $scope.filter_update = function(){
+                    $http({
+                        url: "/user/list/pro",
+                        method: "POST",
+                        data: {"userid":$scope.userid, "token":$scope.token, "filter": $scope.filter,"startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                    }).success(function(data, status, headers, config) {
+                        
+                        $scope.userproArray = data['data'];
+                        
+
+                    }).error(function(data, status, headers, config) {
+                        //alert("hmmm error");
+                        //$scope.status = status;
+                        //$window.location.href="/";
+                    });
+                }
+                $scope.verificationModal = function(viewPart,useriddetail)
+                {
+                    if (viewPart == 'police')
+                    {
+                        angular.element('#policemodalButton').trigger('click');
+                    }
+                    else if (viewPart == 'pro')
+                    {
+                        angular.element('#promodalButton').trigger('click');
+                    }
+                    $http({
+                        url: "/user/list/detail",
+                        method: "POST",
+                        data: {"userid":$scope.userid, "token":$scope.token, "useriddetail":useriddetail}
+                    }).success(function(data, status, headers, config) {
+                        $scope.userArrayDetail = data['data'][0];
+                        $scope.timeAgo = $scope.userArrayDetail.createdatetimeinseconds;
+
+                    }).error(function(data, status, headers, config) {
+                        $scope.status = status;
+                    });
+                    
+                }
+                $scope.verify = function(prouserid, protype) 
+                    {
+                        if (prouserid)
+                        {
+                            $http({
+                                url: "/pro/verify",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"prouserid":prouserid, "verify" : true ,"protype" : protype}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                var alldata = data['data'];
+                                $scope.updatepro = alldata;
+                                // $scope.updateproUserid = alldata.userid;
+                                angular.forEach($scope.updatepro, function(value, key) {
+                                  angular.forEach($scope.userproArray, function(value2, key2) {
+                                    if (value2.userid == value.userid)
+                                      {
+                                        $scope.userproArray[key2].proJSON = value.proJSON;
+                                        return false;
+                                      }
+                                    });
+                                });
+                                if (status == 200)
+                                {
+                                    swal("Verified!", "Verify successfully.", "success");
+                                }
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // console.log(data);
+                                // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.getdetails = function(useriddetail){
+                    // console.log(useriddetail);
+                    angular.element('#modalButton').trigger('click');
+                    $http({
+                        url: "/user/list/detail",
+                        method: "POST",
+                        data: {"userid":$scope.userid, "token":$scope.token, "useriddetail":useriddetail}
+                    }).success(function(data, status, headers, config) {
+                        // console.log(data['data']);
+                        $scope.userArrayDetail = data['data'][0];
+                        $scope.timeAgo = $scope.userArrayDetail.createdatetimeinseconds;
+
+                    }).error(function(data, status, headers, config) {
+                        $scope.status = status;
+                    });
+                    }
+                
+
+                $scope.get_location = function(city){
+
+                    if (city != ""){
+                      $http({
+                            url: "/location/list",
+                            method: "POST",
+                            data: {"cityid":city}
+                            }).success(function(data, status, headers, config) {
+                                console.log(data);
+                                $scope.locationList = data['locationList'];
+                                $scope.profile.country = data['country'][0]['countryid'].toString();
+                                $scope.countryList = data['country'];
+                                $scope.profile.location = "";
+                            }).error(function(data, status, headers, config) {
+                          });
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
+
+
+

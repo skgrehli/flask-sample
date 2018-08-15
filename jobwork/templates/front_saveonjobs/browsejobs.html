@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Browse jobs</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="images/favicon.png">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script>
+
+
+
+<script>
+
+//$(function() {
+//
+//   $(".tasks_list").mousewheel(function(event, delta) {
+//
+//      this.scrollLeft -= (delta * 30);
+//    
+//      event.preventDefault();
+//
+//   });
+//
+//});
+
+</script>
+
+
+<body ng-app="">
+
+ 
+ <!-- Modal -->
+  <div class="modal fade" id="Postajob" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        
+        <div class="modal-body create_post1">
+        	<div class="progress_bar">
+                <img class="img-responsive" src="images/progress_step1.png" />
+              </div><!--progress_bar close-->  
+                <div class="feilds Job_title">
+                    <p>Job Title</p> 
+                    <input type="text" name="title" id="" class="" placeholder="" required="" aria-required="true">
+                </div><!--feilds close-->
+                
+                <div class="feilds job_description">
+                    <p>Describe your task in more detsil</p> 
+                   <textarea name="Description" id="" class="" rows="4" placeholder="" required="" aria-required="true"></textarea>
+                </div><!--feilds close-->
+               
+                <div class="feilds create_popup_btn">
+                <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">DONE</button>
+                </div><!--feilds close-->
+             
+         </div>
+         
+        
+        <div class="modal-body create_post2">
+        
+        <div class="progress_bar">
+        	<img class="img-responsive" src="images/progress_step2.png" />
+        </div><!--progress_bar close-->   
+            
+            
+
+			  <div class="feilds">
+                <div class="radio">
+                    <input id="male" type="radio" name="gender" value="male">
+                    <label for="male">To be completed in person</label>
+                    <input id="female" type="radio" name="gender" value="female">
+                    <label for="female">To be completed online</label>
+               </div>
+               
+               <div class="input-group">
+              <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+              <span class="input-group-addon" id="basic-addon2"><i class="icon-map-marker"></i></span>
+            </div>
+            
+            
+            </div><!--feilds close-->
+            
+            
+            <div class="feilds">
+            <p>$</p> 
+            <input type="number" name="number" class="people" placeholder="" id="">
+            </div><!--feilds close-->
+            
+            <div class="feilds Budget">
+            <p style="">Estimated Budget :</p>
+            </div><!--feilds close-->
+            
+            <div class="feilds create_popup_btn">
+            <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">DONE</button>
+            </div><!--feilds close-->
+            
+        
+        
+          
+        </div>
+        
+        <div class="modal-body create_post3">
+        
+        <div class="progress_bar">
+        	<img class="img-responsive" src="images/progress_step3.png" />
+            
+            <div class="feilds">
+            <p>How many people do you need for your task?</p> 
+            <input type="number" name="number" class="people" placeholder="" id="">
+            </div><!--feilds close-->
+            
+            <div class="feilds">
+            <p style="width:100%; float:left;">What's your budget?</p> 
+           
+                <div class="radio">
+                    <input id="male" type="radio" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input id="female" type="radio" name="gender" value="female">
+                    <label for="female">Female</label>
+                </div>
+            
+            </div><!--feilds close-->
+            
+            
+            <div class="feilds">
+            <p>$</p> 
+            <input type="number" name="number" class="people" placeholder="" id="">
+            </div><!--feilds close-->
+            
+            <div class="feilds Budget">
+            <p style="">Estimated Budget :</p>
+            </div><!--feilds close-->
+            
+            <div class="feilds create_popup_btn">
+            <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">DONE</button>
+            </div><!--feilds close-->
+            
+        </div><!--progress_bar close-->
+        
+          
+        </div>
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--modal close--> 
+  
+<!--header start-->
+
+    <div ng-include="'sticky_header.htm'"></div>
+    
+<!-- full header close-->
+
+<!--content start-->
+<div class="container">
+
+	<div class="browse_buttons">
+        <ul>
+        <a href="#"><li>All Jobs</li></a>
+        <a href="#"><li>Online Jobs</li></a>
+        <a href="#"><li>Open Jobs</li></a>
+        <!-- <a href="#"><li>Projects</li></a>-->
+        </ul>
+    </div><!--browse buttons-->
+
+
+    <div class="browse_jobs">
+    
+    <div class="browse_job_list_left">
+    <div class="browse_search col-sm-12 col-md-8 col-xs-12">
+    <input type="search" placeholder="Search">
+    </div><!--browse search -->
+    
+    <div class="col-sm-12 col-md-8 tasks_list scrollbar" id="style-1">
+     
+    <ul class="browse_job_list_card">
+   
+    
+    <li>
+    	<ul class="detail_card">
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+            
+         </ul>
+         
+        
+      </li>
+      
+      <li>
+      <ul class="detail_card">
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+        <li><div class="centered">
+                    <div class="card_img_name">
+                        <img class="img img-circle" src="images/user1.png" alt="">
+                        <div class="user_name">
+                        <h4><b>Mike Arney</b></h4>
+                        <p>Sec 4, Chandigarh</p>
+                        </div><!--username close-->
+                     </div><!--card_img_name close-->
+                 
+                 <div class="job_detail">
+                    <p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands.</p>
+                 </div><!--job detail close-->
+                    
+                   <div class="rupee_btn">
+                   <h3>$ 100</h3>
+                   </div>    
+                        
+                    </div></li>
+            
+         </ul>
+      </li>
+      
+     </ul>
+     </div>
+     
+     </div><!--browse_job_list_left close-->
+     
+     
+      <div class="col-sm-12 col-md-4">
+                  
+	<div class="row-fluid jobs_map">
+        <div class="span8">
+        	<iframe class="map_view" width="100%" height="643" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+    	</div>
+    </div>
+
+         </div> <!-- 2nd div--> 
+         
+         
+     </div><!--browse_jobs close-->
+     
+         
+         
+               
+          
+ </div>
+ 
+<!--container close-->
+ 
+
+
+
+
+
+
+<!------------------------- footer --------------------------------------------->
+
+<footer id="footerWrapper" class="footer2">
+	<section id="mainFooter">
+    <div class="bg_Triangle"></div>
+		<div class="container footer">
+			<div class="row">
+				<div class="col-md-3 col-sm-12">
+					<div class="footerWidget">
+						<img src="images/logo.PNG" alt="SAVEonJOBS" id="footerLogo">
+						<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters </p>
+                        
+                       
+                        <i class="fa fa-round fa-facebook"></i>
+                        <i class="fa fa-round fa-twitter"></i>
+                         <i class="fa fa-round fa-youtube"></i>
+                        <i class="fa fa-round fa-linkedin"></i>
+                        
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4 col-md-offset-1 col-xs-12 footer_links footer_margin">
+					<div class="footerWidget">
+						<ul class="list-unstyled iconList footer_list">
+							<li><a href="#">How it works</a></li>
+							<li><a href="#">Startup your small business </a></li>
+							<li><a href="#">Trust and Quality</a></li>
+							<li><a href="#">How to earn money</a></li>
+							<li><a href="#">Useful tips</a></li>
+                            <li><a href="#">FAQ</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4 col-xs-12 footer_links">
+					<div class="footerWidget">
+						<ul class="list-unstyled iconList footer_list">
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Contact Us</a></li>
+							<li><a href="#">Terms and Conditions</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Blog</a></li>
+                            <li><a href="#">Follow Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-4 col-xs-12 footer_links">
+					<div class="footerWidget">
+						<ul class="list-unstyled iconList footer_list">
+							<li><a href="#">Login</a></li>
+							<li><a href="#">Signup</a></li>
+							<li><a href="#">Post a job</a></li>
+							<li><a href="#">Browse Jobs</a></li>
+							<li><a href="#">Support Center</a></li>
+						</ul>
+					</div>
+				</div>
+                
+                
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                
+                    <div class="col-md-6 col-sm-0">
+                        
+                     </div>
+                     
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                       <a href="#"> <img src="images/play_store.png" class="center-block img-responsive" /></a>
+                     </div>
+                     
+                      <div class="col-md-3 col-sm-6 col-xs-6">
+                        <a href="#"><img src="images/app_store.png" class="center-block img-responsive" /></a>
+                      </div>
+                  
+				</div>
+                
+			</div>
+		</div>
+	</section>
+	
+</footer>
+
+<section id="footerRights">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					     
+				</div>
+				<div class="col-md-12">
+					<p>Designed bySNA Power - Software & Technology Division</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<!------------------------- footer close--------------------------------------------->
+
+
+
+
+
+
+
+
+
+<!--content close-->      
+
+    
+</body>
+</html>

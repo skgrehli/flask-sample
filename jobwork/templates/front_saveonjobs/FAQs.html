@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FAQs</title>
+<!-- 
+
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="static/front_end/images/favicon.png">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script> -->
+
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+</head>
+
+
+<body ng-app="sojApp" ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+<!--Terms background-->
+
+<!--container-->
+ <div class="container page_content title" style="margin-top: 90px;">
+ 		<h2>FAQs</h2>
+		<div class="container-fluid">
+			<div class="terms who">
+				<h2>Q. What is SAVEonJOBS?</h2>
+				<p>A. SAVEonJOBS is a Canada based trusted community marketplace for Individuals/companies based in Canada to outsource tasks, find local services or complete flexible jobs to earn money – online or via mobile.</p>
+			</div><!--terms-->
+			<div class="terms who">
+				<h2>Q. Who is a Jobber on SAVEonJOBS?</h2>
+				<p>A. Any individual or company bidding and agreeing to work on Job posted by Hirer on SAVEonJOBS is a Jobber.</p>
+			</div><!--terms-->
+			<div class="terms who">
+				<h2>Q. Who is a Hirer on SAVEonJOBS?</h2>
+				<p>A. Any individual or company posting a job and hiring Jobbers on SAVEonJOBS is a Hirer.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. Do you need to create separate profiles of Hirer and Jobber on SAVEonJOBS?</h2>
+				<p>A. NO. You need to create your profile. You can be a Jobber or/and a Hirer.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. How can I get my jobs done/earn money on SAVEonJOBS?</h2>
+				<p>A. For detailed information, visit HOW IT WORKS to explore how you can get your job done at the rates set by you OR how you can work for individuals or companies and earn money.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. What kind of Jobs can I post on SAVEonJOBS? </h2>
+				<p>A. The beauty of working through SAVEonJOBS is that you can post almost any Job that comes to your mind. From Jobs around the home (like gardening or cleaning) to office Jobs (like data entry or website support) to Jobs for business (like promotional staffing or mystery shopping). </p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. What kind of Jobs can I bid on SAVEonJOBS?</h2>
+				<p>A. Whether you are a skilled or an unskilled worker, you can bid on any jobs that you think you can perform.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. Can I post/bid on multiple jobs at the same time?</h2>
+				<p>A. Yes, there is no restriction on the number of jobs you can post or bid on.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. Can I bid on jobs while I have posted another job?</h2>
+				<p>A. Yes, you can bid on jobs even if you have posted another job.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. How much does it cost to post or bid on a Job?</h2>
+				<p>A. It is FREE to post or bid any number of Jobs. Once Hirer accepts a particular Jobbers proposal, he will have to add funds for the jobs via SAVEonJOBS escrow, which are securely held in anSAVEonJOBS Trust Account until the job has been completed. Hirer will need to release funds upon job completion. There are no additional fees or hidden costs and cash payments on SAVEonJOBS (We deduct a Service Fee of from the Jobber for the job).</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. Does SAVEonJOBS provide insurance for people that complete tasks?</h2>
+				<p>A. When you hire on SAVEonJOBS, workers are covered by a $20 million insurance policy placed by Lloyd’s approved coverholder Savannah Insurance Agency Pty Ltd*.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. Once I post a job, is there a commitment to hire a Jobber?</h2>
+				<p>A. No, it is FREE to post a job and there are no obligations to select a Jobber unless you find the right person for the job and accept their offer.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. What Trust & Quality features does SAVEonJOBS provide?</h2>
+				<p>A. Every individual/company that creates a profile on SAVEonJOBSprovides verified IDs, secure payments via SAVEonJOBS escrow and a Customer Support Team ready to assist. For more information, check out our Trust & Quality features.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. How can I decide how much to pay for a particular Job?</h2>
+				<p>A. The price that you offer is simply a starting point and experienced Jobbers at SAVEonJOBS will make offers so that you reach a fair price. There are no strict rules about how much to offer but as a starting point, think of how much time it might take the person to complete the job and what a fair hourly rate could be depending on the experience or skills required. You can also Find Jobs and check out similar jobs before making your offer.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. What are the payment options for each job?</h2>
+				<p>A. When accepting an offer you are required to Add Funds. Your payment method can be either a VISA or Mastercard Debit/Credit card/Paypal. </p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. Can I have a discussion with potential bidders before selecting my Jobber?</h2>
+				<p>A. Besides the commenting wall available on each job, Hirers can interact with shortlisted bidder via private messaging as well.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. How do I receive payment for completing a task?</h2>
+				<p>A. Once your offer has been accepted, the Hireradds funds for the task in SAVEonJOBS escrow. After the work is completed, Jobber selects Request Payment and the Hirer will be notified to Release Funds held into your verified Bank or PayPal account.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. What if I’m not happy with the results?</h2>
+				<p>A. In some unfortunate event, If there’s a disagreement between Hirer and Jobber, we’ll provide free dispute assistance and, if needed, connect you with arbitration.</p>
+			</div><!--terms-->
+            
+            <div class="terms who">
+				<h2>Q. How does SAVEonJOBS make money?</h2>
+				<p>A. SAVEonJOBS charges Jobbers 15% service fee depending on the total amount they’ve billed with a Hirer. </p>
+			</div><!--terms-->
+            
+            
+		</div><!--container-->
+	</div>
+<!--container close--> 
+
+
+    
+ <!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+
+<!-- ----------------------- footer close------------------------------------------- -->
+      
+    
+</body>
+</html>

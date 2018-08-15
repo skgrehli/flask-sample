@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+        <!--  
+         * @Package: Ultra Admin - Responsive Theme
+         * @Subpackage: Bootstrap
+         * @Version: 4.1
+         * This file is part of Ultra Admin Theme.
+        -->
+        <title>Skills | Admin</title>
+        {% include 'meta-tag.html' %}
+
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BEGIN BODY -->
+    <body class=" " ng-app="skillsListing" ng-controller="skillsCtrl" ng-init="changeData()"><!-- START TOPBAR -->
+        {% include 'top-menu.html' %}
+        <!-- END TOPBAR -->
+        <!-- START CONTAINER -->
+        <div class="page-container row-fluid">
+
+            <!-- SIDEBAR - START -->
+           {% include 'side-left.html' %}
+             <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper" style="">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-title">
+
+
+                          <div class="pull-left">
+                               <h1 class="title">Skills</h1>                        
+                          </div>
+
+                            <!--<div class="pull-right hidden-xs">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-basic.html">Tables</a>
+                                    </li>
+                                    <li class="active">
+                                        <strong>Data Tables</strong>
+                                    </li>
+                                </ol>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+
+
+                    <div class="content-body">  
+                        <div class="row">
+                        
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="margin-bottom: 25px;">
+                        <section class="box ">
+                            <header class="panel_header">
+                                <h2 class="title pull-left">Add SKill</h2>
+                                <div class="actions panel_actions pull-right">
+                                    <!--<i class="box_toggle fa fa-chevron-down"></i>-->
+                                    <!--<i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>-->
+                                    <!--<i class="box_close fa fa-times"></i>-->
+                                </div>
+                            </header>
+                            <div class="content-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                                <form name="addSkillAdmin" id="addSkillAdmin" method="POST" ng-submit="addSkill(addSkillAdmin.$valid)" novalidate> 
+                                   <div class="form-group">
+                                        <label class="" for="exampleInputEmail3" style="margin-right: 10px;">Skill Name</label>
+                                        <input type="text" class="form-control" id="skillname" placeholder="Skill name" style="margin-right: 20px;" autofocus autocomplete="off" ng-model="skillname" required>
+                                        
+                                        <p ng-show="submitted && addSkillAdmin.skillname.$error.required" class="error" style="margin-top:0px;">Skill Name is required.</p>
+                                        <input type="hidden" ng-model="skillid" value="">
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label class="" for="exampleInputEmail3" style="margin-right: 10px;">Select Category</label>
+                                        <select id="mySel2" class="form-control" multiple="multiple">
+                                          <option ng-repeat="skillsPropertyArray in skillsArray" ng-selected="item.selected" ng-model="skillsPropertyArray.skillid">{& skillsPropertyArray.skillname &}</option>
+                                        </select>
+                                        <p ng-show="submitted && addSkillAdmin.skillname.$error.required" class="error" style="margin-top:0px;">Skill Name is required.</p>
+                                    </div> -->
+                                        <button type="submit" class="btn btn-primary" ng-disabled="isSaveDisabled" ng-model="saveButton" ng-if="flag == false" ng-click="submitted=true">Save</button>
+
+                                        <button type="submit" class="btn btn-primary" ng-disabled="isUpdateDisabled" ng-model="updateButton" ng-if="flag == true" ng-click="submitted=true">Update</button>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="iscancel" ng-model="cancelButton" ng-if="flag == true" ng-click="cancel()">Cancel</button>
+
+                                   </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section></div>
+                            
+                            <div class="col-md-12 overComeDiv">
+                                <div class="widget">
+                                    <div class="widget-header transparent">
+                                        <!--<h2><strong>Sortable</strong> Table</h2>-->
+                                        
+                                        <!--top buttons-->
+                                        <div class="row" style="">
+                                          <div class="col-md-12 col-sm-12 col-xs-12">
+        
+        
+        
+                                                <!-- start -->
+        
+                                              <!--  <div class="row">
+                                                  <div class="col-md-4 col-sm-8 col-xs-8">
+                                                            <button type="button" class="btn btn-success" onclick="treedata_create();"><i class="fa fa-asterisk"></i> Create</button>
+                                                            <button type="button" class="btn btn-warning" onclick="treedata_rename();"><i class="fa fa-pencil"></i> Rename</button>
+                                                            <button type="button" class="btn btn-danger" onclick="treedata_delete();"><i class="fa fa-remove"></i> Delete</button>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4 pull-right">
+                                                            <input type="text" value="" id="treedata_q" placeholder="Search" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="row">
+                                                        
+                                                    </div> -->
+                                        
+                                                                                <!-- end -->
+                                        
+                                            </div>
+                                        </div>
+                                                           <!--top buttons close-->
+                           
+                                                            <!--<div class="additional-btn">
+                                                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                                                            </div>-->
+                                                        </div>
+                                                        <div class="widget-content">                    
+                                                            <div class="table-responsive">
+                                                                <div class="" style="margin-bottom: 25px;">
+                                                                    <section class="box ">
+                                                                        <header class="panel_header">
+                                                                            <h2 class="title pull-left">Filter</h2>
+                                                                            <div class="actions panel_actions pull-right">
+                                                                                <!--<i class="box_toggle fa fa-chevron-down"></i>-->
+                                                                                <!--<i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>-->
+                                                                                <!--<i class="box_close fa fa-times"></i>-->
+                                                                            </div>
+                                                                        </header>
+                                                                        <div class="content-body">
+                                                                            <div class="row" style="margin-bottom: 25px;display: none;">
+                                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                    <form name="filterDate" id="filterDate" method="POST" novalidate> 
+                                                                                       <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                                                            <label class="" style="margin-right: 10px;">Start Date</label>
+                                                                                            <input type="date" id="startgmtDate" class="form-control" ng-change="changeData()" ng-model="startgmtDate" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                                                            <label class="" style="margin-right: 10px;">End Date</label>
+                                                                                            <input type="date" class="form-control" id="endgmtDate" ng-model="endgmtDate" ng-change="changeData()" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                                                        </div>
+                                                                                   </form>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 20%;">No</th>
+                                                                                        
+                                                                                        <!-- <th style="width: 20%;">Skill Id</th> -->
+                                                                                        <th style="width: 40%;">Skill Name</th>
+                                                                                        <th style="width: 20%;">Status</th>
+                                                                                        <th style="width: 30%;" data-sortable="false">Option</th>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                                
+                                                                                <tbody>
+                                                                                    <tr ng-repeat="skillsPropertyArray in skillsArray" >
+                                                                                        
+                                                                                        <td>{& $index + 1 &}</td>
+                                                                                        <!-- <td><strong>{& skillsPropertyArray.skillid &}</strong></td> -->
+                                                                                        <td>{&skillsPropertyArray.skillname&}</td>
+                                                                                        <td ng-if="skillsPropertyArray.active == true">Activated</td>
+                                                                                        <td ng-if="skillsPropertyArray.active == false">Deactivated</td>
+                                                                                        <td>
+                                                                                            <div class="btn-group btn-group-xs" ng-if="skillsPropertyArray.active == true">
+                                                                                                <button type="button" class="btn btn-danger" ng-model="act_deactive" ng-click="deactivate(skillsPropertyArray.skillid)" style="width: 90px;">Deactivate</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-info" ng-click="edit(skillsPropertyArray.skillid, skillsPropertyArray.skillname)">Edit</button>
+                                                                                            </div>
+                                                                                            <div class="btn-group btn-group-xs" ng-if="skillsPropertyArray.active == false">
+                                                                                                <button type="button" class="btn btn-success" ng-model="act_deactive" ng-click="activate(skillsPropertyArray.skillid)" style="width: 90px;">Activate</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-info" ng-click="edit(skillsPropertyArray.skillid, skillsPropertyArray.skillname)">Edit</button>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                   
+                                                                                </tbody>
+                                                                            </table>
+
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        </div><!--row close-->
+                    </div><!--content body close-->
+                        
+                        
+                        
+                        
+                     
+                    </section>
+                </section>
+                <!-- END CONTENT -->
+                
+                <div class="chatapi-windows ">
+    
+    
+                </div>    
+                </div>
+        <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+        {% include 'footer.html' %}
+        
+        <script>
+            var app = angular.module('skillsListing', ['datatables']);
+            app.config(function($interpolateProvider) {
+                $interpolateProvider.startSymbol('{&');
+                $interpolateProvider.endSymbol('&}');
+            });
+            app.controller('skillsCtrl', function($scope,$http,$window, DTOptionsBuilder, DTColumnBuilder) 
+            {
+                $scope.startgmtDate = new Date();
+                $scope.startgmtDate.setMonth($scope.startgmtDate.getMonth() - 480);
+                $scope.endgmtDate = new Date();
+
+                $scope.count = 0;
+                $scope.userid = {{session['adminid']}};
+                $scope.token = "{{session['token']}}";
+                // // console.log($scope.count);
+                $scope.isSaveDisabled = false;
+                $scope.isUpdateDisabled = true;
+                $scope.flag = false;
+
+                $scope.changeData = function()
+                {
+                    // console.log($scope.startgmtDate + " " + $scope.endgmtDate);
+
+                    $scope.endgmtDatemonth = $scope.endgmtDate.getMonth() + 1;
+                    $scope.endgmtDateday = $scope.endgmtDate.getDate();
+                    $scope.startgmtDatemonth = $scope.startgmtDate.getMonth() + 1;
+                    $scope.startgmtDateday = $scope.startgmtDate.getDate();
+                    
+                    if($scope.startgmtDatemonth < 10)
+                    {
+                        $scope.startgmtDatemonth = "0" + $scope.startgmtDatemonth;
+                    }
+                    if($scope.startgmtDateday < 10)
+                    {
+                        $scope.startgmtDateday = "0" + $scope.startgmtDateday;
+                    }
+                    if($scope.endgmtDatemonth < 10)
+                    {
+                        $scope.endgmtDatemonth = "0" + $scope.endgmtDatemonth;
+                    }
+                    if($scope.endgmtDateday < 10) 
+                    {
+                        $scope.endgmtDateday = "0" + $scope.endgmtDateday;
+                    }
+
+                    // var before = day + '-' + oldmonth + '-' + $scope.startgmtDate.getFullYear();
+                    $scope.startDateTime = $scope.startgmtDateday + '-' + $scope.startgmtDatemonth + '-' + $scope.startgmtDate.getFullYear() + ' ' + '00:00:00';
+
+                    // var today = endgmtDateday + '-' + endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear();
+                    $scope.endDateTime = $scope.endgmtDateday + '-' + $scope.endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear() + ' ' + '23:59:59';
+                
+                    // console.log($scope.startDateTime + " " + $scope.endDateTime);
+
+
+                    $http({
+                            url: "/skills/list",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            // // console.log(data);
+                            $scope.skillsArray = data['data'];
+                            // // console.log(data['data']);
+                            
+
+                        }).error(function(data, status, headers, config) {
+                            // // console.log(data);
+                            // // console.log(status);
+                            $scope.status = status;
+                            //$window.location.href="/";
+                        });
+
+                }
+
+                 $scope.addSkill = function(isValid) 
+                    {
+                        if (isValid) 
+                        { 
+                            $http({
+                                url: "/skills/add/edit",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"skillid":$scope.skillid, "skillname":$scope.skillname}
+                            }).success(function(data, status, headers, config) 
+                            {
+                            	$scope.skillname = "";
+                                if (data['status'] == 200)
+                                {
+                                    $scope.skillsArray = $scope.skillsArray.concat(data['last_added_skill']);
+                                    swal("Added!", "Skill successfully Added.", "success");
+                                }
+                                else if (data['status'] == 400)
+                                {
+                                    swal("Skill already added.");
+                                }
+                                else if (data['status'] == 201)
+                                {
+                                    $scope.updateskillArray = data['last_added_skill'];
+                                        angular.forEach($scope.updateskillArray, function(value, key) {
+                                          angular.forEach($scope.skillsArray, function(value2, key2) {
+                                              if (value2.skillid == value.skillid)
+                                              {
+                                                $scope.skillsArray[key2].skillname = value.skillname;
+                                                return false;
+                                              }
+                                            });
+                                        });
+                                    swal("Update!", "Skill successfully Updated.", "success");
+                                }
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.deactivate = function(skillid) 
+                    {
+                        if (skillid) 
+                        { 
+                            $http({
+                                url: "/skills/activate/deactivate",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"skillid":skillid , "action" : false}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                $scope.updateskills = data['data'];
+                                angular.forEach($scope.updateskills, function(value, key) {
+                                  angular.forEach($scope.skillsArray, function(value2, key2) {
+                                      if (value2.skillid == value.skillid)
+                                      {
+                                        $scope.skillsArray[key2].active = value.active;
+                                        return false;
+                                      }
+                                    });
+                                });
+
+                                if (status == 200)
+                                {
+                                    swal("Deactivate!", "Skill successfully deactivated.", "success");
+                                }
+                                // $scope.languagesArray = $scope.languagesArray.concat(data['last_added_language']);
+                                // $scope.languagesArray = $scope.languagesArray.splice(0, 0, data['last_added_skill']);
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.activate = function(skillid) 
+                    {
+                        if (skillid) 
+                        { 
+                            $http({
+                                url: "/skills/activate/deactivate",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"skillid":skillid , "action" : true}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                $scope.updateskills = data['data'];
+                                angular.forEach($scope.updateskills, function(value, key) {
+                                  angular.forEach($scope.skillsArray, function(value2, key2) {
+                                      if (value2.skillid == value.skillid)
+                                      {
+                                        $scope.skillsArray[key2].active = value.active;
+                                        return false;
+                                      }
+                                    });
+                                });
+
+                                if (status == 200)
+                                {
+                                    swal("Activated!", "Skill successfully activated.", "success");
+                                }
+                                // $scope.languagesArray = $scope.languagesArray.concat(data['last_added_language']);
+                                // $scope.languagesArray = $scope.languagesArray.splice(0, 0, data['last_added_skill']);
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.edit = function(skillid, skillname) 
+                    {
+                        if (skillid) 
+                        { 
+                            $scope.skillname = skillname;
+                            $scope.skillid = skillid;
+                            $scope.count = 1;
+                            $scope.flag = true;
+                            $scope.setFocus();
+                            // // console.log($scope.count);
+                            $scope.isSaveDisabled = true;
+                            $scope.isUpdateDisabled = false;
+                        }    
+                    };
+                $scope.setFocus = function() {
+						var element = $window.document.getElementById("skillname");
+						element.focus();
+					};
+				$scope.cancel = function() {
+                        $scope.skillid = "";
+                        $scope.skillname = "";
+                        $scope.flag = false;
+                        $scope.setFocus();
+                    };
+                });
+        </script>
+    </body>
+</html>
+
+
+

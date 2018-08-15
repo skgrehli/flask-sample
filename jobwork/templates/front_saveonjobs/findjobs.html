@@ -1,0 +1,2336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Browse jobs</title>
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+<!--<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script>-->
+
+
+
+<script>
+
+//$(function() {
+//
+//   $(".tasks_list").mousewheel(function(event, delta) {
+//
+//      this.scrollLeft -= (delta * 30);
+//    
+//      event.preventDefault();
+//
+//   });
+//
+//});
+
+
+
+</script>
+
+
+<body ng-app="sojApp">
+
+<div ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/findjob_header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/findjobs_sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+  <button type="button" class="btn btn-info btn-lg" id="modalButtonFindJob" data-toggle="modal" data-target=".earn-model-cases" style="display: none;">Open Modal</button>
+
+  <button type="button" class="btn btn-info btn-lg" id="showpaypalbutton" data-toggle="modal" data-target=".show_paypal" style="display: none;">Open Modal</button>
+
+  <!-- ************************************************************************************** -->
+
+</div>
+
+<div ng-controller="findjobsCtrl" ng-init="jobmainfilter()" id="bodyAvaliablefindjob">
+
+<div class="overlay" id="overlay" style="display:none;z-index:1;position:absolute;color:#ff0;height:100%;width:100%;" onclick="hide_fiter_div();">
+</div>
+
+
+ <div class="modal fade show_paypal" role="dialog" tabindex="-1" style="z-index: 1111111111111111111">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="jobModals" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Job details</h4>
+        </div>
+        <div class="modal-body">
+          <div id="paypalbutton2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="modal fade in" id="end_task_find_job" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rating</h4>
+        </div>
+        <div class="modal-body" style="border: none;box-shadow: none;">
+          <div class="bid_left_sec col-xs-12 col-sm-12" style="/* margin-top: 27px; */">
+            <div class="user-details">
+              <div class="user-pic" style="background: url({& findjobDataByJobid.picurl &}) no-repeat center center; background-size: cover;">
+              </div>
+              <div class="txt" style="margin-left: 9px;width: 100%;">
+              <b style="float: left;margin-left: 5px;width: 93%;" ng-bind="findjobDataByJobid.fullname"></b>
+        <div class="stars" style="width: 100%;text-align: center;float: left;margin: 20px 0;">
+                   <b class="ratings_popup" style="">
+                      <uib-rating class="fa fa-star" ng-model="userrating_for_job" ></uib-rating>
+                   </b>
+                </div>
+                
+                <textarea class="form-control rating_remarks" ng-model="userremark_for_job" name="comment" placeholder="Remarks"></textarea>
+                
+                
+               <div class="clearfix"></div>
+            </div>
+          </div>  
+             </div>
+           </div>
+       
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="send_rating(findjobDataByJobid.creatinguserid,userrating_for_job,userremark_for_job,findjobDataByJobid.jobid,ratingstatus)" data-dismiss="modal" style="width: auto;padding: 12px 40px;" class="rating_submit">Submit</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- Endtask Modal close-->
+
+
+
+<!-- Modal earn cases-->
+  <div class="modal fade earn-model-cases" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Job details</h4>
+        </div>
+        <div class="modal-body" style="overflow-y: scroll;max-height: calc(107vh - 150px);">
+          
+          <div class="row container-fluid">
+          <div class="col-md-7 col-xs-7">
+            <div class="card_img_name" ng-click="redirectToProfile(findjobDataByJobid.userURL, findjobDataByJobid.userProfileUrl)" style="background:url({& findjobDataByJobid.picurl &}) no-repeat center center; background-size:cover;cursor: pointer;">
+            </div><!--card_img_name close-->
+                <div class="user_name_modal" style="cursor: pointer;">
+                  <h4 class="modal_name" ng-click="redirectToProfile(findjobDataByJobid.userURL, findjobDataByJobid.userProfileUrl)"><b class="pull-left" ng-bind="findjobDataByJobid.fullname"></b></h4>
+                    <div class="job_detail">
+                      <div class="comment-count">
+                           <i class="fa fa-map-marker"></i>
+                             <span ng-bind="findjobDataByJobid.locationname + ' , ' + findjobDataByJobid.cityname"></span>
+                         </div>
+                         <div class="comment-count">
+                           <i class="fa fa-legal"></i>
+                             <span ng-bind="findjobDataByJobid.jobBidsCount"></span>
+                         </div>
+                       <div class="clearfix"></div>  
+                      <small class="pull-left" am-time-ago="findjobDataByJobid.publisheddatetime"></small> 
+                  </div><!--job detail-->
+              </div><!--user_name close-->
+           </div>
+         <div class="col-md-5 col-xs-5">                
+        <div class="rupee_btn rupee_btn_modal" ng-if="typejob == 'jobber'">
+           <h3 class="big-txt x" ng-if="findjobDataByJobid.budget != null " ng-bind="'$'+findjobDataByJobid.budget"></h3>
+           <h3 class="big-txt x" ng-if="findjobDataByJobid.budget == null ">$0</h3>
+           <button class="btn btn-default task_status" ng-if="findjobDataByJobid.jobstatus == 'pending' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false"> Awaiting Offers </button>
+           <button class="btn btn-default Cancelled" ng-if="findjobDataByJobid.jobstatus == 'cancelled' && findjobDataByJobid.expired == false"> Cancelled </button>
+           <button class="btn btn-default earn" ng-if="findjobDataByJobid.jobstatus == 'pending' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == true" data-dismiss="modal" ng-click="finalisejob(findjobDataByJobid)"> Edit Task </button>
+           <button class="btn btn-default make-offer" ng-if="findjobDataByJobid.jobstatus == 'completed' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false"> Completed</button>
+           <button class="btn btn-default make-offer" ng-if="findjobDataByJobid.jobstatus == 'allotted' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false"> Accepted</button>
+           <button class="btn btn-default make-offer" ng-if="findjobDataByJobid.jobstatus == 'paid' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false"> Paid</button>
+           <button class="btn btn-default Cancelled" ng-if="findjobDataByJobid.expired == true && findjobDataByJobid.draft == false"> Expired </button>
+         </div><!--rupee_btn close-->
+          <div class="rupee_btn rupee_btn_modal" ng-if="typejob == 'bidder'">
+            <h3 class="big-txt x" ng-if="findjobDataByJobid.budget != null " ng-bind="'$'+findjobDataByJobid.budget"></h3>
+            <h3 class="big-txt x" ng-if="findjobDataByJobid.budget == null ">$0</h3>
+             <button class="btn btn-default make-offer" id="makebiddiv" ng-click="gotoMakeBid('make-bid-tab')" ng-if="findjobDataByJobid.expired == false && findjobDataByJobid.jobstatus == 'pending' && jobBidlength.length == 0"><i class="fa fa-legal"></i> Make a bid</button>
+             <button class="btn btn-default Cancelled" ng-if="findjobDataByJobid.jobBidsData[0].status == 'cancelledbybidder' && findjobDataByJobid.expired == false"> Cancelled </button>
+            <button class="btn btn-default task_status" ng-click="gotoMakeBid('make-bid-tab')" ng-if="findjobDataByJobid.expired == false && (findjobDataByJobid.jobBidsData[0].status == 'pending' || findjobDataByJobid.jobBidsData[0].status == 'reversebid' ) && jobBidlength.length != 0 "> Awaiting Offers </button>
+            <button class="btn btn-default make-offer" ng-if="findjobDataByJobid.expired == false && (findjobDataByJobid.jobBidsData[0].status == 'completed' || findjobDataByJobid.jobBidsData[0].status == 'verify')" ng-click="gotoMakeBid('make-bid-tab')"> Completed</button>
+            <button class="btn btn-default make-offer" ng-if="findjobDataByJobid.expired == false && (findjobDataByJobid.jobBidsData[0].status == 'approvedbybidder' || findjobDataByJobid.jobBidsData[0].status == 'selectedbyjobber')" ng-click="gotoMakeBid('make-bid-tab')"> Accepted</button>
+            <button class="btn btn-default Cancelled" ng-if="findjobDataByJobid.expired == true && findjobDataByJobid.draft == false"> Expired </button>
+          </div>
+         </div>
+         <div class="clearfix"></div>                     
+         
+         <div class="col-md-8" ng-if="typejob == 'jobber'">
+           <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'pending' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li>Accepted</li>                         
+              <li>Complete</li>
+              <li>Paid</li>
+           </ul> 
+ 
+            <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'allotted' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Accepted</li>
+              <li>Complete</li>
+              <li>Paid</li>
+           </ul> 
+
+           <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'cancelled' && findjobDataByJobid.expired == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Cancelled</li>
+           </ul> 
+           
+           <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'pending' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == true">
+              <li class="active-status">Draft</li>
+              <li>Posted</li>
+           </ul>
+ 
+           <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'completed' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Accepted</li>
+              <li class="active-status">Complete</li>
+              <li>Paid</li>
+           </ul>
+
+            <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'paid' && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Accepted</li>
+              <li class="active-status">Complete</li>
+              <li>Paid</li>
+           </ul>
+
+           <ul class="job-status" ng-if="findjobDataByJobid.draft == false && findjobDataByJobid.expired == true">
+              <li class="active-status">Open</li>
+              <li class="active-status">Expired</li>
+           </ul>
+
+         </div>
+
+         <div class="col-md-8" ng-if="typejob == 'bidder'">
+          <div ng-if="jobBidlength.length != 0">
+           <ul class="job-status" ng-if="(findjobDataByJobid.jobBidsData[0].status == 'pending' || findjobDataByJobid.jobBidsData[0].status == 'reversebid') && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li>Accepted</li>                         
+              <li>Complete</li>
+           </ul> 
+ 
+            <ul class="job-status" ng-if="(findjobDataByJobid.jobBidsData[0].status == 'approvedbybidder' || findjobDataByJobid.jobBidsData[0].status == 'selectedbyjobber') && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Accepted</li>
+              <li>Complete</li>
+           </ul> 
+
+           <ul class="job-status" ng-if="findjobDataByJobid.jobBidsData[0].status == 'cancelledbybidder' && findjobDataByJobid.expired == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Cancelled</li>
+           </ul> 
+ 
+           <ul class="job-status" ng-if="(findjobDataByJobid.jobBidsData[0].status == 'completed' || findjobDataByJobid.jobBidsData[0].status == 'verify')  && findjobDataByJobid.expired == false && findjobDataByJobid.draft == false">
+              <li class="active-status">Open</li>
+              <li class="active-status">Accepted</li>
+              <li class="active-status">Complete</li>
+           </ul>
+
+           <ul class="job-status" ng-if="findjobDataByJobid.draft == false && findjobDataByJobid.expired == true">
+              <li class="active-status">Open</li>
+              <li class="active-status">Expired</li>
+           </ul>
+           </div>
+           <div ng-if="jobBidlength.length == 0">
+              <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'pending' && findjobDataByJobid.expired == false">
+                <li class="active-status">Open</li>
+                  <li>Accepted</li>
+                  <li>Complete</li>
+               </ul> 
+
+               <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'allotted' && findjobDataByJobid.expired == false">
+                  <li class="active-status">Open</li>
+                  <li class="active-status">Accepted</li>
+                  <li>Complete</li>
+               </ul>
+
+               <ul class="job-status" ng-if="(findjobDataByJobid.jobstatus == 'completed' || findjobDataByJobid.jobstatus == 'verify') && findjobDataByJobid.expired == false">
+                  <li class="active-status">Open</li>
+                  <li class="active-status">Accepted</li>
+                  <li class="active-status">Complete</li>
+               </ul>
+
+               <ul class="job-status" ng-if="findjobDataByJobid.jobstatus == 'cancelled' && findjobDataByJobid.expired == false">
+                  <li class="active-status">Open</li>
+                  <li class="active-status">Cancelled</li>
+               </ul> 
+
+                <ul class="job-status" ng-if="findjobDataByJobid.draft == false && findjobDataByJobid.expired == true">
+                  <li class="active-status">Open</li>
+                  <li class="active-status">Expired</li>
+               </ul>
+           </div>
+         </div>
+        <div class="col-md-4 col-xs-12 job_requirments2">
+          <p class="job_require_p " ng-bind="'Requirements :- '+findjobDataByJobid.personsselected+' / '+findjobDataByJobid.personsrequired"></p>
+
+           <p class="job_require_p2" style="cursor:pointer;" data-dismiss="modal" ng-click="finalisejob_find(findjobDataByJobid)"> <i class="fa fa-clone" aria-hidden="true" style="font-size: 14px font-weight: bold; margin-right: 3px;cursor:pointer;"></i> Copy task </p>
+         </div>
+         <div class="clearfix"></div>
+         
+         <div class="job-title">
+          <h3 ng-bind="findjobDataByJobid.title"></h3>
+          <p ng-bind="findjobDataByJobid.description"></p>
+         </div>
+         
+         <kbd> <b> Due </b> <small am-time-ago="findjobDataByJobid.duedate"></small></kbd>
+         
+         <div class="job_detail_map">
+          <div class="row-fluid">
+                        <div class="span8">
+                            <!-- <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe> -->
+              <ng-map id="findjob_map" center="{&findjobmap.center&}" trigger-resize="true" zoom="8" min-zoom="8"  max-zoom="13" street-view-control="false" map-type-control="false" zoom-to-include-markers="true" >
+                  <marker ng-repeat="marker_x in findjobmap.marker" position="{&marker_x&}"></marker>
+                  <!-- <marker position=[{&centerLat&},{&centerLong&}] title="Hello World!"></marker> -->
+            </ng-map>
+            </div>
+          </div>
+        </div>
+    <div class="make-bid" id="make-bid" ng-if="typejob == 'bidder'"> 
+        <div class="make-bid" id="make-bid-tab" ng-if="findjobDataByJobid.jobstatus == 'pending' && jobBidlength.length == 0">
+        <h4>Make a bid</h4>
+          <div class="heading-line"></div>
+          <div class="col-xs-4 enter-bid">
+            <span>Enter bid amount ($)</span>
+              <input type="text" class="form-control" ng-model="bidData.bidAmount" value="" placeholder="100" max="10000" style="max-width:100px;" />
+          </div>
+          <div class="col-xs-4 enter-bid2 pull-right">
+            <span style="float:none;">Total bids on this job</span><br />
+              <h4 ng-bind="findjobDataByJobid.jobBidsCount"></h4>
+              
+          </div>
+          <div class="clearfix"></div>
+          
+          <div class="col-md-12 enter-bid2">
+            <span>Any remarks</span>
+              <textarea class="form-control" name="comment" value="" ng-model="bidData.comment" placeholder="Enter text here..."></textarea>                        
+              <button type="button" class="btn btn-default make-offer" ng-click="setBid(findjobDataByJobid.jobid,0)">Send your bid</button>
+            <span ng-show="make_bid_span == 1" ng-model="make_bid_span" style="color:#f00;">** You must be logged in to bid. <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#Login">Click here</a> to login</span>
+                    </div>
+                </div>  
+                
+                <div class="make-bid" id="make-bid-tab" ng-if="findjobDataByJobid.jobstatus == 'pending' && jobBidlength.length != 0">
+               
+          <div class="make-bid" ng-if= "findjobDataByJobid.jobBidsData[0].status == 'approvedbybidder'">
+          <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow"></i>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+                    <div class="bid-status pull-right" style="margin-top: 18px;">
+            <div class="bid-status accepted" style="margin: 0;">
+              <h1><i class="fa fa-check"></i> Accepted</h1>
+              <h1 style="background: #93b501;color: #fff;margin-top: 10px;cursor:pointer;" ng-click="chat(findjobDataByJobid.jobid)">
+              <i class="fa fa-comments" aria-hidden="true" style="margin-right: 8px;"></i>Chat</h1>
+              <!-- <h1 class="rating_btn" data-toggle="modal" data-target="#end_task_find_job" style=""> Endtask </h1> -->
+              <div class="objection-task">
+                <p style="float:right;cursor: pointer;" class="objection_text" data-dismiss="modal" data-toggle="modal" data-target="#end_task_find_job"> <i class="fa fa-close green" aria-hidden="true"></i> End Task</p>
+          </div>
+            </div>
+             
+          </div>
+          
+          </div>
+
+          <div class="make-bid" ng-if= "findjobDataByJobid.jobBidsData[0].completionstatus == 'rejected'">
+          <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null"></i>
+          <div class="enter-bid your-bid" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+            <div class="pull-right" style="margin-top: -100px;">
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Completed</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status rejected" style="margin-top: 15px;">
+                    <h1><i class="fa fa-close"></i> Rejected Claim</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="objection-task">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-ban" aria-hidden="true"></i> Pending Decision</p>
+                  </div>
+              </div>
+            </div> 
+          </div>
+
+          <div class="make-bid" ng-if= "findjobDataByJobid.jobBidsData[0].completionstatus == 'rejectedaccepted'">
+          <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null"></i>
+          <div class="enter-bid your-bid" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+            <div class="pull-right" style="margin-top: -100px;">
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Completed</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Overridden Rejection</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-check" aria-hidden="true"></i> Payment Processed</p>
+                  </div>
+              </div>
+            </div> 
+          </div>
+
+          <div class="make-bid" ng-if= "findjobDataByJobid.jobBidsData[0].completionstatus == 'rejectedrejected'">
+          <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null"></i>
+          <div class="enter-bid your-bid" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+            <div class="pull-right" style="margin-top: -100px;">
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Completed</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status rejected" style="margin-top: 15px;">
+                    <h1><i class="fa fa-close"></i> Rejection Sustained</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="objection-task">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-ban" aria-hidden="true"></i> Payment Denied</p>
+                  </div>
+              </div>
+            </div> 
+          </div>
+
+
+        <div class="make-bid" id="make-bid-rev" ng-if="findjobDataByJobid.jobBidsData[0].status == 'reversebid'">
+            <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow"></i>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+          <div class="bid-status pull-left" ng-show="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null">
+            <ul>
+            <li ng-click="statusfn(findjobDataByJobid.jobBidsData[0].bidid,'approvedbybidder')"><i class="fa fa-check green" ></i> Accept</li>
+            <li ng-click="statusfn(findjobDataByJobid.jobBidsData[0].bidid,'rejectedbybidder')"><i class="fa fa-close red" ></i> Reject</li>
+            </ul>
+          </div> 
+          <div class="bid-status pull-right">
+            <div class="bid-status pending" style="margin-top: 15px;">
+              <h1><i class="fa fa-exclamation"></i> Pending</h1>
+            </div>
+          </div>
+                </div>
+          
+        
+        <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].status == 'selectedbyjobber'">
+          <h4>Make a bid</h4>
+            <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+           <div class="bid-status pull-right" style="margin-top: 18px;">
+            <div class="bid-status accepted" style="margin: 0;">
+              <h1><i class="fa fa-check"></i> Accepted</h1>
+              <h1 style="background: #93b501;color: #fff;margin-top: 10px;cursor:pointer;" ng-click="chat(findjobDataByJobid.jobid)">
+              <i class="fa fa-comments" aria-hidden="true" style="margin-right: 8px;"></i>Chat</h1>
+              <!-- <h1 class="rating_btn" data-toggle="modal" data-target="#end_task_find_job"> Endtask </h1> -->
+              <div class="objection-task">
+                <p style="float:right;cursor:pointer;" class="objection_text" data-dismiss="modal" data-toggle="modal" data-target="#end_task_find_job"> <i class="fa fa-close green" aria-hidden="true"></i> End Task</p>
+              </div>
+            </div>
+          </div>
+           
+        </div>
+
+        <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].status == 'completed' && findjobDataByJobid.jobBidsData[0].completionstatus == 'pending'">
+           <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null"></i>
+          <div class="enter-bid your-bid" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+          <div class="bid-status pull-right">
+            <div class="bid-status accepted" style="margin-top: 15px;">
+              <h1><i class="fa fa-check"></i> Completed</h1>
+            </div>
+          </div> 
+        </div>
+
+        <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].completionstatus == 'accepted'">
+           <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null"></i>
+          <div class="enter-bid your-bid" ng-if="findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount != null">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+            <div class="pull-right" style="margin-top: -100px;">
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Verified</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Accepted Claim</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted">
+                    <h1 style="float:right;" class="objection_text"> <i class="fa fa-check" aria-hidden="true"></i> Payment Processed</h1>
+                  </div>
+              </div>
+            </div> 
+        </div>
+
+        
+                <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].status == 'rejectedbybidder'">
+                  <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <i class="fa fa-chevron-right rebid-arrow"></i>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].reversebid.reversebidamount"></h1>
+            <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].reversebid.reversebiddatetime"></center>
+          </div>
+          <div class="bid-status pull-right">
+            <div class="bid-status rejected" style="margin-top: 15px;">
+              <h1><i class="fa fa-close"></i> Rejected</h1>
+            </div>
+          </div> 
+                </div>
+
+
+        <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].status == 'rejectedbyjobber'">
+                  <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <div class="bid-status pull-right">
+            <div class="bid-status rejected" style="margin-top: 15px;">
+              <h1><i class="fa fa-close"></i> Rejected</h1>
+            </div>
+          </div> 
+                </div>
+        
+        <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].status == 'cancelledbybidder'">
+                  <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <div class="bid-status pull-right">
+            <div class="bid-status rejected" style="margin-top: 15px;">
+              <h1><i class="fa fa-close"></i> Cancelled</h1>
+            </div>
+          </div> 
+                </div>
+        
+        <div class="make-bid" id="make-bid_3" ng-if="findjobDataByJobid.jobBidsData[0].status == 'rejectedbyjobber'">
+                  <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+                    <div class="bid-status pull-right">
+            <div class="bid-status rejected" style="margin-top: 15px;">
+              <h1><i class="fa fa-close"></i> Rejected</h1>
+            </div>
+          </div>                                       
+                </div>
+                
+                <div class="make-bid" id="make-bid_4" ng-if="findjobDataByJobid.jobBidsData[0].status == 'pending'">
+                  <h4>Make a bid</h4>
+                    <div class="heading-line"></div>
+          <div class="enter-bid your-bid">
+            <h1 ng-bind="'$'+findjobDataByJobid.jobBidsData[0].bidamount"></h1>
+            <center>Your bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="findjobDataByJobid.jobBidsData[0].createdatetime"></center>
+          </div>
+          <div class="bid-status pull-left">
+            <ul>
+              <li class="cancel_bit_btn" ng-click="statusfn(findjobDataByJobid.jobBidsData[0].bidid,'cancelledbybidder')"><i class="fa fa-close gray" ></i> Cancel</li>
+            </ul>
+          </div> 
+          <div class="bid-status pull-right">
+            <div class="bid-status pending" style="margin-top: 15px;">
+              <h1><i class="fa fa-exclamation"></i> Pending</h1>
+            </div>
+          </div> 
+                
+                </div>
+                </div>
+                </div>
+                <div class="make-bid" id="make-bid" ng-repeat="bidData in findjobDataByJobid.jobBidsData" ng-if="typejob == 'jobber'">
+          <h4>Make a bid</h4>
+          <div class="heading-line"></div>
+          <div class="bid_left_sec col-xs-12 col-sm-12" style="margin-top: 27px;">                    
+            <div class="user-details" style="padding: 0;">
+              <div class="user-pic" style="background: url({& bidData.picurl &}) no-repeat center center; background-size: cover;">
+              </div>
+              <div class="txt" style="margin-left: 9px;">
+                                <b style="float: left;margin-left: 5px;" ng-bind="bidData.username"></b>
+                                 
+                                <div class="stars" style="width: 100%;text-align: left;float: left;margin-left: 4px;margin-top: -4px;padding:0px;">
+                                    <b class="ratings">
+                                        <uib-rating class="fa fa-star" ng-model="bidData.userrating" read-only=true ></uib-rating>
+                                    </b>
+                </div>
+                <div class="clearfix"></div>
+              </div>                                 
+                        </div> 
+             </div>
+          
+          <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'cancelledbybidder'">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="enter-bid your-bid" style="margin-left: 0px;">
+                <h1 ng-bind="'$'+bidData.bidamount"></h1>
+                <center>User bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+              </div>
+           </div> 
+      <div class="col-md-6 col-sm-6 col-xs-12">      
+              <div class="bid-status pull-right">
+                <div class="bid-status rejected" style="margin-top: 15px;">
+                  <h1><i class="fa fa-close"></i> Cancelled</h1>
+                </div>
+              </div>  
+      </div>
+          </div>
+          
+          <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'selectedbyjobber'">
+            <div class="enter-bid your-bid">
+              <h1 ng-bind="'$'+bidData.bidamount"></h1>
+              <center>User bid</center>
+              <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+            </div>
+            
+            <div class="bid-status pull-right" style="margin-top: 18px;">
+              <div class="bid-status accepted" style="margin: 0;">
+                <h1><i class="fa fa-check"></i> Accepted</h1>
+                <!-- <h1 style="background: #93b501;color: #fff;margin-top: 10px;" >
+                <i class="fa fa-comments" aria-hidden="true" style="margin-right: 8px;"></i>Chat</h1> -->
+              </div>
+            </div>          
+          </div>
+          
+          <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'pending' && findjobDataByJobid.expired == false">
+      
+      <div class="col-md-7 col-sm-7 col-xs-7 row">  
+            <div class="enter-bid your-bid row" style="margin-left: 0px;">
+              <h1 ng-bind="'$'+bidData.bidamount"></h1>
+              <center>User bid</center>
+              <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+            </div>
+            <i class="fa fa-chevron-right rebid-arrow"></i>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-6 row">  
+            <div class="enter-bid your-bid">
+              <div class="pull-left">
+                <input type="text" ng-model="reverseamount" ng-bind="bidData.bidamount" class="form-control" style="float: left;height: 31px; margin-top: 20px;">
+                <center>Reverse bid</center>
+              </div>
+              
+              <div class="bid-status pull-left" style="/* padding-right: 0; */margin-top: 20px;">
+                  <ul style="margin-top: 0px;">
+                  <li style="padding: 5px 12px;" ng-click="reversebidfn(reverseamount,bidData.bidid,findjobDataByJobid.jobid)"> Reverse bid</li>
+                  </ul>
+                <div class="pending" style="">
+                  <h5 style="float: left;width: 100%;">
+                  <i class="fa fa-exclamation"></i> Pending</h5>
+                </div>
+                            </div> 
+            </div>  
+      </div>
+      <div class="">
+            <div class="enter-bid your-bid col-sm-12 col-xs-12" style="margin: 0;">
+              <div class="bid-status pull-left" style="margin-left: 0;width: 100%;padding: 0;">
+                <ul style="width: 100%;">
+                  <li class="col-sm-5 col-xs-5" style="/* margin-right: 15px; */" ng-click="statusfn(bidData.bidid,'selectedbyjobber')"><i class="fa fa-check green"></i> Accept</li>
+                  <li class="col-sm-5 col-xs-5" style="float: right;" ng-click="statusfn(bidData.bidid,'rejectedbyjobber')"><i class="fa fa-close red"></i> Reject</li>
+                </ul>
+              </div> 
+            </div> 
+        </div>
+          </div>
+                
+        <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'approvedbybidder'">
+            <div class="enter-bid your-bid" style="margin-left: 0px;">
+              <h1 ng-bind="'$'+bidData.bidamount"></h1>
+              <center>User bid</center>
+              <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+            </div>
+                    <i class="fa fa-chevron-right rebid-arrow"></i>
+                    <div class="enter-bid your-bid">
+                        <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                        <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+                    </div>
+                    
+                    <div class="bid-status pull-right" style="margin-top: 18px;margin-left: 12px !important;padding: 0px">
+            <div class="bid-status accepted" style="margin: 0px;">
+              <h1><i class="fa fa-check"></i> Accepted</h1>
+              <!-- <h1 style="background: #93b501;color: #fff;margin-top: 10px;">
+              <i class="fa fa-comments" aria-hidden="true" style="margin-right: 8px;"></i>Chat</h1> -->
+            </div>
+          </div>                                       
+                </div>
+
+          <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'rejectedbyjobber'">
+            <div class="enter-bid your-bid" style="margin-left: 0px;">
+              <h1 ng-bind="'$'+bidData.bidamount"></h1>
+              <center>User bid</center>
+              <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+            </div>  
+            <div class="bid-status pull-right" style="margin-top: 18px;margin-left: 12px !important;padding: 0px">
+            <div class="bid-status accepted" style="margin: 0px;">
+              <h1><i class="fa fa-close"></i> Rejected</h1>
+              <!-- <h1 style="background: #93b501;color: #fff;margin-top: 10px;">
+              <i class="fa fa-comments" aria-hidden="true" style="margin-right: 8px;"></i>Chat</h1> -->
+            </div>
+          </div>                                       
+                </div>
+
+
+                <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid_3" ng-if="findjobDataByJobid.draft == false && bidData.status == 'completed' && bidData.completionstatus == 'pending'">
+              <div class=" col-md-5 col-xs-6">
+        <div class="enter-bid your-bid" style="margin-left: 0px;">
+                <h1 ng-bind="'$'+bidData.bidamount"></h1>
+                <center>Your bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+              </div>
+         <i class="fa fa-chevron-right rebid-arrow" ng-if="bidData.reversebid.reversebidamount != null"></i>
+        </div>
+             
+              <div class="enter-bid your-bid" ng-if="bidData.reversebid.reversebidamount != null">
+                <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                <center>Reverse bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+              </div>
+              <div class="pull-right col-md-4 col-xs-7">
+                <div class="bid-status accepted" style="margin-top: 15px;">
+                  <h1><i class="fa fa-check"></i> Completed</h1>
+                  <h1 class="rating_btn" data-toggle="modal" data-dismiss="modal" data-target="#end_task" ng-click="openverify(bidData.userid,bidData.username,bidData.picurl,'verify',findjobDataByJobid.jobid)" style="background: #93b501;color: #fff;margin-top: 10px;cursor: pointer;"> Verify </h1>
+                </div>
+        
+              </div> 
+              
+        <div class="objection-task col-md-12 col-xs-12">
+                  <p style="float:right;cursor: pointer;" class="objection_text" ng-click="showObjectionData()"> <i class="fa fa-ban" aria-hidden="true"></i> I have an objection on this task</p>
+              </div>
+            </div>
+
+            <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid_3" ng-if="findjobDataByJobid.draft == false && bidData.status == 'completed'  && bidData.completionstatus == 'rejected'">
+              <div class="enter-bid your-bid" style="margin-left: 0px;">
+                <h1 ng-bind="'$'+bidData.bidamount"></h1>
+                <center>Your bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+              </div>
+              <i class="fa fa-chevron-right rebid-arrow" ng-if="bidData.reversebid.reversebidamount != null"></i>
+              <div class="enter-bid your-bid" ng-if="bidData.reversebid.reversebidamount != null">
+                <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                <center>Reverse bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+              </div>
+              <div class="pull-right" style="margin-top: -100px;">
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Completed</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status rejected" style="margin-top: 15px;">
+                    <h1><i class="fa fa-close"></i> Rejected Claim</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="objection-task">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-ban" aria-hidden="true"></i> Pending Decision</p>
+                  </div>
+              </div>
+            </div> 
+            </div>
+
+             <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid_3" ng-if="findjobDataByJobid.draft == false && bidData.status == 'completed'  && bidData.completionstatus == 'rejectedaccepted'">
+              <div class="enter-bid your-bid" style="margin-left: 0px;">
+                <h1 ng-bind="'$'+bidData.bidamount"></h1>
+                <center>Your bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+              </div>
+              <i class="fa fa-chevron-right rebid-arrow" ng-if="bidData.reversebid.reversebidamount != null"></i>
+              <div class="enter-bid your-bid" ng-if="bidData.reversebid.reversebidamount != null">
+                <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                <center>Reverse bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+              </div>
+              <div class="pull-right" style="margin-top: -100px;">
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Completed</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Overridden Rejection</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-check" aria-hidden="true"></i> Payment Processed</p>
+                  </div>
+              </div>
+            </div> 
+
+            </div>
+
+            <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid_3" ng-if="findjobDataByJobid.draft == false && bidData.status == 'completed'  && bidData.completionstatus == 'rejectedrejected'">
+              <div class="enter-bid your-bid" style="margin-left: 0px;">
+                <h1 ng-bind="'$'+bidData.bidamount"></h1>
+                <center>Your bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+              </div>
+              <i class="fa fa-chevron-right rebid-arrow" ng-if="bidData.reversebid.reversebidamount != null"></i>
+              <div class="enter-bid your-bid" ng-if="bidData.reversebid.reversebidamount != null">
+                <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                <center>Reverse bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+              </div>
+               <div class="pull-right" style="margin-top: -100px;">
+               <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Completed</h1>
+                  </div>
+              </div>
+             
+              <div class="col-md-12">
+                  <div class="bid-status rejected" style="margin-top: 15px;">
+                    <h1><i class="fa fa-close"></i> Rejection Sustained</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="objection-task">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-ban" aria-hidden="true"></i> Payment Denied</p>
+                  </div>
+              </div>
+            </div> 
+
+            </div>
+
+            <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid_3" ng-if="findjobDataByJobid.draft == false && bidData.status == 'verify' && bidData.completionstatus == 'accepted'">
+              <div class="enter-bid your-bid" style="margin-left: 0px;">
+                <h1 ng-bind="'$'+bidData.bidamount"></h1>
+                <center>Your bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+              </div>
+              <i class="fa fa-chevron-right rebid-arrow" ng-if="bidData.reversebid.reversebidamount != null"></i>
+              <div class="enter-bid your-bid" ng-if="bidData.reversebid.reversebidamount != null">
+                <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                <center>Reverse bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+              </div>
+              <div class="pull-right" style="margin-top: -100px;">
+               <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Verified</h1>
+                  </div>
+              </div>
+             
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <h1><i class="fa fa-check"></i> Accepted Claim</h1>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="bid-status accepted" style="margin-top: 15px;">
+                    <p style="float:right;" class="objection_text"> <i class="fa fa-check" aria-hidden="true"></i> Payment Processed</p>
+                  </div>
+              </div>
+            </div> 
+            </div>
+        
+                <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'rejectedbybidder'">
+            <div class="enter-bid your-bid" style="margin-left: 0px;">
+              <h1 ng-bind="'$'+bidData.bidamount"></h1>
+              <center>User bid</center>
+              <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+            </div>
+                    <i class="fa fa-chevron-right rebid-arrow"></i>
+                    <div class="enter-bid your-bid">
+                        <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                        <center>Reverse bid</center>
+            <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+                    </div>
+                    
+          <div class="bid-status rejected pull-right">
+            <h1><i class="fa fa-close"></i> Rejected</h1>
+          </div>                                       
+                </div>
+                
+                <div class="bid_right_sec col-xs-12 col-sm-12" id="make-bid" ng-if="findjobDataByJobid.draft == false && bidData.status == 'reversebid' && findjobDataByJobid.expired == false">
+        <div class="col-md-6 col-xs-6">
+            <div class="enter-bid your-bid" style="margin-left: 0px;">
+              <h1 ng-bind="'$'+bidData.bidamount"></h1>
+              <center>User bid</center>
+              <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.createdatetime"></center>
+            </div>
+      
+            <i class="fa fa-chevron-right rebid-arrow"></i>
+      </div>
+      <div class="col-md-6 col-xs-6">
+            <div class="enter-bid your-bid">
+              <div class="pull-left">
+                <h1 ng-bind="'$'+bidData.reversebid.reversebidamount"></h1>
+                <center>Reverse bid</center>
+                <center class="bid_time" style="font-size: 10px;color: #484848;" am-time-ago="bidData.reversebid.reversebiddatetime"></center>
+              </div>
+              <div class="bid-pending-status pull-left">
+                <div class="bid-pending-status pending" style="margin-top: 15px;">
+                  <h1><i class="fa fa-exclamation"></i> Pending</h1>
+                </div>
+              </div> 
+            </div>
+                </div>
+        </div>
+        <div class="objection-task-fill" ng-if="findjobDataByJobid.draft == false && bidData.status == 'completed' && bidData.completionstatus == 'pending' && show_objection_div == true">
+                <textarea class="col-md-8 col-sm-8 col-xs-12" name="comment" ng-model="objection_remark" placeholder="Type here"></textarea>      
+                <button type="submit" value="Submit" class="btn-default col-md-3 col-sm-3" ng-click="create_objection(bidData.bidid,objection_remark)">Submit</button>
+        </div>
+        <div class="clearfix"></div>
+        
+        <div class="all_remarks" style="margin-top: 23px;" ng-if="bidData.bidcomment != ''" ng-bind="bidData.bidcomment">
+            <div class="remarks_list">
+              <!-- <b>Lawn mowing ASAP</b>
+              <i style="width:100%;/* padding: 3px 20px 4px; */float:left;font-size: 12px;">Phoebe G</i> -->
+               
+               
+              <div class="question">
+                <p style="font-size: 12px;" ></p>
+              </div>
+            </div> 
+        </div><!--all_remarks-->
+                </div>
+                <div class="make-bid" ng-if=" findjobDataByJobid.jobCommentsList.length != 0">
+                  <h4>Comments</h4>
+                    <div class="heading-line"></div>
+                    <div class="col-md-12 enter-bid" ng-repeat="comments_list in  findjobDataByJobid.jobCommentsList">
+                      <div class="card_img_name" style="background:url({& comments_list.picurl &}) no-repeat center center; background-size:cover;">
+                        </div>
+                        <div class="comment-details">
+                          <h3 class="pull-left" ng-bind="comments_list.commentuserfullname"></h3><small class="pull-right" am-time-ago="comments_list.createdatetime"></small>
+                            <p ng-bind="comments_list.comment"></p>
+                        </div>
+                     </div>
+           <div class="col-md-12 enter-bid2">
+                      <div class="enter-comment" ng-if="findjobDataByJobid.jobstatus == 'pending' && findjobDataByJobid.draft == false">
+                        <span>Comment on this job</span>
+                        <textarea class="form-control" name="comment" ng-model="comment_box" placeholder="Type your comment..."></textarea>                        
+                        <button type="button" ng-model="comment_submit" ng-click="comment_fn(findjobDataByJobid,comment_box)" class="btn btn-default make-offer">Comment</button><br>
+            <span ng-show="comment_span" style="color:#f00;">** Comment Box is Empty /or/ User Not Logged In </span>
+            </div>
+                    </div>
+                </div>
+                     
+                     
+             </div>
+          
+        </div> 
+      </div>
+      
+    </div>
+</div>
+<!-- Modal earn cases-->
+
+
+
+
+
+
+
+
+
+  <div class="map-icon" ng-click="map_work_fn()"><i class="fa fa-map-marker"></i></div>
+
+
+
+<!--filter start-->
+   <div class="row">
+    <div class="filters">
+    
+   <div class="ddown filter-options" style="display:none;z-index:3 !important;">
+   <div class="container">
+      <div class="semi-half">
+        <p>Sort by</p>
+      </div>
+      <div class="half">
+       <select ng-model="filter.sortDataAccording" ng-change="filterjobsdata('sortDataAccording')">
+        <option value="recent" selected>Most recent</option>
+        <option value="distance">Distance</option>
+        <option value="price_asc">Price Ascending</option>
+        <option value="price_desc">Price Descending</option>
+      </select>
+       </div>  
+    </div>
+    </div>
+    
+    <div class="ddown location-options" style="display:none;z-index:3 !important;">
+    <div class="container">
+      <div class="semi-half">
+        <p>City</p>
+      </div>
+      <div class="half">
+        <!-- <select ng-model="filter.city" ng-change="changeLocation(filter.city)" ng-click="filterjobsdata('city')"> -->
+        <select ng-model="filter.city" ng-change="filterjobsdata('city')">
+          <option ng-repeat="option in cityList | orderBy:option.city" value="{& option.cityid &}">{& option.city &}</option>
+        </select>
+       </div>
+       <div class="semi-half">
+        <p>Location</p>
+       </div>
+       <div class="half">
+        <select ng-model="filter.joblocation" ng-change="filterjobsdata('location')">
+          <option value="" selected="selected">All Locations</option>
+          <option ng-repeat="option in locationList" value="{& option.locationid &}" ng-if="option.under != ''">{& option.under &} - {& option.locationname &}</option>
+          <option ng-repeat="option in locationList" value="{& option.locationid &}" ng-if="option.under == ''">{& option.locationname &}</option>
+         </select>
+        </div>
+         <div class="semi-half">
+        <p>Range</p>
+       </div>
+       <div class="half">
+        <select ng-model="filter.radius" ng-change="filterjobsdata('radius')">
+          <option value="">Select Range</option>
+          <option value="5">5 Km</option>
+          <option value="10">10 Km</option>
+          <option value="50">50 Km</option>
+          <option value="100">100 Km</option>
+          <option value="500">500 Km</option>
+          <option value="1000">1000 Km</option>
+        </select>
+        </div>
+        <!--<button class="btn btn-default apply-filters">Apply filters</button> -->
+      </div>
+      </div>
+    <div class="ddown jobs-type-options" style="display:none;z-index:3 !important;">   
+      <div class="container">     
+      <input id="all-jobs" type="radio" name="type" value="allJobs" ng-change="filterjobsdata('allJobs')" ng-model="status.jobtype">
+        <label for="all-jobs"> All jobs </label>
+      <input id="online-jobs" type="radio" name="type" value="online" ng-change="filterjobsdata('online')" ng-model="status.jobtype">
+        <label for="online-jobs"> Online jobs </label>
+      <input id="offline-jobs" type="radio" name="type" value="offline" ng-change="filterjobsdata('offline')" ng-model="status.jobtype">
+        <label for="offline-jobs"> Offline jobs </label>
+       
+       <!--<button class="btn btn-default apply-filters">Apply filters</button>-->
+    </div>
+    </div>
+
+    <div class="ddown budget-options" style="display:none;z-index:3 !important;">
+    <div class="container">                
+      <div class="semi-half">
+        <p>Min.</p>
+      </div>
+      <div class="half">
+        <input type="number" class="budget" placeholder="Min" min="0" ng-keypress="getValidValue()" value="" ng-change="filterjobsdata('budget')" ng-model="filter.min" />
+       </div>
+       <div class="semi-half">
+        <p>Max.</p>
+       </div>
+       <div class="half">
+        <input type="number" class="budget" placeholder="Max" min="filter.min" ng-keypress="getValidValue()" value="" ng-change="filterjobsdata('budget')" ng-model="filter.max" /> 
+        </div>                    
+       <!-- <button class="btn btn-default apply-filters">Apply filters</button>-->
+     </div>
+     </div>
+
+    
+      
+     <div class="filter-size">
+      <div class="col-md-8 col-sm-12 col-xs-12" style="z-index:2;">
+      <div class="col-xs-3 filter-style" id="filter"> 
+          <div>
+            <small>Filter</small><i class="fa fa-angle-down"></i>
+          </div>
+          <kbd class="filtertext" ng-bind="'Sorted By '+filter.sortDataAccording"></kbd>                     
+        </div>
+        <div class="col-xs-3 filter-style" id="location">
+          <div>
+            <small>Location</small><i class="fa fa-angle-down"></i>
+            </div> 
+          <kbd class="filtertext" ng-if="(filter.joblocation == '' && filter.radius == '')" ng-bind="display_city"></kbd>
+          <kbd class="filtertext" ng-if="(filter.joblocation != '' && filter.radius == '')" ng-bind="display_city+' ('+display_location+')'"></kbd>
+          <kbd class="filtertext" ng-if="(filter.joblocation == '' && filter.radius != '')" ng-bind="display_city+' - '+filter.radius+' km'"></kbd>
+          <kbd class="filtertext" ng-if="(filter.joblocation != '' && filter.radius != '')" ng-bind="display_city+' ('+display_location+') - '+filter.radius+' km'"></kbd>                        
+        </div>
+        <div class="col-xs-3 filter-style" id="jobs-type">
+          <div>
+            <small>Jobs type</small><i class="fa fa-angle-down"></i>
+            </div>
+            <kbd class="filtertext" ng-if="status.jobtype != 'allJobs'" ng-bind="status.jobtype+' Jobs'"></kbd>
+            <kbd class="filtertext" ng-if="status.jobtype == 'allJobs'" ng-bind="'Both Online and Offline Jobs'"></kbd>
+        </div>         
+        <div class="col-xs-3 filter-style"  id="budget">
+          <div>
+            <small>Budget</small><i class="fa fa-angle-down"></i>
+            </div>
+          <kbd class="filtertext" ng-if="filter.min == null && filter.max == null" ng-bind="'-'"></kbd>
+          <kbd class="filtertext" ng-if="filter.min == null && filter.max != null" ng-bind="'-'+filter.max"></kbd>
+          <kbd class="filtertext" ng-if="filter.min != null && filter.max == null" ng-bind="filter.min+'-'"></kbd>
+          <kbd class="filtertext" ng-if="filter.min != null && filter.max != null" ng-bind="filter.min+'-'+filter.max"></kbd>
+        </div>
+    <!-- <button class="btn btn-default apply-filters" ng-click="apply_filters();" >Apply filters</button> -->
+      </div>
+    
+      <div class="col-md-4 col-sm-12 col-xs-12" style="z-index:2;">
+        <div class="browse_search">
+            <input type="search" ng-model="filter.search_string" ng-change="jobmainfilter()" autofocus placeholder="Search a kind of task..">
+        </div><!--browse search -->
+      </div>
+      </div>
+      <!--filter-size-->
+     </div>
+     <!--filters-->
+    </div>
+    <!--filter ends-->
+
+  <!--content start-->
+    <div class="container">
+
+      <div class="browse_jobs">
+        <div class="browse_job_list_left">
+          <div class="col-sm-8 col-xs-12 col-md-8 tasks_list scrollbar" infinite-scroll='jobmainfilter()' infinite-scroll-distance='2' id="style-1" ng-if="allTaskDataLength != 0">
+           
+            <ul class="browse_job_list_card">
+              <ul>
+                <li ng-repeat="allTaskDataArray in allTaskData" ng-if="allTaskDataArray.budget != null">
+                    <div class="centered" ng-if="(allTaskDataArray.jobstatus == 'pending' || allTaskDataArray.jobstatus == 'allotted' || allTaskDataArray.jobstatus == 'completed' || allTaskDataArray.jobstatus == 'paid') && allTaskDataArray.draft == false" ng-click="showModalBox(allTaskDataArray.jobid,allTaskDataArray.jobstatus,false)">
+                               <div class="card_img_name" style="background:url({& allTaskDataArray.picurl &}) no-repeat center center; background-size:cover;">
+                                </div><!--card_img_name close-->
+                                    <div class="user_name">
+                                        <h4><b class="pull-left" ng-bind="allTaskDataArray.fullname"></b><small class="pull-right" am-time-ago="allTaskDataArray.publisheddatetime"></small></h4>
+                                        <div class="job_detail">
+                                             <u><p ng-bind-html="(allTaskDataArray.title | highlight:filter.search_string)"></p></u>
+                                             <p ng-bind-html="(allTaskDataArray.description | highlight:filter.search_string | limitTo: 1)"></p>
+                                             <div class="comment-count">
+                                                 <i class="fa fa-map-marker"></i>
+                                                 <span ng-bind="allTaskDataArray.locationname + ' , ' + allTaskDataArray.cityname"></span>
+                                             </div>
+                                             <div class="comment-count" title="It shows the no. of bids on this particular job." ng-click="gotoModalBidView()"> 
+                                                 <i class="fa fa-legal"></i>
+                                                 <span ng-bind=" allTaskDataArray.totalJobBids"></span>
+                                             </div> 
+                                        </div><!--job detail-->
+                                    </div><!--user_name close-->
+                                 
+                             <div class="rupee_btn" >
+                               <!-- <h3>{& allTaskDataArray.budget &}</h3> -->
+                               <h3 ng-if="allTaskDataArray.budget != null " ng-bind="'$'+allTaskDataArray.budget"></h3>
+                               <h3 ng-if="allTaskDataArray.budget == null ">$0</h3>
+                               <button type="button" value="Submit" data-toggle="modal" class="btn btn-default earn" ng-if="allTaskDataArray.jobstatus == 'pending' && allTaskDataArray.draft == false" >Open</button>
+                               <button type="button" value="Submit" data-toggle="modal" class="btn btn-default earn" ng-if="allTaskDataArray.jobstatus == 'completed' && allTaskDataArray.draft == false" >Completed</button>
+                               <button type="button" value="Submit" data-toggle="modal" class="btn btn-default earn" ng-if="allTaskDataArray.jobstatus == 'allotted' && allTaskDataArray.draft == false" >Accepted</button>
+                               <button type="button" value="Submit" data-toggle="modal" class="btn btn-default earn" ng-if="allTaskDataArray.jobstatus == 'paid' && allTaskDataArray.draft == false" >Paid</button>
+                             </div><!--rupee_btn close-->
+                     </div>
+                </li>
+              </ul>
+            </ul>
+
+           </div>
+           <div class="col-sm-8 col-xs-12 col-md-8 no_results_found" id="style-1" ng-if="allTaskDataLength == 0">
+              <h3 class="no_results_found_text">No results found</h3>
+           </div>
+         
+         </div><!--browse_job_list_left close-->
+         
+         
+          <div class="col-sm-4 col-md-4 col-xs-12">
+                      
+        <div class="row-fluid jobs_map" ng-style="{ 'top': map_work ? '0' : '100%' }">
+          <div class="span8">
+            <select style="margin-bottom:10px;" ng-model="filter.radius">
+              <option value="">Select Range</option>             
+              <option value="5">Showing tasks near - 5km</option>
+              <option value="20">Showing tasks near - 20Km</option>
+              <option value="50">Showing tasks near - 50Km</option>
+              <option value="100">Showing tasks near - 100Km</option>
+              <option value="500">Showing tasks near - 500Km</option>
+              <option value="1000">Showing tasks near - 1000Km</option>
+            </select>
+            <!--<b class="pull-right"><small>Showing tasks near - 100Km</small></b> -->
+            <ng-map id="ng_Map" center="{&map.center&}" zoom="8" zoom-to-include-markers="true" min-zoom="8"  max-zoom="13" street-view-control="false" map-type-control="false"  style="height: 498px;">
+              <marker ng-repeat="marker_p in map.marker" position="{&marker_p&}" title="Toronto"></marker>
+                      <!-- <marker position=[{&centerLat&},{&centerLong&}] title="Hello World!"></marker> -->
+            </ng-map>
+          </div>
+        </div>
+        <div class="map-close-icon" ng-show="map_work == 1" ng-click="map_work_fn()"><i class="fa fa-angle-up"></i></div>
+      </div>
+
+    </div> <!-- 2nd div--> 
+           
+           
+  </div><!--browse_jobs close-->
+     
+         
+         
+               
+          
+</div>
+ 
+<!--container close-->
+ 
+
+
+<button type="button" class="btn btn-info btn-lg" id="modalButtonPost" data-toggle="modal" data-target="#hire_tab" style="display: none;">Open Modal</button>
+
+
+
+<!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+</div>
+<!-- ----------------------- footer close------------------------------------------- -->
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+
+    function create_payment(payment,transactionid,status)
+    {
+      payment = 0.02;
+      paypal.Button.render({
+
+            env: 'production', // sandbox | production
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+            client: {
+                sandbox:    '',
+                production: 'Afy9iSDAwQc9Dd36hyHYeEV0s8zH_9k7f2FzHeu-CKLQIl2bB0zlAiMUJWQXRzMW13Z9aqQs7-ujX9_X'
+            },
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // payment() is called when the button is clicked
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: payment, currency: 'CAD' },
+                                description: transactionid,
+                                custom : transactionid
+                            }
+                        ]
+                    },
+                    experience: {
+                        input_fields: {
+                            no_shipping: 1
+                        }
+                    }
+                });
+            },
+
+            // onAuthorize() is called when the buyer approves the payment
+            onAuthorize: function(data, actions) {
+
+                // Make a call to the REST api to execute the payment
+                return actions.payment.execute().then(function(
+                  payment) {
+                    if (payment != undefined){
+                      $(".close").trigger("click");
+                      console.log(payment);
+                      angular.element('#bodyAvaliablefindjob').scope().paymentPayId(payment.id,status);
+                      $("#paypalbutton2").empty();
+                    }
+                    else{
+                      swal("Transaction Failed!", "Something went wrong. Please try again", "error");
+                    }
+                    
+                    //window.location.reload();
+
+                });
+            },
+            onCancel: function(data, actions) {
+              // Show a cancel page or return to cart
+              swal("Transaction Failed!", "Something went wrong. Please try again", "error");
+              $("#paypalbutton2").empty();
+              $(".close").trigger("click");
+              //window.location.reload();
+            }
+
+          }, '#paypalbutton2');
+    }
+        
+
+    </script>
+
+<script src="https://www.paypalobjects.com/js/external/dg.js"> 
+  </script>
+
+<script type="text/javascript" charset="utf-8">
+      var embeddedPPFlow = new PAYPAL.apps.DGFlow({trigger: 'submitBtn'});
+</script>
+
+<script>
+    function showNextStep(stepNo)
+            {
+          $(".createjob").hide();
+          stepNo++;
+              $(".create_post"+stepNo).show();
+            }
+
+    function hide_fiter_div(){
+           $(".filter-options,.location-options, .jobs-type-options, .budget-options").hide();
+           $("#overlay").hide();
+        }
+
+    $( function() {
+      $( document ).tooltip();
+    } );
+        
+    $(document).ready(function(){
+
+        $("#filter").click(function(){
+            $(".filter-options").toggle();
+            $("#overlay").show();
+            console.log($('#overlay').is(':visible'));
+            $(".location-options, .jobs-type-options, .budget-options").hide();
+        });
+      $("#location").click(function(){
+            $(".location-options").toggle();
+            $("#overlay").show();
+            console.log($('#overlay').css('display'));
+            $(".filter-options, .jobs-type-options, .budget-options").hide();
+        });
+      $("#jobs-type").click(function(){
+            $(".jobs-type-options").toggle();
+            $("#overlay").show();
+            console.log($('#overlay').css('display'));
+            $(".filter-options, .location-options, .budget-options").hide();
+        });
+      $("#budget").click(function(){
+            $(".budget-options").toggle();
+            $("#overlay").show();
+            console.log($('#overlay').css('display'));
+            $(".filter-options, .location-options, .jobs-type-options").hide();
+        });
+      // $(".map-icon").click(function(){
+      //       $(".jobs_map").css("top", "0");
+      //       $(".map-close-icon").show();
+      //   });
+      // $(".map-close-icon").click(function(){
+      //       $(".jobs_map").css("top", "-100%");
+      //       $(".map-close-icon").hide();
+      //   });
+      $(".apply-filters").click(function(){
+            $(".ddown").slideUp();
+        });
+      $(".make-offer").click(function() {
+        $('.modal').animate({
+          scrollTop: $("#make-bid").offset().top
+        }, 500);
+      });
+      $("#total, #hourly").click(function(){
+            $("#fill-amt").slideToggle();
+        });
+
+      $(function(){
+          $('#date_picker').datepicker();
+        });
+    });
+
+</script>
+
+
+<script>
+        
+        /*app.directive('regexValidate', function() {
+              return {
+                  // element must have ng-model attribute.
+                  require: 'ngModel',
+                  
+                  // scope = the parent scope
+                  // elem = the element the directive is on
+                  // attr = a dictionary of attributes on the element
+                  // ctrl = the controller for ngModel.
+                  link: function(scope, elm, attrs, ctrl) {
+                  ctrl.$parsers.unshift(function(viewValue, $scope) {
+
+                    var noMatch = viewValue != scope.reference
+                    ctrl.$setValidity('noMacht', !noMatch)
+                  });
+
+                  scope.$watch("reference", function(value) {;
+                    ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+
+                  });
+                }
+              };
+          });*/
+
+        app.filter('strLimit', ['$filter', function($filter) {
+           return function(input, limit) {
+              if (! input) return;
+              if (input.length <= limit) {
+                  return input;
+              }
+
+              return $filter('limitTo')(input, limit) + '...';
+           };
+        }]);
+
+        app.filter('highlight', function($sce) {
+          return function(text, phrase) {
+            if (phrase) text = text.replace(new RegExp('('+phrase+')', 'gi'),
+              '<span class="highlighted">$1</span>')
+            
+            return $sce.trustAsHtml(text)
+          }
+        })
+    
+        app.controller('findjobsCtrl', function($scope,$window,$http,$cookies,$cookieStore,$rootScope, $location, $anchorScroll) 
+          {
+            // console.log({{ session['userid'] }})
+            // $scope.createjob_step = 1;
+            $scope.bids = [];
+            $scope.job = {};
+            $scope.filter = {};
+            $scope.bidData = {};
+            $scope.bidData.reverse = "";
+            $scope.bid_value = "";
+            $scope.comment_list = []
+            
+            $scope.comment_span = false; 
+            $scope.first_bid = true;
+            $scope.reverse_bid = false;
+            $scope.reject_bid = false;
+            $scope.pending_bid = false;
+
+            $scope.map = {};
+            $scope.findjobmap = {};
+
+            $scope.page_offset = 0;
+
+            var today = new Date();
+            var expired = today.setMinutes(today.getMinutes() + 100000);
+            
+            $scope.cookiesUserid = $cookieStore.get('cookiesUserid');
+            $scope.cookiesToken = $cookieStore.get('cookiesToken');
+            $scope.cookiesFirstname = $cookieStore.get('cookiesFirstname');
+            $scope.cookiesLastname = $cookieStore.get('cookiesLastname');
+            $scope.cookiesCity = $cookieStore.get('cookiesCity');
+            $scope.cookiesLocation = $cookieStore.get('cookiesLocation');
+            $scope.filter.search_string = $cookieStore.get('searchAPI');
+            
+            var sortDataAccording="",city="",location="",radius="",budgetMin="",budgetMax="",jobType = "";
+
+            $scope.loginStatus = false;
+            $scope.showBudgetDiv = false;
+
+            $scope.bidData.bidid = "";
+
+            if ($scope.cookiesUserid != undefined)
+            {
+              if ($cookieStore.get('cookiesCity') != "" && $cookieStore.get('cookiesCity') != undefined){ 
+                $scope.filter.city = $cookieStore.get('cookiesCity').toString();
+              }
+              else{
+                $scope.filter.city = "252347228";
+              }
+              // $scope.filter.joblocation = $cookieStore.get('cookiesLocation').toString();
+              // console.log($scope.filter.joblocation);
+              // $scope.filter.city = "252347228";
+              $scope.filter.joblocation = "";
+              $scope.userid = $cookieStore.get('cookiesUserid');
+              $scope.token = $cookieStore.get('cookiesToken');
+            }
+            else
+            {
+              $scope.filter.city = "252347228";
+              $scope.filter.joblocation = "";
+              $scope.userid = "";
+              $scope.token = "";
+              
+            }
+
+            if ($scope.filter.search_string == undefined)
+            {
+              $scope.filter.search_string = "";
+            }
+
+            console.log($cookieStore.get('cookiessortDataAccording'));
+            $scope.status = { jobtype : 'allJobs' } ;
+
+            if ($cookieStore.get('cookiessortDataAccording') != undefined)
+            {
+              $scope.filter.sortDataAccording = $cookieStore.get('cookiessortDataAccording');
+              // if ($cookieStore.get('cookiesCity') != "" && $cookieStore.get('cookiesCity') != undefined){ 
+              //   $scope.filter.city = $cookieStore.get('cookiesCity').toString();
+              // }
+              // if ($cookieStore.get('cookiesLocation') != "" && $cookieStore.get('cookiesLocation') != undefined){ 
+              //   $scope.filter.joblocation = $cookieStore.get('cookiesLocation').toString();
+              // }
+              // $scope.filter.joblocation = $cookieStore.get('cookiesjoblocation');
+              $scope.filter.radius = $cookieStore.get('cookiesradius');
+              // $scope.status.jobtype = $cookieStore.get('cookiesjobType');
+              $scope.filter.min = $cookieStore.get('cookiesbudgetMin');
+              $scope.filter.max = $cookieStore.get('cookiesbudgetMax');
+            }
+            else
+            {
+              console.log($scope.filter.joblocation,$scope.filter.city);
+              $scope.filter.radius = "";
+              $scope.filter.sortDataAccording = "recent";
+              $scope.filter.min = 0;
+              $scope.filter.max = 10000;
+              // var map_main = angular.element(map_main);
+              // var map_job = angular.element(map);
+            }
+            
+            $http({
+                  url: "http://saveonjobs.com/city/list",
+                  method: "POST",
+                  data: {}
+              }).success(function(data, status, headers, config) {
+                  $scope.cityList = data['cityList'];
+                  
+              }).error(function(data, status, headers, config) {
+              });
+            
+            $scope.jobmainfilter = function()
+            {
+
+              setTimeout(function(){
+                  sortDataAccording = $scope.filter.sortDataAccording;
+                  city = $scope.filter.city;
+                  joblocation = $scope.filter.joblocation;
+                  radius = $scope.filter.radius;
+                  jobType = $scope.status.jobtype ;
+                  budgetMin = $scope.filter.min;
+                  budgetMax = $scope.filter.max;
+
+                  $cookieStore.remove('cookiessortDataAccording');
+                  $cookieStore.remove('cookiesjobcity');
+                  $cookieStore.remove('cookiesjoblocation');
+                  $cookieStore.remove('cookiesradius');
+                  // $cookieStore.remove('cookiesjobType');
+                  $cookieStore.remove('cookiesbudgetMin');
+                  $cookieStore.remove('cookiesbudgetMax');
+
+                  $cookieStore.put('cookiessortDataAccording', sortDataAccording, {expires : expired });
+                  $cookieStore.put('cookiesjobcity', city, {expires : expired });
+                  $cookieStore.put('cookiesjoblocation', location, {expires : expired });
+                  $cookieStore.put('cookiesradius', radius, {expires : expired });
+                  // $cookieStore.put('cookiesjobType', jobType, {expires : expired });
+                  $cookieStore.put('cookiesbudgetMin', budgetMin, {expires : expired });
+                  $cookieStore.put('cookiesbudgetMax', budgetMax, {expires : expired });
+
+                  if (city != "")
+                  {
+                    $http({
+                      url: "http://saveonjobs.com/city/name/byid",
+                      method: "POST",
+                      data: {"cityid":city}
+                      }).success(function(data, status, headers, config) {
+                        console.log(data);
+                        $scope.display_city = data['city_name'];
+                        console.log($scope.display_city);
+                      }).error(function(data, status, headers, config) {
+                    });
+                  }
+                  else
+                  {
+                    $scope.display_city = "";
+                  }
+                    
+
+                  if (joblocation != "")
+                  {
+                    $http({
+                      url: "http://saveonjobs.com/location/name/byid",
+                      method: "POST",
+                      data: {"locationid":joblocation}
+                      }).success(function(data, status, headers, config) {
+                          console.log(data);
+                          $scope.display_location = data['location_name'];
+                          console.log($scope.display_location);                
+                      }).error(function(data, status, headers, config) {
+                    }); 
+                  }
+                  else
+                  {
+                    $scope.display_location = "";
+                  }
+                  
+
+                  $http({
+                    url: "job/all/list",
+                    method: "POST",
+                    data: {"sortDataAccording" : sortDataAccording,
+                        "city" : city,
+                        "location" : joblocation,
+                        "radius" : radius,
+                        "jobType" : jobType,
+                        "budgetMin" : budgetMin,
+                        "budgetMax" : budgetMax,
+                        "searchstring" : $scope.filter.search_string,
+                        "page_offset" : $scope.page_offset,
+                        "userid" : $scope.userid}
+                  }).success(function(data, status, headers, config) {
+                    console.log(data);
+
+                          if ($scope.page_offset != 0){
+
+                            for (i=0 ; i<data['myTask'].length;i++){
+
+                              $scope.allTaskData.push(data['allTask'][i]);
+
+                            }
+
+                            data['allTask'] = $scope.allTaskData;
+
+                            data['countData'] = $scope.allTaskData.length ;
+                          }
+                          else{
+                            $scope.allTaskData = data['allTask'];
+                          }
+
+                      $scope.page_offset = $scope.page_offset + 10 ;
+                      console.log(data['countData']);
+                      $scope.allTaskDataLength = data['countData'];
+                      console.log($scope.allTaskDataLength);
+                      if($scope.allTaskDataLength != 0){
+                        var center = [];
+                        center.push(data['allTask'][0]['mapCoordinate']['lat']);
+                        center.push(data['allTask'][0]['mapCoordinate']['lng']);
+                        $scope.map.center = center;
+                        var markers = [];
+                        angular.forEach($scope.allTaskData, function(value, key) {
+                          var marker = [];
+                          marker.push(value.jobMapCoordinate.lat);
+                          marker.push(value.jobMapCoordinate.lng);
+                          markers.push(marker);
+                        });
+                        $scope.map.marker = markers;
+                        $scope.map.zoom = 8;
+                        $scope.map.mapUrl = "https://maps.google.com/maps?ll="+data['allTask'][0]['mapCoordinate']['lat']+","+data['allTask'][0]['mapCoordinate']['lng']+"&z=8&t=m&hl=en-US&gl=US&mapclient=apiv3";
+                      }
+                      else{
+                        $scope.map.marker = []; 
+                      }
+                      console.log($scope.map);
+                      google.maps.event.trigger(angular.element("#ng_Map"), 'resize');
+                      $cookieStore.remove('searchAPI');
+                      $scope.$digest;
+                  }).error(function(data, status, headers, config) {
+                  });
+
+              },1000);
+              
+            }
+      
+            $http({
+                    url: "/location/list",
+                    method: "POST",
+                    data: {"cityid":$scope.filter.city}
+                }).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.locationList = data['locationList'];
+                    
+                }).error(function(data, status, headers, config) {
+                });
+
+            $scope.map_work = 0 ;
+
+            $scope.map_work_fn = function(){
+              console.log($scope.map_work);
+              if( $scope.map_work == 0){
+                 $scope.map_work = 1;
+              }
+              else{
+                 $scope.map_work = 0;
+              }
+            }
+
+            $scope.bidding = function(){
+              console.log($scope.bid_value);
+              if(parseInt($scope.bid_value) > 0){
+                $scope.bid_span = "";
+                bid_placed = $scope.bid_value;
+                console.log($scope.bid_value);
+                $scope.bids.push(bid_placed);
+                console.log($scope.bids);
+                $scope.bid_value = "";}
+              else {
+                $scope.bid_span = "** Enter higher value";
+              }
+              
+            }
+
+        $scope.finalisejob_find = function(job){
+          console.log(job);
+
+          angular.element('#modalButtonPost').trigger('click');
+
+            $rootScope.job.title = job.title;
+            $rootScope.job.description = job.description;
+            if(job.online == true){
+              $rootScope.job.completedby = "online";
+            }
+            else{
+              $rootScope.job.completedby = "person";
+            }
+            $rootScope.job.city = job.cityid.toString();
+            $rootScope.job.location = job.locationid.toString();
+            $rootScope.job.dueDate = "today";
+            $rootScope.job.budgetType = job.budgettype;
+            $rootScope.job.budget =  job.budget;
+            $rootScope.job.hours = job.totalhours;
+            $rootScope.job.noperson = job.personsrequired;
+            $rootScope.job.jobid = job.jobid;
+            $rootScope.job.draft_data = job.draft;  
+            return false;
+         }
+
+        $scope.upper_filter_string =function(string_search){
+          console.log(string_search);
+          $scope.search_string = string_search;
+        }
+
+
+        $scope.filterjobsdata = function(type)
+        {
+          var filtertype = type;
+          $scope.page_offset = 0;
+          if($scope.filter.joblocation != "")
+          {
+          city = $scope.filter.city;
+          joblocation = $scope.filter.joblocation;
+          }
+          
+          if (filtertype == "sortDataAccording")
+          {
+            sortDataAccording = $scope.filter.sortDataAccording;
+          }
+          if (filtertype == "city")
+          {
+            city = $scope.filter.city;
+            console.log(city);
+            $scope.filter.joblocation = "";
+            joblocation = $scope.filter.joblocation;
+            radius = $scope.filter.radius;
+            $http({
+                url: "/location/list",
+                method: "POST",
+                data: {"cityid":city}
+                }).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.locationList = data['locationList'];
+                    
+                }).error(function(data, status, headers, config) {
+              });
+          }
+        
+          if (filtertype == "location")
+          {
+            joblocation = $scope.filter.joblocation;
+          }
+          if (filtertype == "radius")
+          {
+            radius = $scope.filter.radius;
+          }
+          if (filtertype == "allJobs")
+          {
+            jobType = "allJobs";
+            $scope.status.jobtype = 'allJobs';
+          }
+          if (filtertype == "online")
+          {
+            jobType = true;
+            $scope.status.jobtype = 'online';
+          }
+          if (filtertype == "offline")
+          {
+            jobType = false;
+            $scope.status.jobtype = 'offline';
+          }
+          if (filtertype == "budget")
+          {
+            console.log($scope.filter.min,$scope.filter.max,typeof($scope.filter.min));
+            if($scope.filter.min != null && $scope.filter.max != null){
+            budgetMin = $scope.filter.min;
+            budgetMax = $scope.filter.max;}
+            else if($scope.filter.min == null && $scope.filter.max != null){
+              budgetMin = "";
+              budgetMax = $scope.filter.max;}
+            else if($scope.filter.min == null && $scope.filter.max != null){
+              budgetMin = $scope.filter.min;
+              budgetMax = "";}
+            else if($scope.filter.min >= $scope.filter.max ){
+              alert("Min budget cannot exceed Max budget");
+            }
+            else{
+              budgetMin = "";
+              budgetMax = "";
+            }
+          }
+
+            if (city != "")
+            {
+              $http({
+                url: "http://saveonjobs.com/city/name/byid",
+                method: "POST",
+                data: {"cityid":city}
+                }).success(function(data, status, headers, config) {
+                  console.log(data);
+                  $scope.display_city = data['city_name'];
+                  console.log($scope.display_city);
+                }).error(function(data, status, headers, config) {
+              });
+            }
+            else
+            {
+              $scope.display_city = "";
+            }
+              
+
+            if (joblocation != "")
+            {
+              $http({
+                url: "http://saveonjobs.com/location/name/byid",
+                method: "POST",
+                data: {"locationid":joblocation}
+                }).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.display_location = data['location_name'];
+                    console.log($scope.display_location);                
+                }).error(function(data, status, headers, config) {
+              }); 
+            }
+            else
+            {
+              $scope.display_location = "";
+            }
+            
+
+                var filter_obj ={
+                "sortDataAccording" : sortDataAccording,
+                "location" : joblocation,
+                "city" : city,
+                "radius" :radius,
+                "jobType" :jobType,
+                "budgetMin" : budgetMin,
+                "budgetMax" :budgetMax,
+                "searchstring" : $scope.filter.search_string,
+                "page_offset" : $scope.page_offset,
+                "userid" : $scope.userid
+                }
+                console.log(filter_obj);
+                setTimeout(function(){
+                 $http({
+                          url: "job/all/list",
+                          method: "POST",
+                          data: filter_obj
+                      }).success(function(data, status, headers, config) {
+                        console.log(data['countData']);
+                          $scope.allTaskData = data['allTask'];
+
+                          $scope.allTaskDataLength = data['countData'];
+                          if($scope.allTaskDataLength != 0){
+                            var center = [];
+                            center.push(data['allTask'][0]['mapCoordinate']['lat']);
+                            center.push(data['allTask'][0]['mapCoordinate']['lng']);
+                            $scope.map.center = center;
+                            var markers = [];
+                            angular.forEach($scope.allTaskData, function(value, key) {
+                              var marker = [];
+                              marker.push(value.jobMapCoordinate.lat);
+                              marker.push(value.jobMapCoordinate.lng);
+                              markers.push(marker);
+                            });
+                            $scope.map.marker = markers;
+                            $scope.map.zoom = 8;
+                            $scope.map.mapUrl = "https://maps.google.com/maps?ll="+data['allTask'][0]['mapCoordinate']['lat']+","+data['allTask'][0]['mapCoordinate']['location_nameg']+"&z=8&t=m&hl=en-US&gl=US&mapclient=apiv3";
+                              }
+                          else
+                          {
+                            $scope.map.marker = [];
+                          }
+                          console.log($scope.map);
+                          $scope.findjobmap = $scope.map;
+                          google.maps.event.trigger(angular.element("#ng_Map"), 'resize');
+                          $scope.$digest;
+                        console.log($scope.allTaskData);
+                      }).error(function(data, status, headers, config) {
+                      });
+                },1000);
+            }
+      
+          $scope.comment_fn = function(job,comment_input){
+            $scope.comment_span = false; 
+            if(comment_input != undefined && comment_input != "" && $scope.userid != "" && $scope.token != "" ){
+              var comment_enter = {"userid":$scope.userid, "token":$scope.token, "jobid":job.jobid,"comment":comment_input};
+              $http({
+                  url: "job/comment/create",
+                  method: "POST",
+                  data: comment_enter
+                }).success(function(data, status, headers, config) {
+                  console.log(data['getNewJobComment'][0]);
+                  $scope.findjobDataByJobid.jobCommentsList.push(data['getNewJobComment'][0]);
+                  $scope.comment_box = "";
+                  $scope.$digest;
+                }).error(function(data, status, headers, config) {
+                });
+            }
+            else{
+              $scope.comment_span = true;}
+          }
+
+          $scope.paymentPayId = function(payid,status){
+          alert(payid+""+status);
+          var bidDataStatus = {"userid":$scope.userid, "token":$scope.token , "payid" : payid,"status":status} ;
+          alert(bidDataStatus);
+          $http({
+                    url: "/paypal_payment_web",
+                    method: "POST",
+                    data: bidDataStatus
+                }).success(function(data, status, headers, config) {
+                    //alert("O yeahhhhh!!!!")
+                  
+                  }).error(function(data, status, headers, config) {
+                });
+        }
+          
+          $scope.statusfn = function(bidid , status){
+          console.log(bidid , status);
+
+          var bidDataStatus = {"userid":$scope.userid, "token":$scope.token , "bidid" : bidid , "status" : status} ;
+          if (status == "cancelledbybidder")
+          {
+            bidDataStatus.bidcancellationreason = "";
+          }
+          
+          if (status != "selectedbyjobber"){
+            $http({
+                    url: "/job/bid/action/approved/rejected",
+                    method: "POST",
+                    data: bidDataStatus
+                }).success(function(data, status, headers, config) {
+                  console.log(data);
+                  angular.forEach($scope.findjobDataByJobid['jobBidsData'], function(value, key) {
+                    if (value.bidid == data['budStatusUpdate'][0].bidid)
+                    {
+                    $scope.findjobDataByJobid['jobBidsData'][key] = data['budStatusUpdate'][0];
+                    return false;
+                    }
+                  });
+              $scope.$digest;
+                    }).error(function(data, status, headers, config) {
+                    });
+            }
+          else{
+              angular.forEach($scope.findjobDataByJobid['jobBidsData'], function(value, key) {
+                    if (value.bidid == bidid)
+                    {
+                    $scope.amount_payable = value.bidamount;
+                    $scope.item_id = bidid;
+                    $scope.charge_jobid = value.jobid;
+                    return false;
+                    }
+                  });
+
+                //create a temp transcaction id
+                var jobDetail = {"userid":$scope.userid, "token":$scope.token , "jobbid" : bidid ,"jobid" : $scope.charge_jobid, "amount":$scope.amount_payable, "transactionstatus" : "pending"} ;
+                $http({
+                        url: "/create/temp/transaction",
+                        method: "POST",
+                        data: jobDetail
+                    }).success(function(data, status, headers, config) {
+
+                        $scope.item_name = "selectedbyjobber";
+                        $cookieStore.remove('Jobid');
+                        var today = new Date();
+                        $("#paypalbutton2").empty();
+                        create_payment($scope.amount_payable,data.transactionid,$scope.item_name);
+                        $cookieStore.put('Jobid', $scope.charge_jobid, {expires : today.setMinutes(today.getMinutes() + 100000) });
+                        console.log($scope.amount_payable,$scope.item_id,$scope.item_name);
+                        angular.element('#showpaypalbutton').trigger('click'); 
+
+                    });
+                }
+          }
+
+            $scope.showModalBox = function(jobid,jobstatus,draftStatus)
+            {
+                // console.log(jobid + " " + jobstatus+ " " +draftStatus);
+                $scope.ratingstatus = 'completed';
+                angular.element('#modalButtonFindJob').trigger('click');
+                var getdata = {"userid":$scope.userid, "token":$scope.token, "jobid":jobid, "jobstatus":jobstatus, "draftStatus":draftStatus};
+                $scope.make_bid_span = 0;
+                $scope.bidData.bidAmount = "";
+                $scope.bidData.comment = "";
+                $scope.comment_span = false; 
+                console.log(getdata);
+                setTimeout(function(){
+                  $http({
+                        url: "job/jobid",
+                        method: "POST",
+                        data: getdata
+                    }).success(function(data, status, headers, config) {
+                        console.log(data['jobDetail_jobid']);
+                        $scope.findjobDataByJobid = data['jobDetail_jobid'][0];
+                        var center = [];
+                        center.push(data['jobDetail_jobid'][0]['jobMapCoordinate']['lat']);
+                        center.push(data['jobDetail_jobid'][0]['jobMapCoordinate']['lng']);
+                        $scope.findjobmap.center = center;
+                        var markers = [];
+                        var marker = [];
+                        marker.push(data['jobDetail_jobid'][0]['jobMapCoordinate']['lat']);
+                        marker.push(data['jobDetail_jobid'][0]['jobMapCoordinate']['lng']);
+                        markers.push(marker);
+                        $scope.findjobmap.marker = markers;
+                        $scope.findjobmap.zoom = 8;
+                        $scope.typejob = data['type'];
+                        console.log($scope.typejob);
+                        $scope.findjobmap.mapUrl = "https://maps.google.com/maps?ll="+data['jobDetail_jobid'][0]['jobMapCoordinate']['lat']+","+data['jobDetail_jobid'][0]['jobMapCoordinate']['lng']+"&z=8&t=m&hl=en-US&gl=US&mapclient=apiv3";
+                        window.dispatchEvent(new Event('resize'));
+                        google.maps.event.trigger($scope.findjobmap, 'resize');
+                        $scope.$digest;
+                        console.log($scope.findjobmap);
+                        $scope.jobBidlength = data['jobDetail_jobid'][0]['jobBidsData'];
+                        console.log($scope.jobBidlength.length);    
+                    }).error(function(data, status, headers, config) {
+                    });
+                },200);
+            }
+
+            $scope.openverify = function(userid_bidder,username_bidder,pic,status,jobid){
+              console.log(userid_bidder,username_bidder,pic,jobid);
+              $cookieStore.remove('Jobid');
+              var today = new Date();
+              $cookieStore.put('Jobid', jobid, {expires : today.setMinutes(today.getMinutes() + 100000) });
+              $scope.endtask_userid = userid_bidder ;
+              $scope.endtask_username = username_bidder ;
+              $scope.endtask_pic = pic ;
+              $scope.ratingstatus = status;
+            }
+
+            $scope.cookiesjobid = $cookieStore.get('Jobid');
+              if($scope.cookiesjobid != null){
+                $scope.showModalBox($scope.cookiesjobid,"pending",false);
+                $cookieStore.remove('Jobid');
+              }
+
+            $scope.send_rating = function(userid , rating ,remark ,jobid,status){
+              $cookieStore.remove('Jobid');
+              var today = new Date();
+              $cookieStore.put('Jobid', jobid, {expires : today.setMinutes(today.getMinutes() + 100000) });
+
+              if (remark != "" && remark != undefined){
+
+                var rating_data = { "userid" : $scope.userid , "token" : $scope.token , "touserid" : userid , "rating" : rating , "comment" : remark , "jobid" : jobid , "bidderJobStatus" : status};
+                console.log(rating_data);
+                $http({
+                        url: "/user/job/review",
+                        method: "POST",
+                        data: rating_data
+                    }).success(function(data, status, headers, config) {
+                        console.log(data['updateJobBids']);
+                        $scope.findjobDataByJobid.jobBidsData = data['updateJobBids'];
+                        $scope.jobBidlength = data['updateJobBids'];
+                        console.log($scope.jobBidlength.length);
+                        $scope.$digest;
+                    }).error(function(data, status, headers, config) {
+                    });
+
+                }
+
+                else{
+
+                  swal({title:"You cannot leave remark empty",confirmButtonColor: "#e94e38"});
+
+                }
+
+              $scope.cookiesjobid = $cookieStore.get('Jobid');
+              console.log($scope.cookiesjobid);
+              if($scope.cookiesjobid != null){
+                $scope.showModalBox($scope.cookiesjobid,"pending",false);
+              }
+              $cookieStore.remove('Jobid');
+            }
+      
+      
+      
+            $scope.setBid = function(jobid,bidid)
+            {
+        if (bidid == 0){
+          $scope.bidData.bidid = "";
+        }
+        else {
+          $scope.bidData.bidid = bidid;
+          console.log("input value : "+$scope.bidData.bid_value);
+          if(parseInt($scope.bidData.bid_value) > 0 && $scope.bidData.bid_value != undefined && parseInt($scope.bidData.bid_value) <= 10000){
+          $scope.bidData.reverse = $scope.bidData.bid_value;
+          $scope.bidData.comment = "";}
+          else {
+                $scope.bid_span = "** Enter valid value";
+              }
+        }
+
+        // if($scope.allTaskData[0]['bank_details']['external_account'] && bidid == 0)
+        // {
+        //   swal('Please fill your bank details to bid');
+        //    window.location.replace("http://saveonjobs.com/account#/account");
+        // }
+
+
+        // jobid FK
+        // bidid PK
+        // userid  FK
+        // selected  BOOL
+        // bidamount FLOAT
+        // bidcomment  VARCHAR
+        // createdatetime  
+        // bidcanceldatetime 
+        // bidcancellationreason 
+        // status  PENDING/ REVERSEBID/ REJECTEDBYBIDDER/ SELECTEDBYJOBBER/ CANCELLEDBYBIDDER
+        // reversebid  FLOAT
+        
+        if ($scope.cookiesUserid == undefined)
+        {
+          $scope.make_bid_span = 1;
+          console.log($scope.make_bid_span);
+        }
+        else
+        { 
+          if($scope.bidData.bidAmount == ""){
+            swal({title:"You cannot do a empty bid",confirmButtonColor: "#e94e38"});
+          }
+          else if(parseInt($scope.bidData.bidAmount) < 0 || $scope.bidData.bidAmount == undefined || parseInt($scope.bidData.bidAmount) > 10000) {
+            swal({title:"Please Enter a valid bid amount",confirmButtonColor: "#e94e38"});
+          }
+          else{
+
+          $scope.first_bid = false;
+          $scope.reverse_bid = false;
+          $scope.pending_bid = true;
+          $scope.bids.push($scope.bidData.bidAmount);
+          var setBidData = {"userid":$scope.userid,
+                  "token" : $scope.token,
+                  "bidid" : $scope.bidData.bidid,
+                  "jobid" : jobid,
+                  "bidamount" : $scope.bidData.bidAmount,
+                  "bidcomment" : $scope.bidData.comment,
+                  "reversebid" : $scope.bidData.reverse
+                  };
+          console.log(setBidData);
+          $http({
+            url: "/job/bid/create/reversebid",
+            method: "POST",
+            data: setBidData
+          }).success(function(data, status, headers, config) {
+            console.log(data);
+            if (data['status'] == 200){
+              $scope.findjobDataByJobid.jobBidsData = data['bidUpdate'];
+              $scope.jobBidlength = data['bidUpdate'];
+              console.log($scope.jobBidlength.length);
+              $scope.$digest;
+            }
+              else if (data['status'] == 202){
+              swal({title:data['message'],confirmButtonColor: "#e94e38"});
+          	}
+              else if (data['status'] == 203){
+              swal({title:data['message'],confirmButtonColor: "#e94e38"});
+            }
+              $scope.$digest;
+          }).error(function(data, status, headers, config) {
+          });
+          $scope.bidData.bidAmount = "";
+          $scope.bidData.comment = "";
+          }
+        }
+      }
+
+      $scope.chat = function(jobid){
+        var getdata = {"userid":$scope.userid, "token":$scope.token, "jobid":jobid};
+        console.log(getdata);
+         $http({
+                url: "/conversation/create",
+                method: "POST",
+                data: getdata
+            }).success(function(data, status, headers, config) {
+                window.location.replace("http://saveonjobs.com/account#/chats");
+                $scope.$digest;
+            }).error(function(data, status, headers, config) {
+            });
+      }
+
+      $scope.reversebidfn = function(bidamount,bidid,jobid){
+        console.log(bidamount,bidid,jobid);
+            $scope.amount_payable = bidamount;
+            $scope.item_id = bidid;
+            $scope.charge_jobid = jobid;
+            $scope.item_name = "reversebid";
+            console.log($scope.amount_payable,$scope.item_id,$scope.item_name);
+            $cookieStore.remove('Jobid');
+            var today = new Date();
+            $cookieStore.put('Jobid', $scope.charge_jobid, {expires : today.setMinutes(today.getMinutes() + 100000) });
+            
+
+            var jobDetail = {"userid":$scope.userid, "token":$scope.token , "jobbid" : bidid ,"jobid" : $scope.charge_jobid, "amount":$scope.amount_payable, "transactionstatus" : "pending"} ;
+            $http({
+                    url: "/create/temp/transaction",
+                    method: "POST",
+                    data: jobDetail
+                }).success(function(data, status, headers, config) {
+
+                    $scope.item_name = "reversebid";
+                    $cookieStore.remove('Jobid');
+                    var today = new Date();
+                    create_payment($scope.amount_payable,data.transactionid, $scope.item_name);
+                    $cookieStore.put('Jobid', $scope.charge_jobid, {expires : today.setMinutes(today.getMinutes() + 100000) });
+                    console.log($scope.amount_payable,$scope.item_id,$scope.item_name);
+                    angular.element('#showpaypalbutton').trigger('click'); 
+
+                });
+            }
+
+      $scope.gotoMakeBid = function(valueID) {
+        // set the location.hash to the id of
+        // the element you wish to scroll to.
+        $location.hash(valueID);
+        // call $anchorScroll()
+        $anchorScroll();
+      };
+
+      $scope.gotoModalBidView = function() {
+        // angular.element('#makebiddiv').trigger('click');
+        gotoMakeBid('make-bid-tab');
+      };
+
+      $scope.redirectToProfile = function(urlValue, userProfile){
+          console.log(urlValue);
+          $cookieStore.remove('cookiesuserProfileUrl');
+          $cookieStore.put('cookiesuserProfileUrl', userProfile, {expires : expired });
+          $window.open(urlValue, '_blank');
+      };
+      
+      $scope.getValidValue = function()
+      {
+        var keypresskeycode = event.keyCode;
+        console.log(keypresskeycode);
+        var charCode = (keypresskeycode.which) ? keypresskeycode.which : keypresskeycode.keyCode;
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+        {
+          console.log(charCode);
+          return false;
+        }
+      };
+  });
+
+</script>
+    
+    
+
+
+
+
+<!--content close-->      
+
+    
+</body>
+</html>

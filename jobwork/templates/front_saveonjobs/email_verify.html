@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Email Verification</title>
+
+<!-- 
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="images/favicon.png">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script>
+
+
+
+
+</head>
+
+<body ng-app="">
+
+ -->
+<!--header start-->
+ <!-- <div ng-include="'sticky_header.htm'"></div>   -->
+<!-- header close-->
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+</head>
+
+
+<!--<script src="js/jquery-min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/bootstrap.min.js"></script>-->
+
+
+<body ng-app="sojApp">
+
+<div ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+  <!-- ************************************************************************************** -->
+
+</div>
+
+<!--container-->
+ <!--container-->
+ <div class="container forgot_password">
+    <div class="container-fluid">
+      
+      <div class="terms forgot_p_form verification">
+        <form role="form" class="forgot_p_feilds">
+                <div class="form-group">
+                
+                <!--<h3> Verification Done </h3>-->
+                
+                
+                <h1> <i class="fa fa-check-circle-o" aria-hidden="true"></i> Congratulations! You're Verified </h1>
+                <p> Thank you for verifying! to login <u><a href="/" >click here </a></u></p>
+                
+                
+                </div>  
+                
+                 
+                                
+              </form>
+      </div><!--terms-->
+    </div><!--container-->
+  </div>
+<!--container close-->   
+    
+<!--container close-->   
+    
+<!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+
+<!-- ----------------------- footer close------------------------------------------- -->
+    
+</body>
+</html>
+
+<script type="text/javascript">
+
+app.directive('validPasswordC', function() {
+return {
+  require: 'ngModel',
+  scope: {
+
+    reference: '=validPasswordC'
+
+    },
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue, $scope) {
+
+        var noMatch = viewValue != scope.reference
+        ctrl.$setValidity('noMatch', !noMatch)
+      });
+
+      scope.$watch("reference", function(value) {;
+        ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+
+      });
+    }
+  }
+});
+
+app.controller('forgotpasswordCtrl',function($scope,$http,$cookies,$cookieStore,$window,$location){
+  $scope.forgot = {};
+  // var type = $window.location.hash.substr(1);
+  // console.log($location);
+  var fullUrl = $location.absUrl();
+  var urlPath = fullUrl.split('__');
+  // console.log(urlPath[1]);
+
+  $scope.forgotPasswordSave = function(email, password)
+  {
+    $scope.submitted = true;
+    // console.log($scope.email+ ' ' + $scope.password+ ' ' + $scope.confirmPassword);
+    // console.log(email+ ' ' + password);
+    if ($scope.password == $scope.confirmPassword)
+    {
+      var jsonData = {"email":email, "password":password, "hashData":urlPath[1]}
+      console.log(jsonData);
+      $http({
+          url: "/user/forgotpassword/set",
+          method: "POST",
+          data: {"email":email, "password":password, "hashData":urlPath[1]}
+          }).success(function(data, status, headers, config) 
+          {
+            console.log(data);
+            if (data['status'] == 200)
+            {
+                // $scope.loginStatus = true;
+
+                // $cookieStore.remove('cookiesUserid');
+                // $cookieStore.remove('cookiesToken');
+                // $cookieStore.remove('cookiesCity');
+                // $cookieStore.remove('cookiesLocation');
+                // $cookieStore.remove('cookiesFirstname');
+                // $cookieStore.remove('cookiesLastname');
+                // $cookieStore.remove('cookiesPicUrl');
+                // $cookieStore.remove('cookiespicPath');
+                // $cookieStore.remove('searchAPI');
+
+                // $cookieStore.put('cookiesUserid', data['userid'], {expires : expired });
+                // $cookieStore.put('cookiesToken', data['token'], {expires : expired });
+                // $cookieStore.put('cookiesCity', data['city'], {expires : expired });
+                // $cookieStore.put('cookiesLocation', data['location'], {expires : expired });
+                // $cookieStore.put('cookiesFirstname', data['firstname'], {expires : expired });
+                // $cookieStore.put('cookiesLastname', data['lastname'], {expires : expired });
+                // $cookieStore.put('cookiesPicUrl', data['picurl'], {expires : expired });
+                // $cookieStore.put('cookiespicPath', data['picPath'], {expires : expired });
+
+                $window.location.href = '/';
+                  
+            }
+            else if (data['status'] == 400)
+            {
+                swal("Invalid Password.");
+            }
+            else if (data['status'] == 201)
+            {
+                swal("Invalid User.");
+            }
+
+          }).error(function(data, status, headers, config) {
+              $scope.status = status;
+          });
+    }
+    else
+    {
+      swal("Password Doesn't Match.");
+    }
+  }
+});
+
+</script>

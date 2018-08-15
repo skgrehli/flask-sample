@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Category</title>
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+</head>
+
+
+<body ng-app="sojApp">
+
+<div ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+  <!-- ************************************************************************************** -->
+
+</div>
+
+
+
+
+<!--content start-->
+<div class="container" ng-controller="categoriesCtrl">
+
+	<!--<div class="browse_buttons">
+        <ul>
+        <a href="#"><li>All Jobs</li></a>
+        <a href="#"><li>Online Jobs</li></a>
+        <a href="#"><li>Open Jobs</li></a>
+       
+        </ul>
+    </div>--><!--browse buttons-->
+
+
+    <div class="Category_listing">
+    <h2 class="heading white_sec_heading pullDown">Browse job categories<br />
+    <p class="subheading">Post of find a job in any category</p></h2>
+    
+     <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="category_list_buttons">
+            <ul>                    
+                <li class="cat_Link" ng-repeat="categoriesArraylist in categoriesArray" id={&categoriesArraylist.categoryid&}><a href="#{&categoriesArraylist.categoryid&}" ng-bind="categoriesArraylist.categoryname | capitalize"></a></li>
+                <!-- <li class="cat_Link" id="linkmovingandremovalist"><a href="#movingandremovalist">Moving & Removalist</a></li>
+                <li class="cat_Link" id="linkcomputeranditsupport"><a href="#computeranditsupport">Computer & IT Support</a></li>
+                <li class="cat_Link" id="linkhousecleaning"><a href="#housecleaning">House Cleaning</a></li>
+                <li class="cat_Link" id="linkpickupandassemble"><a href="#pickupandassemble">Pick up and Assemble</a></li>
+                <li class="cat_Link" id="linkonlinework"><a href="#onlinework">Online Work</a></li>
+                <li class="cat_Link" id="linkdataentry"><a href="#dataentry">Data Entry</a></li>
+                <li class="cat_Link" id="linkgardenmaintenance"><a href="#gardenmaintenance">Garden Maintenance</a></li>
+                <li class="cat_Link" id="linkfurnitureassembly"><a href="#furnitureassembly">Furniture Assembly</a></li>
+                <li class="cat_Link" id="linkcarwash"><a href="#carwash">Car Wash</a></li>
+                <li class="cat_Link" id="linkeventsandphotography"><a href="#eventsandphotography">Events and Photography</a></li>
+                <li class="cat_Link" id="linkmarketing"><a href="#marketing">Marketing</a></li> -->
+            </ul>
+        </div>
+    </div>
+    <!--col-md-4 close-->
+
+    
+      <div class="col-md-9 col-sm-9 col-xs-12">
+    	<div class="row category_list_row">
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" ng-repeat="templatesArraylist in templatesArray" id={&templatesArraylist._id&}>
+                <div class="card category_card">
+                     <div class="category-img" style="background:url({&templatesArraylist.categoryimage&}) no-repeat; background-size:cover;"></div>
+                     <div class="card-block category_card_content">
+                        <h4 class="card-title" ng-bind="templatesArraylist.categoryname | capitalize"></h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" ng-repeat="jobTemplate in templatesArraylist.tempData" data-toggle="modal" data-target=".cat-options" ng-click="getJobByTemplate(jobTemplate.templateid,jobTemplate.title,jobTemplate.description)"><li ng-bind="jobTemplate.title | capitalize"></li></a>
+                        <!-- <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a> -->
+                        </ul>
+                        
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="movingandremovalist">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/removalist.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Moving & Removalist</h4>
+                        
+                       <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul> -->
+                        
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    <!-- </div>
+                </div> -->
+            </div>
+            <!-- <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="computeranditsupport">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/it.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Computer & IT Support</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    <!-- </div>
+                </div>
+            </div>
+         </div>
+         
+         <div class="row category_list_row">
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="housecleaning">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/cleaning.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">House Cleaning</h4>
+                        
+                       <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul> -->
+                        
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    <!-- </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="pickupandassemble">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/pickup.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Pick up and Assemble</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                   <!--  </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="onlinework">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/online.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Online Work</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul> -->
+                        
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    <!-- </div>
+                </div>
+            </div>
+         </div>
+         
+         <div class="row category_list_row">
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="dataentry">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/garden.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Data Entry</h4>
+                        
+                       <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                   <!--  </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="gardenmaintenance">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/garden.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Garden Maintenance</h4>
+                        
+                       <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul> -->
+                        
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    <!-- </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="furnitureassembly">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/assembly.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Furniture Assembly</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                   <!--  </div>
+                </div>
+            </div>
+         </div>
+            
+         <div class="row category_list_row">  
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="carwash">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/car-wash.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Car Wash</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                  <!--   </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="eventsandphotography">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/events.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Events and Photography</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                <!--     </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 all_category" id="marketing">
+                <div class="card category_card">
+                    <div class="category-img" style="background:url(static/front_end/images/categories/marketing.jpg) no-repeat; background-size:cover;"></div>
+                    <div class="card-block category_card_content">
+                        <h4 class="card-title">Marketing</h4>
+                        
+                        <ul class="card_content">
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Electrical Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Plumbing</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Handyman Services</li></a>
+                        <a href="#" data-toggle="modal" data-target=".cat-options"><li>Furniture Assembly</li></a>
+                        </ul>
+                         -->
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                   <!--  </div>
+                </div>
+            </div>
+         </div> -->
+          
+    	</div>
+        <!--col-md-8 close-->
+        
+               
+    </div><!--Category_listing close-->
+     
+
+
+    <button type="button" class="btn btn-info btn-lg" id="modalButton" data-toggle="modal" data-target="#myModal" style="display: none;">Open Modal</button>
+
+    <button type="button" class="btn btn-info btn-lg" id="modalButtonPost" data-toggle="modal" data-target="#hire_tab" style="display: none;">Open Modal</button>
+
+<!-- Modal -->
+  <div class="modal fade cat-options" role="dialog" target=-1>
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select your purpose</h4>
+        </div>
+        <div class="modal-body">
+          <div class="purpose" data-dismiss="modal" ng-click="postJob(templatesDataId,'post',title,description)"><img src="static/front_end/images/search-ico.png" />
+            <h2 class="heading slideLeft">I want to <b class="orange"> Post a job </b> in this category</h2>
+          </div>          
+          <div class="clearfix"></div>
+          <div class="purpose" data-dismiss="modal" ng-click="postJob(templatesDataId,'find',title,description)"><img src="static/front_end/images/post.png" />
+            <h2 class="heading slideLeft">I want to <b class="blue"> search a job </b> in this category</h2>
+          </div>
+        </div> 
+      </div>
+      
+    </div>
+  </div>
+               
+          
+ </div><!--container close-->
+
+<!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+
+<!-- ----------------------- footer close------------------------------------------- -->
+
+<script>
+    function showNextStep(stepNo)
+        {
+			$(".createjob").hide();
+			stepNo++;
+        	$(".create_post"+stepNo).show();
+        }
+
+    $('.cat_Link').click(function() {
+        // console.log($(this).find("a").attr('href'),this.id,$(this));
+        $('html, body').animate({
+            scrollTop: $($(this).find("a").attr('href')).offset().top - 200
+        }, 1000);
+    
+    });
+
+        // var getId = 
+
+        // $("#link").click(function() {
+        //     $('html, body').animate({
+        //         scrollTop: $("#myDiv").offset().top
+        //     }, 2000);
+        // });
+
+</script>
+
+<script type="text/javascript">
+    app.controller('categoriesCtrl', function($scope,$window,$http,$cookies,$cookieStore,$rootScope,DTOptionsBuilder, DTColumnBuilder, $anchorScroll, $location) 
+    {
+        var today = new Date();
+        var expired = today.setMinutes(today.getMinutes() + 1);
+        $http({
+                  url: "/templates/categories/list",
+                  method: "POST",
+                  data: {}
+              }).success(function(data, status, headers, config) {
+                  console.log(data['templatesData']);
+                  console.log(data['categoriesList']);
+                  $scope.templatesArray = data['templatesData'];
+                  $scope.categoriesArray = data['categoriesList'];
+                  
+              }).error(function(data, status, headers, config) {
+              });
+
+        $scope.getJobByTemplate = function(templatesID, title, description)
+        {
+            console.log(templatesID);
+            $scope.templatesDataId = templatesID;
+            $scope.title = title;
+            $scope.description = description;
+            angular.element('#modalButton').trigger('click');
+        }
+
+        $scope.postJob = function(templatesID,type,jobTitle,jobDescription)
+        {
+            console.log(templatesID);
+            console.log(jobTitle);
+            console.log(jobDescription);
+            if (type == "post")
+            {
+                angular.element('#modalButtonPost').trigger('click');
+                angular.forEach(jobid, function(value, key) {
+                    $rootScope.job.title = jobTitle;
+                    $rootScope.job.description = jobDescription;
+                    return false;
+                });
+
+            }
+            else if (type == "find")
+            {
+                $cookieStore.remove('searchAPI');
+                $cookieStore.put('searchAPI', jobTitle, {expires : expired });
+                $window.location.href = '/findjobs';
+            }
+        }
+    });
+</script>
+
+
+
+
+
+
+<!--content close-->      
+
+    
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jobs popups</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="images/favicon.png">
+
+
+
+</head>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script>
+
+
+
+
+
+
+<body>
+
+
+ <!-- On post click ( show post description ) -->
+  <div class="modal fade" id="jobpostclick" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> Job title </h4>
+        </div>
+        
+        <div class="modal-body job_detail">
+        	<div class="User_detail">
+             	<div class="row">
+                      <div class="col-md-8">
+                          <div class="job_user_profile">
+                           <img class="img-responsive" src="images/user_profile.png" />
+                          </div>
+                          <div class="job_user_name">
+                            <h3>Rohit Sharma</h3>
+                            <p>40 min ago</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="job_detail_budget">
+                        	<h2> $100 </h2>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">OPTIONS
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Option 1</a></li>
+                                  <li><a href="#">Option 2</a></li>
+                                  <li><a href="#">Option 3</a></li>
+                                </ul>
+                            </div><!--dropdown close-->
+                            
+                        </div>
+                      </div>
+                </div>
+                
+                <div class="job_task_progress">
+                    <ul>
+                        <li style="background:#e94e38; color:#fff; border-right:1px solid #fff;">OPEN</li>
+                        <li>ACCEPTED</li>
+                        <li>COMPLETED</li>
+                    </ul>
+                </div>
+                
+                
+                <div class="job_detail_content">
+                    <h4>Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                    <span> Due in 9 days </span>
+                </div><!--job_detail_content close-->
+                
+                <div class="job_detail_map">
+                	 <div class="row-fluid">
+                        <div class="span8">
+                            <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                        </div>
+                    </div>
+				</div>
+                
+                <div class="job_detail_comments">
+                <h3>1 COMMENTS</h3>
+                
+                <div class="user_commented">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    <div class="user_commented_content">
+                    <p> Rahul Mehta </p>
+                 	<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</span>
+                    </div><!--write_comment close-->
+                
+                </div>
+                
+                
+                
+                <div class="user_comment">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    
+                    <div class="write_comment">
+                    <p> Rahul Mehta </p>
+                 	<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                    </div><!--write_comment close-->
+                    
+                </div><!--user_comment close-->
+                
+                
+                <div class="job_detail_btns">
+                
+                    <div class="fileUpload btn">
+                        <span>Upload</span>
+                        <input type="file" class="upload" />
+                    </div>
+                    
+                    <button type="button" class="btn send_comment" data-dismiss="modal">Send</button>
+                    
+                </div><!--job_detail_btns close-->
+                
+                
+                </div><!--job_detail_comments close-->
+                
+            </div><!--user detail close-->  
+                
+            
+         </div> <!-- modal-body job_detail close-->
+         
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--On post click ( show post description ) close--> 
+ 
+ 
+<!-- Posted Task -->
+  <div class="modal fade" id="postedtask" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> Posted Task Title</h4>
+        </div>
+        
+        <div class="modal-body job_detail">
+        	<div class="User_detail">
+             	<div class="row">
+                      <div class="col-md-8">
+                          <div class="job_user_profile">
+                           <img class="img-responsive" src="images/user_profile.png" />
+                          </div>
+                          <div class="job_user_name">
+                            <h3>Rohit Sharma</h3>
+                            <p>40 min ago</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="job_detail_budget">
+                        	<h2> $100 </h2>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">OPTIONS
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Option 1</a></li>
+                                  <li><a href="#">Option 2</a></li>
+                                  <li><a href="#">Option 3</a></li>
+                                </ul>
+                            </div><!--dropdown close-->
+                        </div><!--job_detail_budget close-->
+                      </div>
+                </div>
+                
+                <div class="job_task_progress">
+                    <ul>
+                        <li style="background:#e94e38; color:#fff; border-right:1px solid #fff;">OPEN</li>
+                        <li>ACCEPTED</li>
+                        <li>PAID</li>
+                        <li>REVIEWED</li>
+                    </ul>
+                </div>
+                
+                
+                <div class="job_detail_content">
+                    <h4>Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                    <span> Due in 9 days </span>
+                </div><!--job_detail_content close-->
+                
+                <div class="job_detail_map">
+                	 <div class="row-fluid">
+                        <div class="span8">
+                            <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                        </div>
+                    </div>
+				</div>
+                
+                <div class="job_detail_comments">
+                <h3>1 COMMENTS</h3>
+                
+                <div class="user_commented">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    <div class="user_commented_content">
+                    <p> Rahul Mehta </p>
+                 	<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</span>
+                    </div><!--write_comment close-->
+                
+                </div>
+                
+                
+                
+                <div class="user_comment">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    
+                    <div class="write_comment">
+                    <p> Rahul Mehta </p>
+                 	<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                    </div><!--write_comment close-->
+                    
+                </div><!--user_comment close-->
+                
+                
+                <div class="job_detail_btns">
+                
+                    <div class="fileUpload btn">
+                        <span>Upload</span>
+                        <input type="file" class="upload" />
+                    </div>
+                    
+                    <button type="button" class="btn send_comment" data-dismiss="modal">Send</button>
+                    
+                </div><!--job_detail_btns close-->
+                
+                
+                </div><!--job_detail_comments close-->
+                
+            </div><!--user detail close-->  
+                
+            
+         </div> <!-- modal-body job_detail close-->
+         
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!--Posted Task close--> 
+ 
+ 
+ <!-- Draft Task -->
+  <div class="modal fade" id="Draft_task" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Draft_task</h4>
+        </div>
+        
+        <div class="modal-body job_detail">
+        	<div class="User_detail">
+             	<div class="row">
+                      <div class="col-md-8">
+                          <div class="job_user_profile">
+                           <img class="img-responsive" src="images/user_profile.png" />
+                          </div>
+                          <div class="job_user_name">
+                            <h3>Rohit Sharma</h3>
+                            <p>40 min ago</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="job_detail_budget">
+                        	<h2> $100 </h2>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">OPTIONS
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Option 1</a></li>
+                                  <li><a href="#">Option 2</a></li>
+                                  <li><a href="#">Option 3</a></li>
+                                </ul>
+                            </div><!--dropdown close-->
+                        </div><!--job_detail_budget close-->
+                      </div>
+                </div>
+                
+                <div class="job_task_progress">
+                    <ul>
+                        <li style="background:#e94e38; color:#fff; border-right:1px solid #fff;">DRAFT</li>
+                        <li>POSTED</li>
+                    </ul>
+                </div>
+                
+                
+                <div class="job_detail_content">
+                    <h4>Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                    <span> Due in 9 days </span>
+                </div><!--job_detail_content close-->
+                
+                <div class="job_detail_map">
+                	 <div class="row-fluid">
+                        <div class="span8">
+                            <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                        </div>
+                    </div>
+				</div>
+                
+                <div class="job_detail_comments">
+                <h3>DRAFT TASK</h3>
+                
+                
+                
+                <!--<div class="job_detail_btns">
+                
+                    <div class="fileUpload btn">
+                        <span>Upload</span>
+                        <input type="file" class="upload" />
+                    </div>
+                    
+                    <button type="button" class="btn send_comment" data-dismiss="modal">Send</button>
+                    
+                </div>--><!--job_detail_btns close-->
+                
+                
+                </div><!--job_detail_comments close-->
+                
+            </div><!--user detail close-->  
+                
+            
+         </div> <!-- modal-body job_detail close-->
+         
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--Draft Task close--> 
+ 
+ 
+ <!-- ACCEPTED Task -->
+  <div class="modal fade" id="ACCEPTED" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">ACCEPTED</h4>
+        </div>
+        
+        <div class="modal-body job_detail">
+        	<div class="User_detail">
+             	<div class="row">
+                      <div class="col-md-8">
+                          <div class="job_user_profile">
+                           <img class="img-responsive" src="images/user_profile.png" />
+                          </div>
+                          <div class="job_user_name">
+                            <h3>Rohit Sharma</h3>
+                            <p>40 min ago</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="job_detail_budget">
+                        	<h2> $100 </h2>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">OPTIONS
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Option 1</a></li>
+                                  <li><a href="#">Option 2</a></li>
+                                  <li><a href="#">Option 3</a></li>
+                                </ul>
+                            </div><!--dropdown close-->
+                        </div><!--job_detail_budget close-->
+                      </div>
+                </div>
+                
+                <div class="job_task_progress">
+                    <ul>
+                        <li style="background:#e94e38; color:#fff; border-right:1px solid #fff;">ACCEPTED</li>
+                        <li>COMPLETE</li>
+                        <li>REVIEW</li>
+                    </ul>
+                </div>
+                
+                
+                <div class="job_detail_content">
+                    <h4>Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                    <span> Due in 9 days </span>
+                </div><!--job_detail_content close-->
+                
+                <div class="job_detail_map">
+                	 <div class="row-fluid">
+                        <div class="span8">
+                            <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                        </div>
+                    </div>
+				</div>
+                
+                <div class="job_detail_comments">
+                <h3>1 COMMENTS</h3>
+                
+                <div class="user_commented">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    <div class="user_commented_content">
+                    <p> Rahul Mehta </p>
+                 	<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</span>
+                    </div><!--write_comment close-->
+                
+                </div>
+                
+                
+                
+                <div class="user_comment">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    
+                    <div class="write_comment">
+                    <p> Rahul Mehta </p>
+                 	<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                    </div><!--write_comment close-->
+                    
+                </div><!--user_comment close-->
+                
+                
+                <div class="job_detail_btns">
+                
+                    <div class="fileUpload btn">
+                        <span>Upload</span>
+                        <input type="file" class="upload" />
+                    </div>
+                    
+                    <button type="button" class="btn send_comment" data-dismiss="modal">Send</button>
+                    
+                </div><!--job_detail_btns close-->
+                
+                
+                </div><!--job_detail_comments close-->
+                
+            </div><!--user detail close-->  
+                
+            
+         </div> <!-- modal-body job_detail close-->
+         
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--ACCEPTED Task close--> 
+ 
+ 
+ <!--PENDING Task -->
+  <div class="modal fade" id="Pending" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">ACCEPTED</h4>
+        </div>
+        
+        <div class="modal-body job_detail">
+        	<div class="User_detail">
+             	<div class="row">
+                      <div class="col-md-8">
+                          <div class="job_user_profile">
+                           <img class="img-responsive" src="images/user_profile.png" />
+                          </div>
+                          <div class="job_user_name">
+                            <h3>Rohit Sharma</h3>
+                            <p>40 min ago</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="job_detail_budget">
+                        	<h2> $100 </h2>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">OPTIONS
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Option 1</a></li>
+                                  <li><a href="#">Option 2</a></li>
+                                  <li><a href="#">Option 3</a></li>
+                                </ul>
+                            </div><!--dropdown close-->
+                        </div><!--job_detail_budget close-->
+                      </div>
+                </div>
+                
+                <div class="job_task_progress">
+                    <ul>
+                        <li style="background:#e94e38; color:#fff; border-right:1px solid #fff;">PENDING</li>
+                        <li>ACCEPTED</li>
+                        <li>COMPLETED</li>
+                    </ul>
+                </div>
+                
+                
+                <div class="job_detail_content">
+                    <h4>Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                    <span> Due in 9 days </span>
+                </div><!--job_detail_content close-->
+                
+                <div class="job_detail_map">
+                	 <div class="row-fluid">
+                        <div class="span8">
+                            <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                        </div>
+                    </div>
+				</div>
+                
+                <div class="job_detail_comments">
+                <h3>1 COMMENTS</h3>
+                
+                <div class="user_commented">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    <div class="user_commented_content">
+                    <p> Rahul Mehta </p>
+                 	<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</span>
+                    </div><!--write_comment close-->
+                
+                </div>
+                
+                
+                
+                <div class="user_comment">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    
+                    <div class="write_comment">
+                    <p> Rahul Mehta </p>
+                 	<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                    </div><!--write_comment close-->
+                    
+                </div><!--user_comment close-->
+                
+                
+                <div class="job_detail_btns">
+                
+                    <div class="fileUpload btn">
+                        <span>Upload</span>
+                        <input type="file" class="upload" />
+                    </div>
+                    
+                    <button type="button" class="btn send_comment" data-dismiss="modal">Send</button>
+                    
+                </div><!--job_detail_btns close-->
+                
+                
+                </div><!--job_detail_comments close-->
+                
+            </div><!--user detail close-->  
+                
+            
+         </div> <!-- modal-body job_detail close-->
+         
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--PENDING Task close--> 
+
+
+ <!--cancelled Task -->
+  <div class="modal fade" id="CANCELLED" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">CANCELLED</h4>
+        </div>
+        
+        <div class="modal-body job_detail">
+        	<div class="User_detail">
+             	<div class="row">
+                      <div class="col-md-8">
+                          <div class="job_user_profile">
+                           <img class="img-responsive" src="images/user_profile.png" />
+                          </div>
+                          <div class="job_user_name">
+                            <h3>Rohit Sharma</h3>
+                            <p>40 min ago</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="job_detail_budget">
+                        	<h2> $100 </h2>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">OPTIONS
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Option 1</a></li>
+                                  <li><a href="#">Option 2</a></li>
+                                  <li><a href="#">Option 3</a></li>
+                                </ul>
+                            </div><!--dropdown close-->
+                        </div><!--job_detail_budget close-->
+                      </div>
+                </div>
+                
+                <div class="job_task_progress">
+                    <ul>
+                        <li style="background:#e94e38; color:#fff; border-right:1px solid #fff;">CANCELLED</li>
+                        <li>REPOST</li>
+                    </ul>
+                </div>
+                
+                
+                <div class="job_detail_content">
+                    <h4>Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                    <span> Due in 9 days </span>
+                </div><!--job_detail_content close-->
+                
+                <div class="job_detail_map">
+                	 <div class="row-fluid">
+                        <div class="span8">
+                            <iframe class="map_view" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                        </div>
+                    </div>
+				</div>
+                
+                <div class="job_detail_comments">
+                <h3>1 COMMENTS</h3>
+                
+                <div class="user_commented">
+                	<img class="img img-circle" src="images/user1.png" alt="">
+                    <div class="user_commented_content">
+                    <p> Rahul Mehta </p>
+                 	<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</span>
+                    </div><!--write_comment close-->
+                
+                </div>
+                
+                
+                
+     
+                
+                
+                <!--<div class="job_detail_btns">
+                
+                    <div class="fileUpload btn">
+                        <span>Upload</span>
+                        <input type="file" class="upload" />
+                    </div>
+                    
+                    <button type="button" class="btn send_comment" data-dismiss="modal">Send</button>
+                    
+                </div>--><!--job_detail_btns close-->
+                
+                
+                </div><!--job_detail_comments close-->
+                
+            </div><!--user detail close-->  
+                
+            
+         </div> <!-- modal-body job_detail close-->
+         
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ <!--cancelled Task close--> 
+ 
+ 
+ 
+ 
+
+<a href="#" data-toggle="modal" data-target="#jobpostclick"> <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal"> On post click ( show post description )</button></a>
+
+
+<a href="#" data-toggle="modal" data-target="#postedtask"> <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">Posted Task</button></a>
+
+
+<a href="#" data-toggle="modal" data-target="#Draft_task"> <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">Draft</button></a>
+
+
+<a href="#" data-toggle="modal" data-target="#ACCEPTED"> <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">ACCEPTED</button></a>
+
+
+<a href="#" data-toggle="modal" data-target="#Pending"> <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">PENDING</button></a>
+
+
+<a href="#" data-toggle="modal" data-target="#CANCELLED"> <button type="button" class="btn btn-default create_popup_btn_done" data-dismiss="modal">CANCELLED</button></a>
+
+
+
+
+
+</body>
+</html>

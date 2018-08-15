@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Contact Us</title>
+
+<!-- 
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="static/front_end/images/favicon.png">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script>
+ -->
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+</head>
+
+
+<body ng-app="sojApp" ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+
+<!--Terms background-->
+
+
+<!--container-->
+ <div class="container page_content" style="margin-top: 90px;">
+		<div id="wrapper">
+<div id="page" class="container ">
+<div class="title ">
+				<h2 style="font-family: 'open_sansregular'; font-weight: bold; margin-top:0;">Contact Us</h2>
+				<span class="byline">Mauris vulputate dolor sit amet nibh</span>
+            </div>
+
+		<div class="col-md-6 col-sm-12" id="content">
+			
+			<img src="static/front_end/images/about.JPG" alt="" class="image image-full" style="height: auto;">
+			
+		</div>
+        
+             
+		<!--<div class="col-md-5 col-sm-12" id="sidebar">
+        
+        <h2 class="about_side_heading">Trending Jobs</h2>
+			<ul class="about_sidebar">
+            
+				<li class="first">
+					<h3><a href="#">Handyman Services</a></h3>
+					<p><a href="#">In posuere eleifend odio. Quisque semper augue mattis wisi. Pellentesque viverra vulputate enim. Aliquam erat volutpat.</a></p>
+				</li>
+				<li>
+					<h3><a href="#">House Cleaning</a></h3>
+					<p><a href="#">In posuere eleifend odio. Quisque semper augue mattis wisi. Pellentesque viverra vulputate enim. Aliquam erat volutpat.</a></p>
+				</li>
+				<li>
+					<h3><a href="#">Pickup &amp; Delivery</a></h3>
+					<p><a href="#">In posuere eleifend odio. Quisque semper augue mattis wisi. Pellentesque viverra vulputate enim. Aliquam erat volutpat.</a></p>
+				</li>
+			</ul>
+			<div id="about_cate_list">
+				<div class="about_cate_left">
+					<h2>Etiam rhoncus</h2>
+					<ul class="cate_left_list">
+						<li><a href="#">Semper quis egetmi dolore</a></li>
+						<li><a href="#">Quam turpis feugiat dolor</a></li>
+						<li><a href="#">Amet ornare hendrerit lectus</a></li>
+						<li><a href="#">Quam turpis feugiat dolor</a></li>
+						<li><a href="#">Consequat lorem phasellus</a></li>
+						<li><a href="#">Amet turpis feugiat amet</a></li>
+					</ul>
+				</div>
+				<div class="about_cate_right">
+					<h2>Integer gravida</h2>
+					<ul class="cate_left_list">
+						<li><a href="#">Semper quis egetmi dolore</a></li>
+						<li><a href="#">Quam turpis feugiat dolor</a></li>
+						<li><a href="#">Quam turpis feugiat dolor</a></li>
+						<li><a href="#">Amet ornare hendrerit lectus</a></li>
+						<li><a href="#">Consequat lorem phasellus</a></li>
+						<li><a href="#">Amet turpis feugiat amet</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>-->
+        
+         <div class="col-md-6 col-sm-12 " id="sidebar" >
+         <h3 style="text-align:left;"> Heading here </h3>
+         
+         <p>Aliquam libero. Vivamus nisl nibh, iaculis vitae, viverra sit amet, ullamcorper vitae, turpis. Aliquam erat volutpat. Vestibulum dui sem, pulvinar sed, imperdiet nec, iaculis nec, leo.</p>
+         
+         <p>Aliquam libero. Vivamus nisl nibh, iaculis vitae, viverra sit amet, ullamcorper vitae, turpis. Aliquam erat volutpat. Vestibulum dui sem, pulvinar sed, imperdiet nec, iaculis nec, leo. Fusce odio. Etiam arcu dui, faucibus eget, placerat vel, sodales eget, orci. Donec ornare neque ac sem. Mauris aliquet. Aliquam sem leo, vulputate sed, convallis at, ultricies quis, justo. Donec nonummy magna quis risus. Quisque eleifend. Phasellus tempor vehicula justo. Aliquam lacinia metus ut elit. Suspendisse iaculis mauris nec lorem. Donec leo. Vivamus fermentum nibh in augue. Praesent a lacus at urna congue rutrum. Nulla enim eros, porttitor eu, tempus id, varius non, nibh. </p>
+         </div><!--sidebar close <div class="col-md-5 col-sm-12" id="sidebar"> -->
+			
+            
+            
+	</div>	
+
+<!--container-->
+	</div>
+ </div>
+<!--container close-->   
+   
+    
+ <!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+
+<!-- ----------------------- footer close------------------------------------------- -->
+
+    
+</body>
+</html>

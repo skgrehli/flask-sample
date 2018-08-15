@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+        <!--  
+         * @Package: Ultra Admin - Responsive Theme
+         * @Subpackage: Bootstrap
+         * @Version: 4.1
+         * This file is part of Ultra Admin Theme.
+        -->
+        <title>Pending Dues | Admin</title>
+        {% include 'meta-tag.html' %}
+
+        <style type="text/css">
+            .datepickerdemoBasicUsage {
+          /** Demo styles for mdCalendar. */ }
+          .datepickerdemoBasicUsage md-content {
+            padding-bottom: 200px; }
+          .datepickerdemoBasicUsage .validation-messages {
+            font-size: 12px;
+            color: #dd2c00;
+            margin-left: 15px; }
+
+        .bidderBlock {                
+                    cursor: pointer;
+                    border-bottom: 3px solid #eaeaea;
+                    margin-bottom: 10px;
+        }
+        .bidderBlock_td .bidderBlock:last-of-type {border-bottom: none;
+
+        }
+        </style>
+
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BEGIN BODY -->
+    <body class=" " ng-app="escrowListing" ng-controller="escrowCtrl" ng-init="changeData()" ng-cloak><!-- START TOPBAR -->
+        {% include 'top-menu.html' %}
+        <!-- END TOPBAR -->
+        <!-- START CONTAINER -->
+        <div class="page-container row-fluid">
+
+            <!-- SIDEBAR - START -->
+           {% include 'side-left.html' %}
+             <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper" style="">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-title">
+
+
+                          <div class="pull-left">
+                               <h1 class="title">Pending Dues To Be Paid Out</h1>                        
+                          </div>
+
+                            <!--<div class="pull-right hidden-xs">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-basic.html">Tables</a>
+                                    </li>
+                                    <li class="active">
+                                        <strong>Data Tables</strong>
+                                    </li>
+                                </ol>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+
+
+                    <div class="content-body">  
+                        <div class="row">
+                            
+                            <div class="col-md-12 overComeDiv">
+                                <div class="widget">
+                                    <div class="widget-header transparent">
+                                        <!--<h2><strong>Sortable</strong> Table</h2>-->
+                                        
+
+                                        <!--top buttons-->
+                                        <div class="row" style="">
+                                          <div class="col-md-12 col-sm-12 col-xs-12">
+        
+        
+        
+                                                <!-- start -->
+        
+                                               <!-- <div class="row">
+                                                  <div class="col-md-4 col-sm-8 col-xs-8">
+                                                            <button type="button" class="btn btn-success" onclick="treedata_create();"><i class="fa fa-asterisk"></i> Create</button>
+                                                            <button type="button" class="btn btn-warning" onclick="treedata_rename();"><i class="fa fa-pencil"></i> Rename</button>
+                                                            <button type="button" class="btn btn-danger" onclick="treedata_delete();"><i class="fa fa-remove"></i> Delete</button>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4 pull-right">
+                                                            <input type="text" value="" id="treedata_q" placeholder="Search" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="row">
+                                                        
+                                                    </div>
+                                         -->
+                                                                                <!-- end -->
+                                        
+                                            </div>
+                                        </div>
+                                                           <!--top buttons close-->
+                           
+                                                            <!--<div class="additional-btn">
+                                                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                                                            </div>-->
+                                                        </div>
+                                                        <div class="widget-content">
+                                                            <!-- <div>
+                                                                <label><b>Filtering Data ::</b></label><br>
+                                                                <div flex-gt-xs>
+                                                                    <h4>Start Date</h4>
+                                                                    <input tpye="text" md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+                                                                  </div>
+                                                                <label><b>Filtering On the basis of status ::</b></label>
+                                                                <select ng-model="filter.status" ng-change="filterType(filter.status)" style="width: 25%;margin-left: 22px;">
+                                                                    <option value="allotted" checked="true">Approved</option>
+                                                                    <option value="cancelled" >Not Approved</option>
+                                                                    <option value="completed" >Completed</option>
+                                                                 </select>
+                                                            </div> 
+                                                            <section> </section>  -->
+
+                                                            <div class="" style="margin-bottom: 25px;">
+                                                               <!--  <section class="box ">
+                                                                    <header class="panel_header">
+                                                                        <h2 class="title pull-left">Filter by Date</h2>
+                                                                        <div class="actions panel_actions pull-right">
+                                                                        </div>
+                                                                    </header>
+                                                                    <div class="content-body">
+                                                                        <div class="row" style="margin-bottom: 25px;">
+                                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                <form name="filterDate" id="filterDate" method="POST" novalidate> 
+                                                                                   <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                                                        <label class="" style="margin-right: 10px;">Start Date</label>
+                                                                                        <input type="date" id="startgmtDate" class="form-control" ng-change="changeData()" ng-model="startgmtDate" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                                                    </div>
+                                                                                    <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                                                        <label class="" style="margin-right: 10px;">End Date</label>
+                                                                                        <input type="date" class="form-control" id="endgmtDate" ng-model="endgmtDate" ng-change="changeData()" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                                                    </div>
+                                                                               </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </section> -->
+                                                            </div>
+                                                               <!-- <ul class="nav nav-tabs" ng-init = "tab = 1">
+                                                                <li ng-class="{active:tab===1}"><a href ng-click ="tab = 1">Not Approved Payment</a></li>
+                                                                <li ng-class="{active:tab===2}"><a href ng-click ="tab = 2">Not Approved Payment</a></li>
+                                                                <li ng-class="{active:tab===3}"><a href ng-click ="tab = 3">Approved Payment</a></li>
+                                                              </ul> -->
+
+                                                            <button ng-click="export()"  style="font-size: small;"><b>Export CSV</b></button>
+                                                            <button ng-click="csv_model()" style="font-size: small;float: right;"><b>Import CSV</b></button>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="40%">Job Detail</th>
+                                                                            <th width="15%">Created By</th>
+                                                                            <th width="15%">Bidder</th>
+                                                                            <th width="20%">Paypal Details</th>
+                                                                            <th width="10%">Amount</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    
+                                                                    <tbody>
+                                                                        <tr ng-repeat="jobsPropertyArray in jobbidsArray" style="cursor: pointer;">
+                                                                            <td>
+                                                                                <span><b>Title&nbsp;:&nbsp;</b><p>{& jobsPropertyArray[3] &}&nbsp;</p><a ng-if="jobsPropertyArray.originaljobid != null" ><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+                                                                                <span><b>Description&nbsp;:&nbsp;</b><p>{& jobsPropertyArray[4] &}</p></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span><b>{& jobsPropertyArray[8] &}&nbsp;{& jobsPropertyArray[9] &}</b></span><br>
+                                                                                <span>{& jobsPropertyArray[6] &}</span><br>
+                                                                                <span>{& jobsPropertyArray[7] &}</span><br>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span><b>{& jobsPropertyArray[13] &}&nbsp;{& jobsPropertyArray[14] &}</b></span><br>
+                                                                                <span>{& jobsPropertyArray[11] &}</span><br>
+                                                                                <span>{& jobsPropertyArray[12] &}</span><br>
+                                                                            </td>.
+                                                                            <td><span><b>Paypal ID&nbsp;:&nbsp;</b><p>{& jobsPropertyArray[15] &}&nbsp;</p></span>
+                                                                               </td>
+                                                                            <td>
+                                                                                <span style="width: 100%; float: left;">{& jobsPropertyArray[2] | currency &}</span><br/><br/><br/><br/>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- <div class="table-responsive" ng-show="tab === 2">
+                                                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Job Detail</th>
+                                                                            <th>Created By</th>
+                                                                            <th>Bidder</th>
+                                                                            <th>Status</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    
+                                                                    <tbody>
+                                                                        <tr ng-repeat="jobsPropertyArray in jobbidsArray" style="cursor: pointer;" ng-if="jobsPropertyArray.biddreInfoDic[0].completionstatus == 'rejected' && jobsPropertyArray.biddreInfoDic[0].status == 'rejectedbybidder'">
+                                                                            <td ng-click="getdetails_job(jobsPropertyArray._id)">
+                                                                                <span><b>Title&nbsp;:&nbsp;</b><p>{& jobsPropertyArray.jobTitle &}&nbsp;</p><a ng-if="jobsPropertyArray.originaljobid != null" href="http://geri.in:5000/job/"{& jobsPropertyArray.jobdescriptionurlhash &}><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+                                                                                <span><b>Description&nbsp;:&nbsp;</b><p>{& jobsPropertyArray.jobDescription &}</p></span>
+                                                                                <span><p><i class="fa fa-comment"></i><span>{& jobsPropertyArray.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobsPropertyArray.job_bids_counts &}</span></p></span>
+                                                                            </td>
+                                                                            <td ng-click="getdetails_user(jobsPropertyArray.createdInfoCollection.createdByuserid)">
+                                                                                <span><b>{& jobsPropertyArray.createdInfoCollection.createdByfirstname &}&nbsp;{& jobsPropertyArray.createdInfoCollection.createdBylastname &}</b></span><br>
+                                                                                <span>{& jobsPropertyArray.createdInfoCollection.createdByemail &}</span><br>
+                                                                                <span>{& jobsPropertyArray.createdInfoCollection.createdBymobile &}</span><br>
+                                                                                <span><p><i class="fa fa-pencil-square-o"></i><span>{& jobsPropertyArray.createdInfoCollection.createdByuser_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobsPropertyArray.createdInfoCollection.createdByuser_biding_count &}</span></p></span>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'rejected'">
+                                                                                    <span><b>{& biddreInfoDicArray.bidByfirstname &}&nbsp;{& biddreInfoDicArray.bidBylastname &}</b></span><br>
+                                                                                    <span>{& biddreInfoDicArray.bidByemail &}</span><br>
+                                                                                    <span>{& biddreInfoDicArray.bidBymobile &}</span><br>
+                                                                                    <span><p><i class="fa fa-pencil-square-o"></i><span>{& biddreInfoDicArray.bidByuser_comment_count &}</span> <i class="fa fa-legal"></i><span>{& biddreInfoDicArray.bidByuser_biding_count &}</span></p></span>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'rejected'" style="padding-bottom: 10px;">
+                                                                                    <span ng-if="biddreInfoDicArray.completionstatus == 'rejected'" style="width: 100%; float: left;"><b>Not Approved</b></span><br/><br/><br/><br/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'rejected'" style="padding-bottom: 10px;">
+                                                                                    <span style="width: 100%; float: left;">{& biddreInfoDicArray.finalbidamount | currency &}</span><br/><br/><br/><br/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'rejected'" style="padding-bottom: 10px;">
+                                                                                    <span ng-if="biddreInfoDicArray.completionstatus == 'rejected'" style="width: 100%; float: left;">{& jobsPropertyArray.remarks &}</span><br/><br/><br/><br/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-if="biddreInfoDicArray.completionstatus == 'rejected'" style="padding-bottom: 6px;">
+                                                                                    <div class="btn-group btn-group-xs">
+                                                                                    <button type="button" class="btn btn-danger" ng-model="act_deactive" ng-click="refund(jobsPropertyArray.createdInfoCollection.createdByuserid)" style="width: 90px;">Refund</button>
+                                                                                     <button type="button" class="btn btn-info" ng-click="edit(jobsPropertyArray.jobid)">Edit</button> 
+                                                                                </div>
+                                                                                <div class="btn-group btn-group-xs">
+                                                                                    <button type="button" class="btn btn-success" ng-model="act_deactive" ng-click="pay(jobsPropertyArray.createdInfoCollection.createdByuserid)" style="width: 90px;">Pay</button>
+                                                                                     <button type="button" class="btn btn-info" ng-click="edit(jobsPropertyArray.jobid)">Edit</button> 
+                                                                                </div>
+                                                                                <br/><br/><br/><br/>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="table-responsive" ng-show="tab === 3">
+                                                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Job Detail</th>
+                                                                            <th>Created By</th>
+                                                                            <th>Bidder</th>
+                                                                            <th>Status</th>
+                                                                            <th>Escrow Recevied</th>
+                                                                            <th>Remark / Reasons</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    
+                                                                    <tbody>
+                                                                        <tr ng-repeat="jobsPropertyArray in jobbidsArray" style="cursor: pointer;" ng-if="jobsPropertyArray.biddreInfoDic[0].completionstatus == 'approved' && jobsPropertyArray.biddreInfoDic[0].status == 'selectedbyjobber'">
+                                                                            <td ng-click="getdetails_job(jobsPropertyArray._id)">
+                                                                                <span><b>Title&nbsp;:&nbsp;</b><p>{& jobsPropertyArray.title &}&nbsp;</p><a ng-if="jobsPropertyArray.originaljobid != null" href="http://geri.in:5000/job/"{& jobsPropertyArray.jobdescriptionurlhash &}><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+                                                                                <span><b>Description&nbsp;:&nbsp;</b><p>{& jobsPropertyArray.description &}</p></span>
+                                                                                <span><p><i class="fa fa-comment"></i><span>{& jobsPropertyArray.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobsPropertyArray.job_bids_counts &}</span></p></span>
+                                                                            </td>
+                                                                            <td ng-click="getdetails_user(jobsPropertyArray.createdInfoCollection.createdByuserid)">
+                                                                                <span><b>{& jobsPropertyArray.createdInfoCollection.createdByfirstname &}&nbsp;{& jobsPropertyArray.createdInfoCollection.createdBylastname &}</b></span><br>
+                                                                                <span>{& jobsPropertyArray.createdInfoCollection.createdByemail &}</span><br>
+                                                                                <span>{& jobsPropertyArray.createdInfoCollection.createdBymobile &}</span><br>
+                                                                                <span><p><i class="fa fa-pencil-square-o"></i><span>{& jobsPropertyArray.createdInfoCollection.createdByuser_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobsPropertyArray.createdInfoCollection.createdByuser_biding_count &}</span></p></span>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'approved'">
+                                                                                    <span><b>{& biddreInfoDicArray.bidByfirstname &}&nbsp;{& biddreInfoDicArray.bidBylastname &}</b></span><br>
+                                                                                    <span>{& biddreInfoDicArray.bidByemail &}</span><br>
+                                                                                    <span>{& biddreInfoDicArray.bidBymobile &}</span><br>
+                                                                                    <span><p><i class="fa fa-pencil-square-o"></i><span>{& biddreInfoDicArray.bidByuser_comment_count &}</span> <i class="fa fa-legal"></i><span>{& biddreInfoDicArray.bidByuser_biding_count &}</span></p></span>                                                                                    
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'approved'" style="padding-bottom: 10px;">
+                                                                                    <span ng-if="biddreInfoDicArray.completionstatus == 'approved'" style="width: 100%; float: left;"><b>Approved</b></span><br/><br/><br/><br/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="bidderBlock_td">
+                                                                                <div class="bidderBlock" ng-repeat="biddreInfoDicArray in jobsPropertyArray.biddreInfoDic" ng-click="getdetails_user(biddreInfoDicArray.bidByuserid)" ng-if="biddreInfoDicArray.completionstatus == 'approved'" style="padding-bottom: 10px;">
+                                                                                    <span style="width: 100%; float: left;">{& biddreInfoDicArray.finalbidamount | currency &}</span><br/><br/><br/><br/>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        </div><!--row close-->
+                    </div><!--content body close-->
+                        
+                        
+                    <button type="button" class="btn btn-info btn-lg" id="modal_user_Button" data-toggle="modal" data-target="#myModal_user" style="display: none;">Open Modal</button>
+                    <button type="button" class="btn btn-info btn-lg" id="modal_job_Button" data-toggle="modal" data-target="#myModal_job" style="display: none;">Open Modal</button>
+
+                    <div id="myModal_job123455" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" style="text-align: center;"><b>Job Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 20px; ">
+                                    <!-- <div class="col-md-12" style="text-align: center;">
+                                        <h4><p><b>Job</b></p></h4>
+                                        <hr>
+                                    </div> -->
+                                    <div class="col-md-6">
+                                        <p><b>Title</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{& jobsArrayDetail.title &}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Description</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{& jobsArrayDetail.description &}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Budget</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>{& jobsArrayDetail.budget | currency &}</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Persons Required</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{& jobsArrayDetail.personsrequired &}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Address</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- <p>4{& jobsArrayDetail.addressJSON &}</p> -->
+                                        <p>{& jobsArrayDetail.address &}<br>{& jobsArrayDetail.city &},&nbsp;{& jobsArrayDetail.state &}<br>{& jobsArrayDetail.country &}&nbsp;-&nbsp;{& jobsArrayDetail.pincode &}</p>
+                                    </div>
+                                    <div class="col-md-6" ng-if="jobsArrayDetail.originaljobid != null">
+                                        <p><b>Original JobID</b></p>
+                                    </div>
+                                    <div class="col-md-6" ng-if="jobsArrayDetail.originaljobid != null">
+                                        <p>{& jobsArrayDetail.originaljobid &}</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                          </div>
+                          <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div> -->
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="myModal_user" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h4 class="modal-title" style="text-align: center; color:#fff;"><b>Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-5 text-left">
+                                        <figure>
+                                            <img ng-if="jobsUserArrayDetail.picurl == ''" src="http://saveonjobs.com/static/front_end/images/profile/user-no-image.jpg" alt="" class="img-circle img-responsive">
+                                            <img ng-if="jobsUserArrayDetail.picurl != ''" src="http://saveonjobs.com/static/front_end/images/profile/{& jobsUserArrayDetail.picurl &}" alt="" class="img-circle img-responsive">
+                                        </figure>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-7">
+                                        <h2>{& jobsUserArrayDetail.firstname &}&nbsp;{& jobsUserArrayDetail.lastname &}</h2>
+                                        <p><span ng-if="jobsUserArrayDetail.address != '' && jobsUserArrayDetail.address != ','">{& jobsUserArrayDetail.address &}<br></span><strong><span>{& jobsUserArrayDetail.city &},&nbsp;{& jobsUserArrayDetail.state &}</span><br><span>{& jobsUserArrayDetail.country &}</span><span ng-if="jobsUserArrayDetail.pincode != ''">&nbsp;-&nbsp;{& jobsUserArrayDetail.pincode &}</span></strong></p>
+
+                                        <p>{& jobsUserArrayDetail.email &}</p>
+                                        <p>{& jobsUserArrayDetail.mobile &}</p>
+                                        <p><small am-time-ago="jobsUserArrayDetail.createdatetimeinseconds"></small></p>
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> About</strong></h5>
+                                        <p><small>{& jobsUserArrayDetail.aboutme &}</small></p>
+                                        <p ng-if="jobsUserArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong>Skills</strong></h5>                    
+                                        <p><small class="text-fields" ng-repeat="skillNameData in jobsUserArrayDetail.skillsJSON" >{& skillNameData.skillname &}&nbsp;</small></p>
+                                        <p ng-if="jobsUserArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Jobs Posted / Bids Counts / Comments Counts</strong></h5>                    
+                                        <p><small>Job Posted : <strong>{& jobsUserArrayDetail.total_Jobs &}</strong><br>Bids On : <strong>{& jobsUserArrayDetail.totalJObsBids &}</strong><br>Bids and Completed : <strong>{& jobsUserArrayDetail.totalJObsBidsCompleted &}</strong><br>Comments : <strong>{& jobsUserArrayDetail.totalJobsComments &}</strong></small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Verification Status</strong></h5>                    
+                                        <p><small>
+                                            <ul>
+                                                <!-- <li ng-if="userData.proJSON.creditcardverified == true"><i class="fa icon_round fa-credit-card" aria-hidden="true" ></i> <span> Credit Card</span> </li> -->
+                                                <li ng-if="jobsUserArrayDetail.proJSON.mobileverified == true"><i class="fa icon_round fa-mobile" aria-hidden="true" ></i> <span>Mobile</span> </li>
+                                                <li ng-if="jobsUserArrayDetail.proJSON.facebookapproved == true"><i class="fa icon_round fa-round fa-facebook" aria-hidden="true" ></i> <span> Facebook </span> </li>
+                                                <li ng-if="jobsUserArrayDetail.proJSON.policeverification == true"><i class="fa icon_round fa-gavel" aria-hidden="true" ></i> <span> Police </span> </li>
+                                                <li ng-if="jobsUserArrayDetail.proJSON.professionalcertificationverified == true"><i class="fa icon_round fa-briefcase" aria-hidden="true" ></i> <span>PRO</span> </li>
+                                            </ul>
+                                        </small></p>
+                                        <p ng-if="jobsUserArrayDetail.proJSON.mobileverified != true && jobsUserArrayDetail.proJSON.facebookapproved != true && jobsUserArrayDetail.proJSON.policeverification != true && jobsUserArrayDetail.proJSON.professionalcertificationverified != true"><small>
+                                            Nothing is Verified.
+                                        </small></p>
+                                        
+                                    </div>                                    
+                                </div>
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Education</strong></h5>                    
+                                        <p ng-if="jobsUserArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                       
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Work experience</strong></h5>                    
+                                        <p ng-if="jobsUserArrayDetail.aboutme == ''"><small>No Data Found.</small></p>                                        
+                                    </div>                                    
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="myModal_job" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h4 class="modal-title" style="text-align: center; color:#fff;"><b>Job Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px; border-bottom: 1px solid #d6d6d6;">
+                                    <p style="font-style: italic;color: rgb(128, 128, 128);"><small>(JOB ID {& jobsArrayDetail.jobid &})</small></p>
+                                    <p><strong style="font-size: 17px;">Title </strong>{& jobsArrayDetail.title &}</p>
+                                    <p><strong style="font-size: 17px;">Description </strong>{& jobsArrayDetail.description &}</p>
+                                </div>
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-6 text-left" style="margin-top: 5px; padding-left: 0;">
+                                        <p style="font-style: italic;color: rgb(128, 128, 128);"><strong>Peoples ({& jobsArrayDetail.personsrequired &})</strong></p>
+                                        <h6 style="font-style: italic;color: rgb(128, 128, 128);">Due Date <p>{& jobsArrayDetail.duedate &}</p></h6>
+                                        <p style="font-style: italic;color: rgb(128, 128, 128);">Job Created On <small>{& jobsArrayDetail.jobcreatedatetime &}</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 text-left">
+                                        <h3><p><strong>{& jobsArrayDetail.budget | currency &}</strong></p></h3>
+                                        <p style="text-transform: uppercase;">Job {& jobsArrayDetail.jobstatus &}</p>
+                                        <p style="text-transform: uppercase;font-style: italic;color: rgb(128, 128, 128);" ng-if="jobsArrayDetail.online == true">(Online)</p>
+                                        <p style="text-transform: uppercase;font-style: italic;color: rgb(128, 128, 128);" ng-if="jobsArrayDetail.online == false">(Offline)</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider text-left">
+                                    <h5><strong style="font-size: 17px;"> Address</strong></h5>
+                                    <p><small>{& jobsArrayDetail.address &}&nbsp;{& jobsArrayDetail.city &},&nbsp;{& jobsArrayDetail.state &},&nbsp;{& jobsArrayDetail.country &}&nbsp;-&nbsp;{& jobsArrayDetail.pincode &}</small></p>
+                                </div>
+                                <div class="col-xs-12 divider">
+                                    <h5 class="text-left"><strong style="font-size: 17px;">Basic Details</strong></h5>
+                                    <div class="col-xs-12 col-sm-6 text-left">
+                                        <p>Job Bids <small>({& jobsArrayDetail.job_biding_count &})</small></p>
+                                        <p>Bidder Selected <small>({& jobsArrayDetail.job_bidder_selected &})</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 text-left">
+                                        <p>Bidder Rejected <small>({& jobsArrayDetail.job_bidder_rejected &})</small></p>
+                                        <p>Comments <small>({& jobsArrayDetail.job_comment_count &})</small></p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                
+                <div class="chatapi-windows ">
+    
+    
+                </div>    
+                </div>
+        <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+
+          <div class="modal fade" id="myModalcsv" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">CSV Insert</h4>
+                </div>
+                
+                <div class="modal-body">
+                
+                   <form name="addlocationAdmin" id="addlocationAdmin" novalidate> 
+                       <div class="form-group">
+
+                            <label class="" for="exampleInputEmail3" style="margin-right: 10px;">Import CSV</label>
+                            <input type="file" class="form-control" style="margin-right: 20px;" onchange="angular.element(this).scope().readURL(this,'csv')" autofocus autocomplete="off" ng-model="csv" accept=".csv" file-reader="fileContent" required>
+                            
+                        </div>
+                        
+                           <button type="button" class="btn btn-primary" data-dismiss="modal" ng-model="saveButton" ng-if="flag == false" ng-click="csvadd()">ADD</button>
+                    </form>
+                </div>
+                
+                
+                <div class="modal-footer">
+                 <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-info btn-lg" id="modalcsv" data-toggle="modal" data-target="#myModalcsv" style="display: none;">Open Modal</button>
+
+        {% include 'footer.html' %}
+        
+        <script>
+            var app = angular.module('escrowListing', ['ngFileUpload','datatables']);
+            app.config(function($interpolateProvider) {
+                $interpolateProvider.startSymbol('{&');
+                $interpolateProvider.endSymbol('&}');
+            });
+
+            app.controller('escrowCtrl', function($scope,$http,$window,Upload, DTOptionsBuilder, DTColumnBuilder) 
+            {
+                $scope.startgmtDate = new Date();
+                $scope.startgmtDate.setMonth($scope.startgmtDate.getMonth() - 1);
+                $scope.endgmtDate = new Date();
+
+                $scope.message = "";
+
+                $scope.count = 0;
+                $scope.userid = {{session['adminid']}};
+                $scope.token = "{{session['token']}}";
+
+                $scope.filter = {};
+                $scope.filter.status = "allotted";
+
+                $scope.jobData = false;
+                $scope.userData = false;
+
+                $scope.myDate = new Date();
+
+                $scope.csv_present = false;
+                $scope.csv_data = [];
+                $scope.flag = false;
+
+                $scope.minDate = new Date(
+                    $scope.myDate.getFullYear(),
+                    $scope.myDate.getMonth() - 2,
+                    $scope.myDate.getDate());
+
+                $scope.maxDate = new Date(
+                    $scope.myDate.getFullYear(),
+                    $scope.myDate.getMonth() + 2,
+                    $scope.myDate.getDate());
+
+                $scope.onlyWeekendsPredicate = function(date) {
+                    var day = date.getDay();
+                    return day === 0 || day === 6;
+                };
+
+                // console.log($scope.count);
+                $scope.isSaveDisabled = false;
+                $scope.isUpdateDisabled = true;
+
+                $scope.csvadd = function(){
+                    if($scope.csv_present == true){
+                        $scope.upload($scope.csv_data);
+                    }
+                    else{
+                        swal("You have to add a file to add locations");
+                    }
+                }
+
+                $scope.upload = function (file) {
+                  for (var i=0; i<file.length ; i++){
+                    var upload_data = {"mycsv":file[i]};
+                    console.log(upload_data);
+                    Upload.upload({
+                      url: '/list/import',
+                      method: 'POST',
+                      data: upload_data
+                    }).success(function(data, status, headers, config) {
+
+                        if (data['status'] == 200){
+                            swal(data['message']);
+                            $scope.changeData();
+                        }
+                        else if(data['status'] == 201){
+                            $window.location.href = "http://saveonjobs.com/static/images/category/error_records.csv"
+                            swal(data['message']);
+                            $scope.changeData();
+                        }
+
+                      }).error(function(data, status, headers, config) {
+                      });
+                    }
+                    $scope.csv_data = []; 
+                };
+
+
+                $scope.readURL = function (input,type) {
+                  var file_size = 0; 
+                  url_data = input.files;
+                  if (input.files) {
+                    for(i=0;i<input.files.length;i++)
+                    {
+                      var reader = new FileReader();
+                      reader.onload = function (e) {
+                            url_data.$ngfDataUrl = e.target.result ;
+                      };
+                      reader.readAsDataURL(input.files[i]);
+                    }
+                 }
+                  $scope.csv_data = url_data;
+                  $scope.csv_present = true;
+                  console.log($scope.csv_data);
+                }   
+
+
+                $scope.csv_model = function(){
+                    angular.element('#modalcsv').trigger('click');
+                }
+
+                $scope.changeData = function()
+                {
+                    // console.log($scope.startgmtDate + " " + $scope.endgmtDate);
+
+                    $scope.endgmtDatemonth = $scope.endgmtDate.getMonth() + 1;
+                    $scope.endgmtDateday = $scope.endgmtDate.getDate();
+                    $scope.startgmtDatemonth = $scope.startgmtDate.getMonth() + 1;
+                    $scope.startgmtDateday = $scope.startgmtDate.getDate();
+                    
+                    if($scope.startgmtDatemonth < 10)
+                    {
+                        $scope.startgmtDatemonth = "0" + $scope.startgmtDatemonth;
+                    }
+                    if($scope.startgmtDateday < 10)
+                    {
+                        $scope.startgmtDateday = "0" + $scope.startgmtDateday;
+                    }
+                    if($scope.endgmtDatemonth < 10)
+                    {
+                        $scope.endgmtDatemonth = "0" + $scope.endgmtDatemonth;
+                    }
+                    if($scope.endgmtDateday < 10) 
+                    {
+                        $scope.endgmtDateday = "0" + $scope.endgmtDateday;
+                    }
+
+                    // var before = day + '-' + oldmonth + '-' + $scope.startgmtDate.getFullYear();
+                    $scope.startDateTime = $scope.startgmtDateday + '-' + $scope.startgmtDatemonth + '-' + $scope.startgmtDate.getFullYear() + ' ' + '00:00:00';
+
+                    // var today = endgmtDateday + '-' + endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear();
+                    $scope.endDateTime = $scope.endgmtDateday + '-' + $scope.endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear() + ' ' + '23:59:59';
+                
+                    // console.log($scope.startDateTime + " " + $scope.endDateTime);
+
+                    $http({
+                            url: "/escrow/list/all",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            console.log(data);
+                            $scope.jobbidsArray = data['dataArray'];
+                            $scope.count++;
+                            console.log($scope.jobbidsArray);
+                            
+
+                        }).error(function(data, status, headers, config) {
+                            $scope.status = status;
+                        });
+
+                }
+
+                $scope.export = function(){
+                    
+                    $window.location.href = "http://saveonjobs.com/static/images/category/due_payment.csv"
+                           
+                }
+
+                $scope.filterType = function(statusType)
+                {
+                    $scope.filter.status = statusType;
+                }
+                
+                $scope.payBudget = function(user_id, total_budget, pay_remark) 
+                    {
+                        data123 = {"userid":$scope.userid, "token":$scope.token, "user_id":user_id, "total_budget":total_budget, "pay_budget":angular.element('#pay_amount').val(), "pay_remark":pay_remark}
+                        // // console.log(data123);
+                        $http({
+                            url: "/ledger/paidout",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "user_id":user_id, "total_budget":total_budget, "pay_budget":angular.element('#pay_amount').val(), "pay_remark":pay_remark}
+                        }).success(function(data, status, headers, config) 
+                        {
+                            if (data['status'] == 200)
+                            {
+                                swal("Paid!", "Paid Successfully.", "success");
+                            }
+
+                        }).error(function(data, status, headers, config) {
+                            $scope.status = status;
+                        });
+                    }
+
+            });
+        </script>
+    </body>
+</html>
+
+
+

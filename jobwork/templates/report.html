@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+        <!--  
+         * @Package: Ultra Admin - Responsive Theme
+         * @Subpackage: Bootstrap
+         * @Version: 4.1
+         * This file is part of Ultra Admin Theme.
+        -->
+        <title>Reports | Admin</title>
+        {% include 'meta-tag.html' %}
+
+    <style type="text/css">
+        .active {
+            background-color: rgb(233, 78, 56);
+        }
+    </style>
+
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BEGIN BODY -->
+    <body class=" " ng-app="reportsListing" ng-controller="reportsCtrl" ng-init="changeData()"><!-- START TOPBAR -->
+        {% include 'top-menu.html' %}
+        <!-- END TOPBAR -->
+        <!-- START CONTAINER -->
+        <div class="page-container row-fluid">
+
+            <!-- SIDEBAR - START -->
+           {% include 'side-left.html' %}
+             <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper" style="">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-title">
+
+
+                          <div class="pull-left">
+                               <h1 class="title">Reports</h1>                        
+                          </div>
+
+                            <!--<div class="pull-right hidden-xs">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-basic.html">Tables</a>
+                                    </li>
+                                    <li class="active">
+                                        <strong>Data Tables</strong>
+                                    </li>
+                                </ol>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+
+
+                    <div class="content-body">  
+
+                        <section>
+                            <div class="" style="margin-bottom: 25px;">
+                                <section class="box ">
+                                    <header class="panel_header">
+                                        <h2 class="title pull-left">Filter by Date</h2>
+                                        <div class="actions panel_actions pull-right">
+                                            <!--<i class="box_toggle fa fa-chevron-down"></i>-->
+                                            <!--<i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>-->
+                                            <!--<i class="box_close fa fa-times"></i>-->
+                                        </div>
+                                    </header>
+                                    <div class="content-body">
+                                        <div class="row" style="margin-bottom: 25px;">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <form name="filterDate" id="filterDate" method="POST" novalidate> 
+                                                   <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                        <label class="" style="margin-right: 10px;">Start Date</label>
+                                                        <input type="date" id="startgmtDate" class="form-control" ng-change="changeData()" ng-model="startgmtDate" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                    </div>
+                                                    <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                        <label class="" style="margin-right: 10px;">End Date</label>
+                                                        <input type="date" class="form-control" id="endgmtDate" ng-model="endgmtDate" ng-change="changeData()" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                    </div>
+                                               </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                           <ul class="nav nav-tabs" ng-init = "tab = 1">
+                            <li ng-class="{active:tab===1}"><a href ng-click ="tab = 1">Users</a></li>
+                            <li ng-class="{active:tab===2}"><a href ng-click ="tab = 2">Jobs</a></li>
+                            <li ng-class="{active:tab===3}"><a href ng-click ="tab = 3">Comments</a></li>
+                            <li ng-class="{active:tab===4}"><a href ng-click ="tab = 4">Review Lists</a></li>
+                          </ul>
+                       
+                            <div ng-show="tab === 1">
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th style="width: 10%;">Profile Image</th>
+                                            <th style="width: 25%;">User Profile</th>
+                                            <th style="width: 25%;">Report By</th>
+                                            <th style="width: 10%;">Action</th>
+                                            <th style="width: 10%;">Status</th>
+											<th style="width: 10%;">Option</th>
+											 -->
+											 <th style="width: 35%;">User Details</th>
+											 <th style="width: 35%;">Report By</th>
+											 <th style="width: 10%;">Action</th>
+                                            <th style="width: 10%;">Status</th>
+											<th style="width: 10%;">Option</th>
+											
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="userPropertyArray in userArray" class="view_detail" >
+                                            <td ng-click="getdetails_user(userPropertyArray.userid)">
+												<div style="float:left;" >
+													<div style="float:left;"><img src="{&userPropertyArray.url&}{&userPropertyArray.picurl&}" alt="{& userPropertyArray.userid &}" height="140" width="140" ></div>
+													<div style="float:left;margin-left:10px;"><span><strong>{& userPropertyArray.firstname &}&nbsp;{& userPropertyArray.lastname &}</strong></span><br><span>{& userPropertyArray.email&}</span><br><span>{& userPropertyArray.mobile &}</span></div>
+												</div>
+											</td>
+                                            <td ng-click="getdetails_user(userPropertyArray.by_userid)">
+												<div style="float:left;">
+													<div style="float:left;"><img src="{&userPropertyArray.url&}{&userPropertyArray.by_picurl&}" alt="{& userPropertyArray.by_userid &}" height="150" width="150">
+													</div>
+													<div style="float:left;margin-left:10px;">
+														<span>{& userPropertyArray.by_firstname &}&nbsp;{& userPropertyArray.by_lastname &}</span><br>
+														<span>{& userPropertyArray.by_email &}</span><br>
+														<span>{& userPropertyArray.by_mobile &}</span>
+													</div>
+												</div>
+											</td>
+                                            <td ng-if="userPropertyArray.reportresolved == true">Resolved</td>
+                                            <td ng-if="userPropertyArray.reportresolved == false">Pending</td>
+                                            <td ng-if="userPropertyArray.active == true">Approved</td>
+                                            <td ng-if="userPropertyArray.active == false">Rejected</td>
+                                            <td>
+                                                <span class="btn-group btn-group-xs" ng-if="userPropertyArray.active == true">
+                                                    <button ng-if="userPropertyArray.reportresolved == false" type="button" class="btn btn-info" ng-click="resolved(userPropertyArray.reportid, 'userreport')">Resolve</button><button type="button" class="btn btn-danger" ng-model="act_deactive" ng-click="deactivate(userPropertyArray.reportid, 'userreport')" style="width: 90px;">Rejected</button>
+                                                </span>
+                                                <span class="btn-group btn-group-xs" ng-if="userPropertyArray.active == false">
+                                                    <button ng-if="userPropertyArray.reportresolved == false" type="button" class="btn btn-info" ng-click="resolved(userPropertyArray.reportid, 'userreport')">Resolve</button><button type="button" class="btn btn-success" ng-model="act_deactive" ng-click="activate(userPropertyArray.reportid, 'userreport')" style="width: 90px;">Approved</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-show="tab === 2">
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">Job Details</th>
+                                            <th style="width: 25%;">Report By</th>
+                                            <th style="width: 10%;">Action</th>
+                                            <th style="width: 10%;">Status</th>
+                                            <th style="width: 20%;" data-sortable="false">Option</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr ng-repeat="jobPropertyArray in jobArray">
+											<td ng-click=getdetails_job(jobPropertyArray.jobid)>
+												<span>{& jobPropertyArray.jobid &}<b>Title&nbsp;:&nbsp;</b><p>{& jobPropertyArray.title &}&nbsp;</p><a ng-if="jobsPropertyArray.originaljobid != null" href="http://geri.in:5000/job/"{& jobsPropertyArray.jobdescriptionurlhash &}><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+												<span><b>Description&nbsp;:&nbsp;</b><p>{& jobPropertyArray.description &}</p></span>
+												<span><p><i class="fa fa-comment"></i><span>{& jobPropertyArray.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobsPropertyArray.job_bids_counts &}</span></p></span>
+											</td>
+                                            <!-- <td><span><strong>{& jobPropertyArray.firstname &}&nbsp;{& jobPropertyArray.lastname &}</strong></span><br><span>{& jobPropertyArray.email&}</span><br><span>{& jobPropertyArray.mobile &}</span></td>
+                                             -->
+											<td ng-click="getdetails_user(jobPropertyArray.userid)">
+												<div style="float:left;">
+													<div style="float:left;">
+                                                        <img src="{&jobPropertyArray.url&}{&jobPropertyArray.picurl&}" alt="{& jobPropertyArray.userid &}" height="150" width="150">
+													</div>
+													<div style="float:left;margin-left:10px;">
+														<span>{& jobPropertyArray.firstname &}&nbsp;{& jobPropertyArray.lastname &}</span><br>
+														<span>{& jobPropertyArray.email &}</span><br>
+														<span>{& jobPropertyArray.mobile &}</span>
+													</div>
+												</div>
+											</td>
+
+											
+											<td ng-if="jobPropertyArray.reportresolved == true">Resolved</td>
+                                            <td ng-if="jobPropertyArray.reportresolved == false">Pending</td>
+                                            <td ng-if="jobPropertyArray.active == true">Approved</td>
+                                            <td ng-if="jobPropertyArray.active == false">Rejected</td>
+                                            <td>
+                                                <span class="btn-group btn-group-xs" ng-if="jobPropertyArray.active == true">
+                                                    <button type="button" class="btn btn-info" ng-if="jobPropertyArray.reportresolved == false" ng-click="resolved(jobPropertyArray.reportid , 'jobreport')">Resolve</button><button type="button" class="btn btn-danger" ng-model="act_deactive" ng-click="deactivate(jobPropertyArray.reportid, 'jobreport')" style="width: 90px;">Rejected</button>
+                                                </span>
+                                                <span class="btn-group btn-group-xs" ng-if="jobPropertyArray.active == false">
+                                                    <button type="button" class="btn btn-info" ng-if="jobPropertyArray.reportresolved == false" ng-click="resolved(jobPropertyArray.reportid, 'jobreport')">Resolve</button><button type="button" class="btn btn-success" ng-model="act_deactive" ng-click="activate(jobPropertyArray.reportid, 'jobreport')" style="width: 90px;">Approved</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-show="tab === 3">
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 25%;">Comment</th>
+											<th style="width: 25%;">Job Details</th>
+											
+                                            <th style="width: 25%;">Report By</th>
+                                            <th style="width: 10%;">Action</th>
+                                            <th style="width: 10%;">Status</th>
+                                            <th style="width: 20%;" data-sortable="false">Option</th>
+                                        </tr>
+                                    </thead>
+
+                                    
+                                    <tbody>
+                                        <tr ng-repeat="commentPropertyArray in commentArray"  >                                        
+                                            <td><span><strong>{& commentPropertyArray.firstname &}&nbsp;{& commentPropertyArray.lastname &}</strong></span><br><span>{& commentPropertyArray.email&}</span><br><span>{& commentPropertyArray.mobile &}</span></td>
+                                            
+											
+											<td ng-click="getdetails_user(jobsPropertyArray.jobid)">
+												<span><b>Title&nbsp;:&nbsp;</b><p>{& jobPropertyArray.title &}&nbsp;</p><a ng-if="jobsPropertyArray.originaljobid != null" href="http://geri.in:5000/job/"{& jobsPropertyArray.jobdescriptionurlhash &}><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+												<span><b>Discription&nbsp;:&nbsp;</b><p>{& jobPropertyArray.description &}</p></span>
+												<span><p><i class="fa fa-comment"></i><span>{& jobPropertyArray.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobsPropertyArray.job_bids_counts &}</span></p></span>
+											</td>
+                                            <!-- <td><span><strong>{& jobPropertyArray.firstname &}&nbsp;{& jobPropertyArray.lastname &}</strong></span><br><span>{& jobPropertyArray.email&}</span><br><span>{& jobPropertyArray.mobile &}</span></td>
+                                             -->
+											<td>
+												<div style="float:left;">
+													<div style="float:left;"><img src="{&jobPropertyArray.url&}{&jobPropertyArray.picurl&}" alt="{& jobPropertyArray.userid &}" height="150" width="150">
+													</div>
+													<div style="float:left;margin-left:10px;">
+														<span>{& jobPropertyArray.firstname &}&nbsp;{& jobPropertyArray.lastname &}</span><br>
+														<span>{& jobPropertyArray.email &}</span><br>
+														<span>{& jobPropertyArray.mobile &}</span>
+													</div>
+												</div>
+											</td>
+											
+											
+											<td ng-if="commentPropertyArray.reportresolved == true">Resolved</td>
+                                            <td ng-if="commentPropertyArray.reportresolved == false">Pending</td>
+                                            <td ng-if="commentPropertyArray.active == true">Approved</td>
+                                            <td ng-if="commentPropertyArray.active == false">Rejected</td>
+                                            <td>
+                                                <span class="btn-group btn-group-xs" ng-if="commentPropertyArray.active == true">
+                                                    <button type="button" class="btn btn-info" ng-if="commentPropertyArray.reportresolved == false" ng-click="resolved(commentPropertyArray.reportid, 'commentreport')">Resolve</button><button type="button" class="btn btn-danger" ng-model="act_deactive" ng-click="deactivate(commentPropertyArray.reportid, 'commentreport')" style="width: 90px;">Rejected</button>
+                                                </span>
+                                                <span class="btn-group btn-group-xs" ng-if="commentPropertyArray.active == false">
+                                                    <button type="button" class="btn btn-info" ng-if="commentPropertyArray.reportresolved == false" ng-click="resolved(commentPropertyArray.reportid, 'commentreport')">Resolve</button><button type="button" class="btn btn-success" ng-model="act_deactive" ng-click="activate(commentPropertyArray.reportid, 'commentreport')" style="width: 90px;">Approved</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-show="tab === 4">
+                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                    <thead>
+                                        <tr><th style="width: 35%;">User Profile</th>
+                                            <th style="width: 35%;">Review To</th>
+                                            <th style="width: 8%;">Job Detail</th>
+                                            <th style="width: 8%;">Comment</th>
+                                            <!-- <th style="width: 7%;">Action By Admin</th> -->
+                                            <!-- <th style="width: 8%;">Status</th> -->
+                                            <th style="width: 7%;" data-sortable="false">Option / Status</th>
+                                        </tr>
+                                    </thead>
+
+                                    
+                                    <tbody>
+                                        <tr ng-repeat="jobreviewPropertyArray in jobreviewArray" >                                        
+                                            <!-- <td><span>{&jobreviewPropertyArray.picurl&}<strong>{& jobreviewPropertyArray.firstname &}&nbsp;{& jobreviewPropertyArray.lastname &}</strong></span><br><span>{& jobreviewPropertyArray.email&}</span><br><span>{& jobreviewPropertyArray.mobile &}</span></td>
+                                            <td><span>{&jobreviewPropertyArray.to_picurl&}</span><br><span>{& jobreviewPropertyArray.to_firstname &}&nbsp;{& jobreviewPropertyArray.to_lastname &}</span><br><span>{& jobreviewPropertyArray.to_email &}</span><br><span>{& jobreviewPropertyArray.to_mobile &}</span></td>
+                                             -->
+											 <td ng-click="getdetails_user(jobreviewPropertyArray.userid)">
+												<div style="float:left;" >
+													<div style="float:left;"><img src="{&jobreviewPropertyArray.url&}{&jobreviewPropertyArray.picurl&}" alt="{& jobreviewPropertyArray.userid &}" height="100" width="100" ></div>
+													<div style="float:left ; margin-left:10px;"><span><strong>{& jobreviewPropertyArray.firstname &}&nbsp;{& jobreviewPropertyArray.lastname &}</strong></span><br><span>{& jobreviewPropertyArray.email&}</span><br><span>{& jobreviewPropertyArray.mobile &}</span></div>
+												</div>
+											</td>
+                                            <td ng-click="getdetails_user(jobreviewPropertyArray.touserid)">
+												<div style="float:left">
+													<div style="float:left"><img src="{&jobreviewPropertyArray.url&}{&jobreviewPropertyArray.to_picurl&}" alt="{& jobreviewPropertyArray.to_userid &}" height="100" width="100">
+													</div>
+													<div style="float:left ; margin-left:10px;" >
+														<span>{& jobreviewPropertyArray.to_firstname &}&nbsp;{& jobreviewPropertyArray.to_lastname &}</span><br>
+														<span>{& jobreviewPropertyArray.to_email &}</span><br>
+														<span>{& jobreviewPropertyArray.to_mobile &}</span>
+													</div>
+												</div>
+											</td>
+                                           <td ng-click=getdetails_job(jobreviewPropertyArray.jobid)>
+	                                           	<span ng-repeat="jobreviewDetailArray in jobreviewPropertyArray.jobDetail">
+													<span><b>Title&nbsp;:&nbsp;</b><p>{& jobreviewDetailArray.title &}&nbsp;</p><a ng-if="jobreviewDetailArray.originaljobid != null" href="http://geri.in:5000/job/"{& jobreviewDetailArray.jobdescriptionurlhash &}><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+													<span><b>Discription&nbsp;:&nbsp;</b><p>{& jobreviewDetailArray.description &}</p></span>
+												</span>
+												<span><p><i class="fa fa-comment"></i><span>{& jobreviewPropertyArray.job_comment_count &}</span> <i class="fa fa-legal"></i><span>{& jobreviewPropertyArray.job_bids_counts &}</span></p></span>
+											</td>
+											 
+											<td>{&jobreviewPropertyArray.comment&}</td>                                        
+                                            <!-- <td ng-if="jobreviewPropertyArray.adminaction == true">Approved</td>
+                                            <td ng-if="jobreviewPropertyArray.adminaction == false">Have to take Admin Action.</td> -->
+                                            <!-- <td ng-if="jobreviewPropertyArray.active == true">Approved</td>
+                                            <td ng-if="jobreviewPropertyArray.active == false">Removed</td> -->
+                                            <td>
+                                                <span class="btn-group btn-group-xs">
+                                                    <button type="button" class="btn btn-info" ng-model="act_deactive" ng-if="jobreviewPropertyArray.adminaction == false" ng-click="toapprove(jobreviewPropertyArray.reviewid, 'true', 'true')" style="width: 90px;">To Approve</button><!-- <button type="button" class="btn btn-danger" ng-model="act_deactive" ng-if="jobreviewPropertyArray.active == true" ng-click="deactivate(jobreviewPropertyArray.reviewid, 'jobreview')" style="width: 90px;">Rejected</button> -->
+                                                    <button type="button" class="btn btn-danger" ng-model="act_deactive" ng-if="jobreviewPropertyArray.adminaction == false" ng-click="toapprove(jobreviewPropertyArray.reviewid, 'true' , 'false')" style="width: 90px;">To Remove</button><!-- <button type="button" class="btn btn-success" ng-model="act_deactive" ng-if="jobreviewPropertyArray.active == false" ng-click="activate(jobreviewPropertyArray.reviewid, 'jobreview')" style="width: 90px;">Approved</button> -->
+                                                    <span ng-if="jobreviewPropertyArray.adminaction == true"><span ng-if="jobreviewPropertyArray.active == true">Approved</span><span ng-if="jobreviewPropertyArray.active == false">Removed</span></span>
+                                                </span>
+                                                <!-- <span class="btn-group btn-group-xs">
+                                                    <button type="button" class="btn btn-danger" ng-model="act_deactive" ng-click="toapprove(jobreviewPropertyArray.reviewid, 'jobreview')" style="width: 90px;">To Remove</button><button type="button" class="btn btn-info" ng-model="act_deactive" ng-click="activate(jobreviewPropertyArray.reviewid, 'jobreview')" style="width: 90px;">Approved</button>
+                                                </span> -->
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+					
+				    <button type="button" class="btn btn-info btn-lg" id="modal_user_Button" data-toggle="modal" data-target="#myModal_user" style="display: none;">Open Modal</button>
+                    <button type="button" class="btn btn-info btn-lg" id="modal_job_Button" data-toggle="modal" data-target="#myModal_job" style="display: none;">Open Modal</button>
+
+                    <!-- Modal -->
+                    <div id="myModal_user" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h4 class="modal-title" style="text-align: center; color:#fff;"><b>Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-5 text-left">
+                                        <figure>
+                                            <img ng-if="userArrayDetail.picurl == ''" src="http://geri.in:5000/static/images/users/No-image-found.jpg" alt="" class="img-circle img-responsive">
+                                            <img ng-if="userArrayDetail.picurl != ''" src="http://geri.in:5000/static/images/users/"{& userArrayDetail.picurl &} alt="" class="img-circle img-responsive">
+                                            <!-- <figcaption class="ratings">
+                                                <p>Ratings
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                     <span class="fa fa-star-o"></span>
+                                                </a> 
+                                                </p>
+                                            </figcaption> -->
+                                        </figure>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-7">
+                                        <h2>{& userArrayDetail.firstname &}&nbsp;{& userArrayDetail.lastname &}</h2>
+                                        <p><span ng-if="userArrayDetail.address != '' && userArrayDetail.address != ','">{& userArrayDetail.address &}<br></span><strong><span>{& userArrayDetail.city &},&nbsp;{& userArrayDetail.state &}</span><br><span>{& userArrayDetail.country &}</span><span ng-if="userArrayDetail.pincode != ''">&nbsp;-&nbsp;{& userArrayDetail.pincode &}</span></strong></p>
+
+                                        <p>{& userArrayDetail.email &}</p>
+                                        <p>{& userArrayDetail.mobile &}</p>
+                                        <p><small am-time-ago="userArrayDetail.createdatetimeinseconds"></small></p>
+                                        <!-- <p><small>{& userArrayDetail.createdatetimeinseconds &}</small></p> -->
+                                            <!-- <span class="tags">html5</span> 
+                                            <span class="tags">css3</span>
+                                            <span class="tags">jquery</span>
+                                            <span class="tags">bootstrap3</span> -->
+                                        
+                                    </div>
+                                    
+                                </div>
+                                    
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> About</strong></h5>                    
+                                        <p><small>{& userArrayDetail.aboutme &}</small></p>
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong>Skills</strong></h5>                    
+                                        <p><small class="text-fields" ng-repeat="skillNameData in userArrayDetail.skillsJSON" >{& skillNameData.skillname &}&nbsp;</small></p>
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>                                    
+                                </div>
+                                <div class="col-xs-12 divider">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Jobs Posted / Bids Counts / Comments Counts</strong></h5>                    
+                                        <p><small>Job Posted : <strong>{& userArrayDetail.total_Jobs &}</strong><br>Bids On : <strong>{& userArrayDetail.totalJObsBids &}</strong><br>Bids and Completed : <strong>{& userArrayDetail.totalJObsBidsCompleted &}</strong><br>Comments : <strong>{& userArrayDetail.totalJobsComments &}</strong></small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Verification Status</strong></h5>                    
+                                        <p><small>
+                                            <ul>
+                                                <!-- <li ng-if="userData.proJSON.creditcardverified == true"><i class="fa icon_round fa-credit-card" aria-hidden="true" ></i> <span> Credit Card</span> </li> -->
+                                                <li ng-if="userArrayDetail.proJSON.mobileverified == true"><i class="fa icon_round fa-mobile" aria-hidden="true" ></i> <span>Mobile</span> </li>
+                                                <li ng-if="userArrayDetail.proJSON.facebookapproved == true"><i class="fa icon_round fa-round fa-facebook" aria-hidden="true" ></i> <span> Facebook </span> </li>
+                                                <li ng-if="userArrayDetail.proJSON.policeverification == true"><i class="fa icon_round fa-gavel" aria-hidden="true" ></i> <span> Police </span> </li>
+                                                <li ng-if="userArrayDetail.proJSON.professionalcertificationverified == true"><i class="fa icon_round fa-briefcase" aria-hidden="true" ></i> <span>PRO</span> </li>
+                                            </ul>
+                                        </small></p>
+                                        <p ng-if="userArrayDetail.proJSON.mobileverified != true && userArrayDetail.proJSON.facebookapproved != true && userArrayDetail.proJSON.policeverification != true && userArrayDetail.proJSON.professionalcertificationverified != true"><small>
+                                            Nothing is Verified.
+                                        </small></p>
+                                        
+                                    </div>                                    
+                                </div>
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Education</strong></h5>                    
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                       
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Work experience</strong></h5>                    
+                                        <p ng-if="userArrayDetail.aboutme == ''"><small>No Data Found.</small></p>                                        
+                                    </div>                                    
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>       
+                <!-- END CONTENT -->
+
+                <!-- Modal -->
+                    <div id="myModal_job" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h4 class="modal-title" style="text-align: center; color:#fff;"><b>Job Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px; border-bottom: 1px solid #d6d6d6;">
+                                    <p style="font-style: italic;color: rgb(128, 128, 128);"><small>(JOB ID {& jobsArrayDetail.jobid &})</small></p>
+                                    <p><strong style="font-size: 17px;">Title </strong>{& jobsArrayDetail.title &}</p>
+                                    <p><strong style="font-size: 17px;">Description </strong>{& jobsArrayDetail.description &}</p>
+                                </div>
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-6 text-left" style="margin-top: 5px; padding-left: 0;">
+                                        <p style="font-style: italic;color: rgb(128, 128, 128);"><strong>Peoples ({& jobsArrayDetail.personsrequired &})</strong></p>
+                                        <h6 style="font-style: italic;color: rgb(128, 128, 128);">Due Date <p>{& jobsArrayDetail.duedate &}</p></h6>
+                                        <p style="font-style: italic;color: rgb(128, 128, 128);">Job Created On <small>{& jobsArrayDetail.jobcreatedatetime &}</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 text-left">
+                                        <h3><p><strong>{& jobsArrayDetail.budget | currency &}</strong></p></h3>
+                                        <p style="text-transform: uppercase;">Job {& jobsArrayDetail.jobstatus &}</p>
+                                        <p style="text-transform: uppercase;font-style: italic;color: rgb(128, 128, 128);" ng-if="jobsArrayDetail.online == true">(Online)</p>
+                                        <p style="text-transform: uppercase;font-style: italic;color: rgb(128, 128, 128);" ng-if="jobsArrayDetail.online == false">(Offline)</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider text-left">
+                                    <h5><strong style="font-size: 17px;"> Address</strong></h5>
+                                    <p><small>{& jobsArrayDetail.address &}&nbsp;{& jobsArrayDetail.city &},&nbsp;{& jobsArrayDetail.state &},&nbsp;{& jobsArrayDetail.country &}&nbsp;-&nbsp;{& jobsArrayDetail.pincode &}</small></p>
+                                </div>
+                                <div class="col-xs-12 divider">
+                                    <h5 class="text-left"><strong style="font-size: 17px;">Basic Details</strong></h5>
+                                    <div class="col-xs-12 col-sm-6 text-left">
+                                        <p>Job Bids <small>({& jobsArrayDetail.job_biding_count &})</small></p>
+                                        <p>Bidder Selected <small>({& jobsArrayDetail.job_bidder_selected &})</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 text-left">
+                                        <p>Bidder Rejected <small>({& jobsArrayDetail.job_bidder_rejected &})</small></p>
+                                        <p>Comments <small>({& jobsArrayDetail.job_comment_count &})</small></p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                
+                <div class="chatapi-windows ">
+    
+    
+                </div>    
+                </div>
+        <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+        {% include 'footer.html' %}
+        
+        <script>
+            var app = angular.module('reportsListing', ['datatables']);
+            app.config(function($interpolateProvider) {
+                $interpolateProvider.startSymbol('{&');
+                $interpolateProvider.endSymbol('&}');
+            });
+            app.controller('reportsCtrl', function($scope,$http,$window, DTOptionsBuilder, DTColumnBuilder) 
+            {
+                $scope.startgmtDate = new Date();
+                $scope.startgmtDate.setMonth($scope.startgmtDate.getMonth() - 1);
+                $scope.endgmtDate = new Date();
+                // $scope.startgmtDate.setHours(0,0,0,0);
+                
+                // $scope.endgmtDate.setHours(23,59,59);
+
+                // $scope.startDateTime = $scope.startgmtDate.toUTCString();
+                // $scope.endDateTime = $scope.endgmtDate.toUTCString();
+
+                // // console.log($scope.startDateTime + "," + $scope.endDateTime)
+
+                // utmTime = $scope.startgmtDate.getTimezoneOffset() * 60000;
+
+                // var startTimeInSeconds = ($scope.startgmtDate.getTime())/1000;
+                // var endTimeInSeconds = ($scope.endgmtDate.getTime())/1000;
+
+                $scope.count = 0;
+                $scope.userid = {{session['adminid']}};
+                $scope.token = "{{session['token']}}";
+                // // console.log($scope.count);
+                $scope.isSaveDisabled = false;
+                $scope.isUpdateDisabled = true;
+
+                $scope.changeData = function()
+                {
+                    // console.log($scope.startgmtDate + " " + $scope.endgmtDate);
+
+                    $scope.endgmtDatemonth = $scope.endgmtDate.getMonth() + 1;
+                    $scope.endgmtDateday = $scope.endgmtDate.getDate();
+                    $scope.startgmtDatemonth = $scope.startgmtDate.getMonth() + 1;
+                    $scope.startgmtDateday = $scope.startgmtDate.getDate();
+                    
+                    if($scope.startgmtDatemonth < 10)
+                    {
+                        $scope.startgmtDatemonth = "0" + $scope.startgmtDatemonth;
+                    }
+                    if($scope.startgmtDateday < 10)
+                    {
+                        $scope.startgmtDateday = "0" + $scope.startgmtDateday;
+                    }
+                    if($scope.endgmtDatemonth < 10)
+                    {
+                        $scope.endgmtDatemonth = "0" + $scope.endgmtDatemonth;
+                    }
+                    if($scope.endgmtDateday < 10) 
+                    {
+                        $scope.endgmtDateday = "0" + $scope.endgmtDateday;
+                    }
+
+                    // var before = day + '-' + oldmonth + '-' + $scope.startgmtDate.getFullYear();
+                    $scope.startDateTime = $scope.startgmtDateday + '-' + $scope.startgmtDatemonth + '-' + $scope.startgmtDate.getFullYear() + ' ' + '00:00:00';
+
+                    // var today = endgmtDateday + '-' + endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear();
+                    $scope.endDateTime = $scope.endgmtDateday + '-' + $scope.endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear() + ' ' + '23:59:59';
+                
+                    // console.log($scope.startDateTime + " " + $scope.endDateTime);
+
+                    $http({
+                            url: "/report/user/list",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            console.log(data);
+                            $scope.userArray = data['data'];
+                            
+
+                        }).error(function(data, status, headers, config) {
+                        });
+                    $http({
+                            url: "/report/job/list",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            
+                            console.log(data);
+                            $scope.jobArray = data['data'];
+
+                        }).error(function(data, status, headers, config) {
+                        });
+                    $http({
+                            url: "/report/comment/list",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            
+                            console.log(data);
+                            $scope.commentArray = data['data'];
+                            
+
+                        }).error(function(data, status, headers, config) {
+                        });
+                    $http({
+                            url: "/report/job/review",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            console.log(data);
+                            $scope.jobreviewArray = data['data'];
+                            
+                        }).error(function(data, status, headers, config) {
+                        });
+                }
+
+                
+                $scope.deactivate = function(reportid, reporttype) 
+                    {
+                        if (reportid)
+                        { 
+                            $http({
+                                url: "/report/activate/deactivate",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"reportid":reportid , "action" : false, "reporttype" : reporttype}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                $scope.reporttype = data['reporttype'];
+
+                                if ($scope.reporttype == "userreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.updatereport.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.userArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.userArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "jobreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.updatereport.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.jobArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.jobArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "commentreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.commentArray.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.jobArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.commentArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "jobreview")
+                                {
+                                    $scope.updatereport = data['data'];
+                                    // // console.log($scope.updatereport);
+                                    // // console.log($scope.jobreviewArray);
+                                    angular.forEach($scope.updatereport, function(value, key) {
+                                      angular.forEach($scope.jobreviewArray, function(value2, key2) {
+                                          if (value2.reviewid == value.reviewid)
+                                          {
+                                            // // console.log($scope.jobreviewArray[key2].active);
+                                            // // console.log(value.active);
+                                            $scope.jobreviewArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                
+                                if (status == 200)
+                                {
+                                    swal("Deactivate!", "Report successfully deactivated.", "success");
+                                }
+                                // $scope.languagesArray = $scope.languagesArray.concat(data['last_added_language']);
+                                // $scope.languagesArray = $scope.languagesArray.splice(0, 0, data['last_added_skill']);
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.activate = function(reportid, reporttype) 
+                    {
+                        if (reportid)
+                        { 
+                            $http({
+                                url: "/report/activate/deactivate",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"reportid":reportid , "action" : true, "reporttype" : reporttype}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                $scope.reporttype = data['reporttype'];
+
+                                if ($scope.reporttype == "userreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.updatereport.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.userArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.userArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "jobreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.updatereport.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.jobArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.jobArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "commentreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.commentArray.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.jobArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.commentArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "jobreview")
+                                {
+                                    $scope.updatereport = data['data'];
+                                    // // console.log($scope.updatereport);
+                                    // // console.log($scope.jobreviewArray);
+                                    angular.forEach($scope.updatereport, function(value, key) {
+                                      angular.forEach($scope.jobreviewArray, function(value2, key2) {
+                                          if (value2.reviewid == value.reviewid)
+                                          {
+                                            // // console.log($scope.jobreviewArray[key2].active);
+                                            // // console.log(value.active);
+                                            $scope.jobreviewArray[key2].active = value.active;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+
+                                if (status == 200)
+                                {
+                                    swal("Activated!", "Report successfully Activated.", "success");
+                                }
+                                // $scope.languagesArray = $scope.languagesArray.concat(data['last_added_language']);
+                                // $scope.languagesArray = $scope.languagesArray.splice(0, 0, data['last_added_skill']);
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.resolved = function(reportid, reporttype) 
+                    {
+                        if (reportid)
+                        { 
+                            $http({
+                                url: "/report/resolved",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"reportid":reportid , "reportresolved" : true ,"reporttype" : reporttype}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                $scope.reporttype = data['reporttype'];
+
+                                if ($scope.reporttype == "userreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.updatereport.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.userArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.userArray[key2].reportresolved = value.reportresolved;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "jobreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.updatereport.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.jobArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.jobArray[key2].reportresolved = value.reportresolved;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if ($scope.reporttype == "commentreport")
+                                {
+                                    var alldata = data['data'];
+                                    $scope.updatereport = alldata[0];
+                                    angular.forEach($scope.commentArray.reportedJSON, function(value, key) {
+                                      angular.forEach($scope.jobArray, function(value2, key2) {
+                                          if (value2.reportid == value.reportid)
+                                          {
+                                            $scope.commentArray[key2].reportresolved = value.reportresolved;
+                                            return false;
+                                          }
+                                        });
+                                    });
+                                }
+                                if (status == 200)
+                                {
+                                    swal("Resolved!", "Report successfully resolved.", "success");
+                                }
+                                // $scope.languagesArray = $scope.languagesArray.concat(data['last_added_language']);
+                                // $scope.languagesArray = $scope.languagesArray.splice(0, 0, data['last_added_skill']);
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+                $scope.toapprove = function(reviewid, adminaction, active) 
+                    {
+                        if (reviewid)
+                        { 
+                            $http({
+                                url: "/report/job/review/approval",
+                                method: "POST",
+                                data: {"userid":$scope.userid, "token":$scope.token,"reviewid":reviewid , "adminaction" : adminaction, "active" : active}
+                            }).success(function(data, status, headers, config) 
+                            {
+                                $scope.updatereview= data['data'];
+                                angular.forEach($scope.updatereview, function(value, key) {
+                                  angular.forEach($scope.jobreviewArray, function(value2, key2) {
+                                      if (value2.reviewid == value.reviewid)
+                                      {
+                                        $scope.jobreviewArray[key2].adminaction = value.adminaction;
+                                        return false;
+                                      }
+                                    });
+                                });
+
+                                if (status == 200)
+                                {
+                                    swal("Resolved!", "Report successfully resolved.", "success");
+                                }
+                                // $scope.languagesArray = $scope.languagesArray.concat(data['last_added_language']);
+                                // $scope.languagesArray = $scope.languagesArray.splice(0, 0, data['last_added_skill']);
+
+                            }).error(function(data, status, headers, config) {
+                                $scope.status = status;
+                                // // console.log(data);
+                                // // console.log(status);
+                            });
+                        }    
+                    };
+					
+				$scope.getdetails_user = function(useriddetail){
+					// // console.log(useriddetail);//comment it
+					angular.element('#modal_user_Button').trigger('click');
+					$http({
+						url: "/user/list/detail",
+						method: "POST",
+						data: {"userid":$scope.userid, "token":$scope.token, "useriddetail":useriddetail}
+					}).success(function(data, status, headers, config) {
+						// // console.log(data['data']);
+						$scope.userArrayDetail = data['data'][0];
+						$scope.timeAgo = $scope.userArrayDetail.createdatetimeinseconds;
+						// // console.log($scope.timeAgo);
+						// // console.log("run");
+					}).error(function(data, status, headers, config) {
+						$scope.status = status;
+						// // console.log("error");
+					});
+                };
+                $scope.getdetails_job = function(jobid){
+                    // // console.log(jobid);
+                    angular.element('#modal_job_Button').trigger('click');
+                    $http({
+                        url: "/job/list/detail",
+                        method: "POST",
+                        data: {"userid":$scope.userid, "token":$scope.token, "jobid":jobid}
+                    }).success(function(data, status, headers, config) {
+                        // // console.log(data);
+                        $scope.jobData = true;
+                        $scope.jobsArrayDetail = data['data'][0];              
+
+                    }).error(function(data, status, headers, config) {
+                        $scope.status = status;
+                    });
+                };
+            });
+        </script>
+    </body>
+</html>
+
+
+

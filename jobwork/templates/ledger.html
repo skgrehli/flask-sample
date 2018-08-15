@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+        <!--  
+         * @Package: Ultra Admin - Responsive Theme
+         * @Subpackage: Bootstrap
+         * @Version: 4.1
+         * This file is part of Ultra Admin Theme.
+        -->
+        <title>Ledger | Admin</title>
+        {% include 'meta-tag.html' %}
+
+        <style type="text/css">
+            .datepickerdemoBasicUsage {
+          /** Demo styles for mdCalendar. */ }
+          .datepickerdemoBasicUsage md-content {
+            padding-bottom: 200px; }
+          .datepickerdemoBasicUsage .validation-messages {
+            font-size: 12px;
+            color: #dd2c00;
+            margin-left: 15px; }
+        </style>
+
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BEGIN BODY -->
+    <body class=" " ng-app="ledgerListing" ng-controller="ledgerCtrl" ng-init="changeData()" ng-cloak><!-- START TOPBAR -->
+        {% include 'top-menu.html' %}
+        <!-- END TOPBAR -->
+        <!-- START CONTAINER -->
+        <div class="page-container row-fluid">
+
+            <!-- SIDEBAR - START -->
+           {% include 'side-left.html' %}
+             <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper" style="">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-title">
+
+
+                          <div class="pull-left">
+                               <h1 class="title">Ledger</h1>                        
+                          </div>
+
+                            <!--<div class="pull-right hidden-xs">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-basic.html">Tables</a>
+                                    </li>
+                                    <li class="active">
+                                        <strong>Data Tables</strong>
+                                    </li>
+                                </ol>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+
+
+                    <div class="content-body">  
+                        <div class="row">
+                            
+                            <div class="col-md-12 overComeDiv">
+                                <div class="widget">
+                                    <div class="widget-header transparent">
+                                        <!--<h2><strong>Sortable</strong> Table</h2>-->
+                                        
+
+                                        <!--top buttons-->
+                                        <div class="row" style="">
+                                          <div class="col-md-12 col-sm-12 col-xs-12">
+        
+        
+        
+                                                <!-- start -->
+        
+                                               <!-- <div class="row">
+                                                  <div class="col-md-4 col-sm-8 col-xs-8">
+                                                            <button type="button" class="btn btn-success" onclick="treedata_create();"><i class="fa fa-asterisk"></i> Create</button>
+                                                            <button type="button" class="btn btn-warning" onclick="treedata_rename();"><i class="fa fa-pencil"></i> Rename</button>
+                                                            <button type="button" class="btn btn-danger" onclick="treedata_delete();"><i class="fa fa-remove"></i> Delete</button>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4 pull-right">
+                                                            <input type="text" value="" id="treedata_q" placeholder="Search" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="row">
+                                                        
+                                                    </div>
+                                         -->
+                                                                                <!-- end -->
+                                        
+                                            </div>
+                                        </div>
+                                                           <!--top buttons close-->
+                           
+                                                            <!--<div class="additional-btn">
+                                                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                                                            </div>-->
+                                                        </div>
+                                                        <div class="widget-content">
+                                                            <!-- <div>
+                                                                <label><b>Filtering Data ::</b></label><br>
+                                                                <div flex-gt-xs>
+                                                                    <h4>Start Date</h4>
+                                                                    <input tpye="text" md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+                                                                  </div>
+                                                                <label><b>Filtering On the basis of status ::</b></label>
+                                                                <select ng-model="filter.status" ng-change="filterType(filter.status)" style="width: 25%;margin-left: 22px;">
+                                                                    <option value="allotted" checked="true">Approved</option>
+                                                                    <option value="cancelled" >Not Approved</option>
+                                                                    <option value="completed" >Completed</option>
+                                                                 </select>
+                                                            </div> -->
+                                                                <div class="" style="margin-bottom: 25px;">
+                                                                    <section class="box ">
+                                                                        <header class="panel_header">
+                                                                            <h2 class="title pull-left">Filter by Date</h2>
+                                                                            <div class="actions panel_actions pull-right">
+                                                                                <!--<i class="box_toggle fa fa-chevron-down"></i>-->
+                                                                                <!--<i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>-->
+                                                                                <!--<i class="box_close fa fa-times"></i>-->
+                                                                            </div>
+                                                                        </header>
+                                                                        <div class="content-body">
+                                                                            <div class="row" style="margin-bottom: 25px;">
+                                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                    <form name="filterDate" id="filterDate" method="POST" novalidate> 
+                                                                                       <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                                                            <label class="" style="margin-right: 10px;">Start Date</label>
+                                                                                            <input type="date" id="startgmtDate" class="form-control" ng-change="changeData()" ng-model="startgmtDate" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-6 col-sm-6" style="padding: 0;">
+                                                                                            <label class="" style="margin-right: 10px;">End Date</label>
+                                                                                            <input type="date" class="form-control" id="endgmtDate" ng-model="endgmtDate" ng-change="changeData()" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" size="30" />
+                                                                                        </div>
+                                                                                   </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>User Detail</th>
+                                                                            <th>Paypal Details</th>
+                                                                            <th>Payment Type</th>
+                                                                            <th>Amount</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    
+                                                                    <tbody>
+                                                                        <tr ng-repeat="ledgersPropertyArray in ledgersArray" ng-if="ledgersPropertyArray.last_paid_date != ''" style="cursor: pointer;">
+                                                                            <td ng-click="getdetails(ledgersPropertyArray.userid)">
+                                                                                <span><b>{& ledgersPropertyArray.firstname &}&nbsp;{& ledgersPropertyArray.lastname &}</b></span><br>
+                                                                                <span>{& ledgersPropertyArray.email &}</span><br>
+                                                                                <span>{& ledgersPropertyArray.mobile &}</span><br>
+                                                                                <span><p><i class="fa fa-pencil-square-o"></i><span>{& ledgersPropertyArray.user_comment_count &}</span> <i class="fa fa-legal"></i><span>{& ledgersPropertyArray.user_biding_count &}</span></p></span>
+                                                                            </td>
+                                                                            <td ng-click="getdetails(ledgersPropertyArray.userid)">
+                                                                                <span><b>Paypal ID : {& ledgersPropertyArray.paypal_id &}</b></span><br>
+                                                                            </td>
+                                                                            <td ng-click="getdetails(ledgersPropertyArray.userid)">
+                                                                                <span>{& ledgersPropertyArray.type &}</span>
+                                                                            </td>
+                                                                            <td ng-click="getdetails(ledgersPropertyArray.userid)">
+                                                                                <span>{& ledgersPropertyArray.amount | currency &}</span>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        </div><!--row close-->
+                    </div><!--content body close-->
+                        
+                        
+                    <button type="button" class="btn btn-info btn-lg" id="modalButton" data-toggle="modal" data-target="#myModal" style="display: none;">Open Modal</button>
+
+                    <!-- Modal -->
+                    <div id="myModal123465" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" style="text-align: center;"><b>Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6" style="margin-bottom: 20px;">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <h4><b>User Detail</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Name</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>{& ledgersArrayDetail.firstname &}&nbsp;{& ledgersArrayDetail.lastname &}</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Email</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{& ledgersArrayDetail.email &}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Mobile</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{& ledgersArrayDetail.mobile &}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>Total Jobs</b></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>{& ledgersArrayDetail.total_Jobs &}</b></p>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <p><b>Bids</b></p>
+                                    </div> -->
+                                    <div class="clearfix"></div>
+                                </div>
+                                
+                                <div class="col-md-6" style="margin-bottom: 20px; border-left: 1px solid #eee;">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <h4><p><b>Paypal ID</b></p></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>{& ledgersArrayDetail.paypal_id &}</b></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            
+                          </div>
+                          <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div> -->
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                    <!-- {& globaljobid &} -->
+                      <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #e94e38;">
+                            <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+                            <h4 class="modal-title" style="text-align: center; color:#fff;"><b>Details</b></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row" style="border: thick;">
+                                <div class="col-xs-12" style="margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-5 text-left">
+                                        <figure class="profile_pic">
+                                            <img src="http://saveonjobs.com/static/front_end/images/profile/{& ledgersArrayDetail.picurl &}" alt="" class="img-circle img-responsive">
+                                        </figure>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-7">
+                                        <h2>{& ledgersArrayDetail.firstname &}&nbsp;{& ledgersArrayDetail.lastname &}</h2>
+                                        <p><span ng-if="ledgersArrayDetail.address != '' && ledgersArrayDetail.address != ','">{& ledgersArrayDetail.address &}<br></span><strong><span>{& ledgersArrayDetail.city &},&nbsp;{& ledgersArrayDetail.state &}</span><br><span>{& ledgersArrayDetail.country &}</span><span ng-if="ledgersArrayDetail.pincode != ''">&nbsp;-&nbsp;{& ledgersArrayDetail.pincode &}</span></strong></p>
+
+                                        <p>{& ledgersArrayDetail.email &}</p>
+                                        <p>{& ledgersArrayDetail.mobile &}</p>
+                                        <p><small am-time-ago="ledgersArrayDetail.createdatetimeinseconds"></small></p>
+                                    </div>
+                                </div>                                    
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> About</strong></h5>
+                                        <p><small>{& ledgersArrayDetail.aboutme &}</small></p>
+                                        <p ng-if="ledgersArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong>Skills</strong></h5>                    
+                                        <p><small class="text-fields" ng-repeat="skillNameData in ledgersArrayDetail.skillsJSON" >{& skillNameData.skillname &}&nbsp;</small></p>
+                                        <p ng-if="ledgersArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Jobs Posted / Bids Counts / Comments Counts</strong></h5>                    
+                                        <p><small>Job Posted : <strong>{& ledgersArrayDetail.total_Jobs &}</strong><br>Bids On : <strong>{& ledgersArrayDetail.totalJObsBids &}</strong><br>Bids and Completed : <strong>{& ledgersArrayDetail.totalJObsBidsCompleted &}</strong><br>Comments : <strong>{& ledgersArrayDetail.totalJobsComments &}</strong></small></p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis verify">
+                                        <h5><strong>Verification Status</strong></h5>                    
+                                        <p><small>
+                                            <ul>
+                                                <!-- <li ng-if="userData.proJSON.creditcardverified == true"><i class="fa icon_round fa-credit-card" aria-hidden="true" ></i> <span> Credit Card</span> </li> -->
+                                                <li ng-if="ledgersArrayDetail.proJSON.mobileverified == true"><i class="fa icon_round fa-mobile" aria-hidden="true" ></i> <span>Mobile</span> </li>
+                                                <li ng-if="ledgersArrayDetail.proJSON.facebookapproved == true"><i class="fa icon_round fa-round fa-facebook" aria-hidden="true" ></i> <span> Facebook </span> </li>
+                                                <li ng-if="ledgersArrayDetail.proJSON.policeverification == true"><i class="fa icon_round fa-gavel" aria-hidden="true" ></i> <span> Police </span> </li>
+                                                <li ng-if="ledgersArrayDetail.proJSON.professionalcertificationverified == true"><i class="fa icon_round fa-briefcase" aria-hidden="true" ></i> <span>PRO</span> </li>
+                                            </ul>
+                                        </small></p>
+                                        <p ng-if="ledgersArrayDetail.proJSON.mobileverified != true && ledgersArrayDetail.proJSON.facebookapproved != true && ledgersArrayDetail.proJSON.policeverification != true && ledgersArrayDetail.proJSON.professionalcertificationverified != true"><small>
+                                            Nothing is Verified.
+                                        </small></p>
+                                        
+                                    </div>                                    
+                                </div>
+                                <div class="col-xs-12 divider " style="margin-bottom: 10px; border-bottom: 1px solid #d6d6d6;">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong> Education</strong></h5>
+                                        <p ng-if="ledgersArrayDetail.aboutme == ''"><small>No Data Found.</small></p>
+                                       
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <h5><strong>Work experience</strong></h5>
+                                        <p ng-if="ledgersArrayDetail.aboutme == ''"><small>No Data Found.</small></p>                                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 divider text-center" style="margin-bottom: 20px;">
+                                    <h3><strong >Paypal ID</strong></h3>
+                                </div>
+
+                                <div class="col-xs-12 divider ">
+                                    <div class="col-xs-12 col-sm-6 emphasis">
+                                        <p><small>{& ledgersArrayDetail.paypal_id &}</small></p>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                
+                <div class="chatapi-windows ">
+    
+    
+                </div>    
+                </div>
+        <!-- END CONTAINER -->
+        <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+        {% include 'footer.html' %}
+        
+        <script>
+            var app = angular.module('ledgerListing', ['datatables']);
+            app.config(function($interpolateProvider) {
+                $interpolateProvider.startSymbol('{&');
+                $interpolateProvider.endSymbol('&}');
+            });
+
+            app.controller('ledgerCtrl', function($scope,$http,$window, DTOptionsBuilder, DTColumnBuilder) 
+            {
+                $scope.startgmtDate = new Date();
+                $scope.startgmtDate.setMonth($scope.startgmtDate.getMonth() - 1);
+                $scope.endgmtDate = new Date();
+
+                $scope.count = 0;
+                $scope.userid = {{session['adminid']}};
+                $scope.token = "{{session['token']}}";
+
+                $scope.filter = {};
+                $scope.filter.status = "allotted";
+
+                $scope.myDate = new Date();
+
+                  $scope.minDate = new Date(
+                      $scope.myDate.getFullYear(),
+                      $scope.myDate.getMonth() - 2,
+                      $scope.myDate.getDate());
+
+                  $scope.maxDate = new Date(
+                      $scope.myDate.getFullYear(),
+                      $scope.myDate.getMonth() + 2,
+                      $scope.myDate.getDate());
+
+                  $scope.onlyWeekendsPredicate = function(date) {
+                    var day = date.getDay();
+                    return day === 0 || day === 6;
+                  };
+
+                $scope.getdetails = function(useriddetail){
+                    // // console.log(jobid);
+                    angular.element('#modalButton').trigger('click');
+                    $http({
+                        url: "/user/list/detail",
+                        method: "POST",
+                        data: {"userid":$scope.userid, "token":$scope.token, "useriddetail":useriddetail}
+                    }).success(function(data, status, headers, config) {
+                        // console.log(data['data'][0]);
+                        $scope.ledgersArrayDetail = data['data'][0];
+
+                    }).error(function(data, status, headers, config) {
+                        $scope.status = status;
+                    });
+                    }
+
+                // // console.log($scope.count);
+                $scope.isSaveDisabled = false;
+                $scope.isUpdateDisabled = true;
+
+                $scope.changeData = function()
+                {
+                    // console.log($scope.startgmtDate + " " + $scope.endgmtDate);
+
+                    $scope.endgmtDatemonth = $scope.endgmtDate.getMonth() + 1;
+                    $scope.endgmtDateday = $scope.endgmtDate.getDate();
+                    $scope.startgmtDatemonth = $scope.startgmtDate.getMonth() + 1;
+                    $scope.startgmtDateday = $scope.startgmtDate.getDate();
+                    
+                    if($scope.startgmtDatemonth < 10)
+                    {
+                        $scope.startgmtDatemonth = "0" + $scope.startgmtDatemonth;
+                    }
+                    if($scope.startgmtDateday < 10)
+                    {
+                        $scope.startgmtDateday = "0" + $scope.startgmtDateday;
+                    }
+                    if($scope.endgmtDatemonth < 10)
+                    {
+                        $scope.endgmtDatemonth = "0" + $scope.endgmtDatemonth;
+                    }
+                    if($scope.endgmtDateday < 10) 
+                    {
+                        $scope.endgmtDateday = "0" + $scope.endgmtDateday;
+                    }
+
+                    // var before = day + '-' + oldmonth + '-' + $scope.startgmtDate.getFullYear();
+                    $scope.startDateTime = $scope.startgmtDateday + '-' + $scope.startgmtDatemonth + '-' + $scope.startgmtDate.getFullYear() + ' ' + '00:00:00';
+
+                    // var today = endgmtDateday + '-' + endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear();
+                    $scope.endDateTime = $scope.endgmtDateday + '-' + $scope.endgmtDatemonth + '-' + $scope.endgmtDate.getFullYear() + ' ' + '23:59:59';
+                
+                    // console.log($scope.startDateTime + " " + $scope.endDateTime);
+
+                    $http({
+                            url: "/ledger/list",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "startDateTime":$scope.startDateTime, "endDateTime":$scope.endDateTime}
+                        }).success(function(data, status, headers, config) {
+                            console.log(data['ledgerData']);
+                            $scope.ledgersArray = data['ledgerData'];
+                            $scope.count++;
+                            // // console.log(data['data']);
+                            
+
+                        }).error(function(data, status, headers, config) {
+                            // // console.log(data);
+                            // // console.log(status);
+                            $scope.status = status;
+                            //$window.location.href="/";
+                        });
+
+                }
+
+                $scope.filterType = function(statusType)
+                {
+                    $scope.filter.status = statusType;
+                }
+                
+                $scope.payBudget = function(user_id, total_budget, pay_remark, pay_amount)
+                    {
+                        // console.log(angular.element('#pay_amount'+user_id).val());
+                        data123 = {"userid":$scope.userid, "token":$scope.token, "user_id":user_id, "total_budget":total_budget, "pay_budget":angular.element('#pay_amount'+user_id).val(), "pay_remark":pay_remark}
+                        // console.log(data123);
+                        $http({
+                            url: "/ledger/paidout",
+                            method: "POST",
+                            data: {"userid":$scope.userid, "token":$scope.token, "user_id":user_id, "total_budget":total_budget, "pay_budget":angular.element('#pay_amount'+user_id).val(), "pay_remark":pay_remark}
+                        }).success(function(data, status, headers, config) 
+                        {
+                            if (data['status'] == 200)
+                            {
+                                swal("Paid!", "Paid Successfully.", "success");
+                            }
+
+                        }).error(function(data, status, headers, config) {
+                            $scope.status = status;
+                        });
+                    }   
+            });
+        </script>
+    </body>
+</html>
+
+
+

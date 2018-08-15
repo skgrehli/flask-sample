@@ -1,0 +1,142 @@
+<!-- Postajob -->
+<div class="modal fade" id="hire_tab" role="dialog" >
+    <div class="modal-dialog modal-sm">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Post a job</h4>
+        </div>
+        
+        <div class="modal-body">
+
+            <div class="create_post1 createjob" id="createjob_step1" ng-if="createjob_step == 1">
+                <div class="progress_bar">
+                    <img class="img-responsive" src="static/front_end/static/front_end/images/progress_step1.png" />
+                  </div><!--progress_bar close-->  
+                    <div class="feilds Job_title">
+                        <p>Job Title</p> 
+                        <input type="text" class="" id="title" name="title" placeholder="Job Title" value="" ng-model="job.title" autocomplete="off" autofocus required>
+                        <!-- <p ng-show="findjobsScreen.jobTitle.$error.required" class="error" style="margin-top:0px;">Required.</p> -->
+                    </div><!--feilds close-->
+                    
+                    <div class="feilds job_description">
+                        <p>Describe your task in more detsil</p> 
+                       <textarea name="description" id="description" class="description" rows="4" placeholder="Description" value="" ng-model="job.description" autocomplete="off" required></textarea>
+                       <!-- <p ng-show="findjobsScreen.jobDescription.$error.required" class="error" style="margin-top:0px;">Required.</p> -->
+                    </div><!--feilds close-->
+                   <input type="hidden" name="jobid" id="jobid" ng-model="jobid" value="">
+                    <div class="feilds create_popup_btn">
+                    <button type="button" id="popup2_show" class="btn btn-default create_popup_btn_done" ng-click="jobshowNextStep(2)" data-toggle="modal" data-dismiss="modal">Continue</button>
+                    </div><!--feilds close-->
+             </div>
+
+            <div class="create_post2 createjob" style="display: block;" id="createjob_step2" ng-if="createjob_step == 2">   
+                <div class="progress_bar">
+                    <img class="img-responsive" src="static/front_end/static/front_end/images/progress_step2.png" />
+                </div><!--progress_bar close-->   
+                    
+                    
+        
+                      <div class="feilds">
+                        <div class="radio create_post2_radio" ng-model="job.completedby" value="">
+                          <p style="margin-left:-13px;">Job is</p>
+                            <input id="person-job" type="radio" name="completedby" value="person">
+                            <label for="person-job">to be completed in person</label>
+                            <input id="online-job" type="radio" name="completedby" value="online">
+                            <label for="online-job">to be completed online</label>
+                       </div>
+                       
+                       <div class="input-group enter_location">
+                       <p>Job Location</p>
+                       <!-- <select style="margin-bottom:20px;" ng-model="job.location" value=""> -->
+                        <select style="margin-bottom:20px;" ng-model="job.location" value="">
+                        {% for citieslist in cities  %}
+                          <option value="{{citieslist['cityid']}}">{{citieslist['city']}}</option>
+                        {% endfor %}
+                          
+                         </select>
+                       <!-- </select> -->
+                    </div>
+                    
+                    
+                    </div><!--feilds close-->
+                    
+                    
+                    <div class="feilds">
+                        <div class="radio create_post2_radio" value="">
+                        <p style="margin-left:-13px !important;"> Due Date </p>
+                        <div class="clearfix"></div>
+                            <input id="today" type="radio" name="duedate" ng-model="job.dueDate" value="today">
+                            <label for="today">Today</label>
+                            <input id="week" type="radio" name="duedate" ng-model="job.dueDate" value="week">
+                            <label for="week">Within 1 week</label>
+                            <input id="day" type="radio" name="duedate" ng-model="job.dueDate" value="certain_day">
+                            <label for="day">By a certain day</label>
+                            <div id="date_picker"> </div>
+                       </div>
+                    
+                  </div>
+                    <!--feilds close-->
+                    
+                    <div class="feilds create_popup_btn">
+                      <button type="button" id="popup2_show" class="btn btn-default create_popup_btn_done" ng-click="jobshowNextStep(3)">CONTINUE</button>
+                    </div><!--feilds close-->  
+          </div>
+               
+          <div class="create_post3 createjob" style="display: block;" id="createjob_step3" ng-if="createjob_step == 3">
+            
+            <div class="progress_bar">
+                <img class="img-responsive" src="static/front_end/static/front_end/images/progress_step3.png" />
+                
+                
+                
+                <div class="feilds">
+               
+                    <div class="radio create_post3_radio" ng-model="job.budgetType" value="">
+                        <p style="margin-left:-13px;"> What's your budget? </p>
+                        <br />
+                        <input id="total" type="radio" name="budgetType" value="total" ng-click="jobshowNextStep('budget')">
+                        <label for="total">Total</label>
+                        <input id="hourly" type="radio" name="budgetType" value="hourly" ng-click="jobshowNextStep('budget')">
+                        <label for="hourly">Hourly rate</label>
+                    </div>
+                    <div class="enter-bid" id="fill-amt" ng-if="showBudgetDiv == true">
+                      <span>Fill amount ($)</span>
+                        <input type="number" class="form-control" ng-model="job.amount" value="" style="max-width:100px;">
+                    </div>
+                    <br />
+                
+                </div><!--feilds close-->
+                
+                
+                <!--<div class="feilds job_budget">
+                <p>$</p> 
+                <input type="number" name="number" class="people" placeholder="" id="">
+                </div>-->
+                
+                <!--<div class="feilds job_total_budget">
+                <p style="">Estimated Budget :</p>
+                </div>-->
+                
+                <div class="feilds create_popup_btn">
+                <button type="button" style="margin-top:20px;" class="btn btn-default create_popup_btn_done" data-dismiss="modal" ng-click="jobshowNextStep(4)"><i class="fa fa-check"> </i> Post my job</button>
+                </div><!--feilds close-->
+                
+            </div><!--progress_bar close-->
+            
+              
+          </div>
+        </div>
+        
+        
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+ <!--modal close--> 

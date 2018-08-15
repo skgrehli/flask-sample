@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>How it Works</title>
+
+<!-- 
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="static/front_end/images/favicon.png">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.js'></script>
+ -->
+
+
+
+{% include "front_saveonjobs/head_tag.html" %}
+
+</head>
+
+
+<!--<script src="js/jquery-min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/bootstrap.min.js"></script>-->
+
+
+<body ng-app="sojApp">
+
+<div ng-controller="indexCtrl">
+
+  <!--header start-->
+
+  <div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/how_header.htm' "></div> 
+  <div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/how_sticky_header.htm' "></div>
+
+  <!-- full header close-->
+
+  <!-- Post Job / Register / Login -->
+
+  <div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>  
+
+  <!-- ************************************************************************************** -->
+
+</div>
+<!--Terms background-->
+
+<!--container-->
+ <div class="container page_content" style="margin-top: 90px;">
+		<div id="wrapper">
+<div id="" class="container">
+
+		<div class="title ">
+				<h2 style="font-family: 'open_sansregular';">How SaveonJobs Works</h2>
+				<span class="byline">Whatever you need done, we have a solution</span>
+            </div>
+            
+		<div class="col-md-12 col-sm-12" id="content">
+			
+			<img src="static/front_end/images/about.JPG" alt="" class="image image-full" style="height: auto;">
+			
+		</div>
+        
+          <div class="col-md-12 col-sm-12 who terms" id="sidebar">
+          <h3 style="text-align:left;">Create your profile</h3>
+         
+	         <p >SaveonJobs Hirers and SaveonJobs Jobbers DO NOT need to create separate profiles. So a SaveonJobs Jobber today can be a SaveonJobs Hirer tomorrow, and vice versa. Hirers and Jobbers can be individual persons or big/small businesses. A single account allows you to post jobs as a SaveonJobs Hirer and make offers as a SaveonJobs Jobber. If you're looking to switch between being a SaveonJobs Hirer and a SaveonJobs Jobber, you do not need to create a second account.</p>
+
+	         <p >Key to success on SaveonJobs is to create an impressive profile and maintain it with getting good reviews and ratings.</p>
+	         <p >Briefly describe yourself & your skill set, and add a portfolio –you’re ready to earn/get job done.</p>
+	         <p >Hirer briefly describes the Job</p>
+	         <p >You need to get any big or small job done. You can do it yourself but you do not have time or energy for it.</p>
+	         <p >Or you cannot do it yourself.</p>
+	         <p>Outsource it now through SaveonJobs NOW! Just write a brief description of the job and post it for FREE. There’s no obligation to hire. Jobbers on SaveonJobs can tackle a range of jobs:</p>
+	         <p >
+	         	<ul>
+	         		<li style="text-align: left;">Big or small</li>
+	         		<li style="text-align: left;">Short or ongoing</li>
+	         		<li style="text-align: left;">Individual or team-based</li>
+	         	</ul>
+	         </p>
+         </div><!--sidebar close <div class="col-md-5 col-sm-12" id="sidebar"> -->
+         
+            <div class= "col-md-12 terms who" style="margin-top: 25px;float: left;">
+				<h2>SaveonJobs Jobbers bid and SaveonJobs Hirers select the best</h2>
+				<p>After the Hirer has described his job in a clear and concise way, Jobbers submit their proposals.</p>
+				<p>There is no restriction for Jobbers on the kind of and number of jobs they can apply to.</p>
+				<p>Based on Hirer’s requirements, Jobber’s profile/portfolio, skills, ratings and reviews, client feedback, SaveonJobs Hirer hires a SaveonJobs Jobber.</p>
+			</div><!--terms-->
+			<div class="terms who col-md-12">
+				<h2>Release funds</h2>
+				<p>Once hired, Hirer will add funds securely through SaveonJobs escrow for the job. SaveonJobs will hold funds until the completion of job and transfer it to the Jobber upon successful completion of Job. All payments go through our secure system. Choose from the following billing methods:</p>
+				<p>
+					<ul>
+						<li style="text-align: left;">Visa</li>
+						<li style="text-align: left;">Mastercard</li>
+						<li style="text-align: left;">American Express</li>
+						<li style="text-align: left;">PayPal</li>
+					</ul>
+				</p>
+				<p style="text-align: left;">Note – SaveonJobs does not support any kind of cash money.</p>
+			</div><!--terms-->
+			<div class="terms who col-md-12">
+				<h2>Rate and Review each other</h2>
+				<p>Once the job is completed, both Jobber and Hirer have to rate the performance and write a review about the experience of working with each other. This will help in other individuals/businesses to identify the abilities and capabilities of a particular Jobber/Hirer.</p>
+			</div><!--terms-->
+         
+		    
+	</div>	
+
+<!--container-->
+	</div>
+ </div>
+<!--container close-->   
+    
+ <!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+
+<!-- ----------------------- footer close------------------------------------------- -->
+    
+    
+</body>
+</html>

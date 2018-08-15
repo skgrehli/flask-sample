@@ -1,0 +1,872 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SAVEonJOBS</title>
+{% include "front_saveonjobs/head_tag.html" %}
+
+<script>
+function myFunction() {
+    location.reload();
+}
+</script>
+
+<!-- <script type="text/javascript" src="static/front_end/js/header_angular_custom.js"></script> -->
+
+</head>
+
+<body ng-app="sojApp" ng-controller="indexCtrl">
+
+<div ng-if="cookiesUserid == undefined" ng-include=" '/static/front_end/angularTemplates/header.htm' "></div> 
+<div ng-if="cookiesUserid != undefined" ng-include=" '/static/front_end/angularTemplates/sticky_header.htm' "></div>
+
+<div ng-include=" '/static/front_end/angularTemplates/header_model.html' "></div>
+
+ <!-- -----------------sec2 mac banner---------------- --> 
+<div class="overlay" id="overlay_index" style="display:none;z-index:1;position:absolute;color:#ff0;height:100%;width:100%;" onclick="hide_searchbar_options();">
+</div>
+
+<div class="sec_2" style="width:100%; margin:0;">
+    
+        <section class="module parallax parallax-1">
+    
+              <div class="container">
+                    <div class="banner"> 
+            
+                         <div class="line_about_soj">
+                            <h3>Canada’s largest portal for all One time and Part time Jobs</h3>
+                         </div><!--line_about_soj close-->
+                            
+                         <div class="line_about_soj2">
+                            <h3>We give every person / business an opportunity to earn thousands of dollars.</h3>
+                        </div><!--line_about_soj close-->
+                        
+                        
+                    
+                      <div class="ui-searchbar-body">
+                          <div class="spacing">
+                              <form method="POST">
+                                  <div class="ui-searchbar-type">
+                                    <div data-widget-cid="widget-0">
+                                      <div class="ui-searchbar-type-value">
+                                          <span class="ui-searchbar-type-display" ng-show="searchType == 1" >Find a job</span>
+										                      <span class="ui-searchbar-type-display" id="post_job_searchbar" style="display: none;" ng-show="searchType == 0" >Post a job</span>
+                                          <span class="ui-searchbar-hollow-arrow" ><em></em><b></b></span>
+                                        </div>
+                                        <ul class="ui-searchbar-type-options" style="min-width: 112px; z-index: 99; position: absolute; left: 0px; top: 55px; right: auto; display: none;" data-widget-cid="widget-1">
+                                        	<li class="ui-searchbar-type-option">
+                                            	<a href="javascript:void(0)" ng-click="searchType = 1">Find a job</a>
+                                            </li>
+                                            <li class="ui-searchbar-type-option">
+                                            	<a href="javascript:void(0)" ng-click="searchType = 0">Post a job</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                  </div>
+                                  <div class="ui-searchbar-main" style="margin-left: 125px;">
+                                      <input type="text" class="ui-searchbar-keyword" name="SearchText" ng-model="job.search_string" lang="en" placeholder="Search jobs here">
+                                  </div>
+                								  <input type="submit" ng-if="searchType == 1" ng-click="searchPost('search', job.search_string);" class="ui-searchbar-submit" value="Search">
+                								  <input type="submit" ng-if="searchType == 0" data-toggle="modal" data-target="#hire_tab" ng-click="searchPost('postJob', job.search_string);" class="ui-searchbar-submit" value="Post">
+                                  
+                              </form>
+                             </div>
+                             <!--spacing close-->                             
+                          </div>
+                          <!--ui-body-->
+                    
+                       
+                        <!--carousel-->
+                        <div id="carousel">
+                          
+                            <div id="slides">
+                                <ul style="width:100% !important;">
+                                    <li class="slide">
+                                        <div class="quoteContainer">
+                                            <p class="quote-phrase">"Over 1000 trusted people ready to complete your task today"</p>
+                                        </div>
+                                    </li>
+                                    <li class="slide">
+                                        <div class="quoteContainer">
+                                             <p class="quote-phrase">"Find local services or hire flexible staff in minutes - online or via mobile"</p>
+                                        </div>                                       
+                                    </li>
+                                    <li class="slide">
+                                        <div class="quoteContainer">
+                                            <p class="quote-phrase">"Secure payments. We makes it seamless to pay for your task"</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="btn-bar">
+                              <div id="buttons"><a id="prev" href="#"><</a><a id="next" href="#">></a> </div>
+                            </div>
+                         </div>
+                        <!--carousel-->
+                            
+                    </div>
+                    <!--banner close-->
+              </div>
+            <!--container-->
+        </section>
+
+    
+      
+  
+
+
+
+
+<!--I want to hire start-->
+<div class="container" style="border-bottom: 1px solid #dadada;">
+
+
+  <div class="row hire_work">
+  
+  <h2 class="heading" id="hire_button_animation" >I want to <a href="#" data-toggle="modal" data-target="#hire_tab"><b> hire </b></a> </h2>
+  
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+	<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/post_a_job.PNG" alt="">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Post Job</h4>
+      <p style="text-align: left;">Just fill in a brief description, location and budget of the job you need to get done. Post any no. of jobs for FREE.</p>     
+      </div>
+          <div class="step"><img src="static/front_end/images/step.png" /></div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+	<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/get_bids.png" alt="">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Get Bids</h4>
+      <p style="text-align: left;">Depending on the job’s constraints, the best freelancers/companies in your vicinity will bid.</p>     
+      </div>
+          <div class="step even"><img src="static/front_end/images/step.png" /></div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+	<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/hire_the_right_person.png" alt="">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Hire the right person</h4>
+      <p style="text-align: left;">From amongst the bidders, choose the right person/company for your job.</p>      
+      </div>
+          <div class="step"><img src="static/front_end/images/step.png" /></div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+	<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/rate_and_pay.png" alt="">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Pay & Rate</h4>
+      <p style="text-align: left;">Upon successful completion of job, pay & rate your Jobber.</p>
+      </div>
+    </div>
+    </div>
+    
+  </div><!--row close-->
+ </div>
+ <!--I want to hire cose-->
+
+ 
+ 
+<!--I want to work-->
+<div class="container want_work">
+  <div class="row hire_work">
+  
+  <h2 class="heading" id="work_button_animation">I want to <a href="/findjobs"><b> work </b></a> </h2> 
+  
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+	<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/Browse_Jobs.png" alt="">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Browse Jobs</h4>
+      <p style="text-align: left;">Find all or any particular job of your interest and check it’s description, location and budget.</p>     
+      </div>
+          <div class="step"><img src="static/front_end/images/step.png" /></div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+	<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/bid_for_jobs.png" alt="...">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Bid for multiple jobs</h4>
+      <p style="text-align: left;">You can bid for any number and all kind of jobs for FREE and get hired by presenting yourself in the best way possible.</p>
+      </div>
+          <div class="step even"><img src="static/front_end/images/step.png" /></div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+		<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/Give_your_best.png" alt="...">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Give your best service</h4>
+      <p style="text-align: left;">Once hired, offer your best service to get 5 star rating thereby increasing your chances to get hired for other jobs as well.</p>     
+      </div>
+          <div class="step"><img src="static/front_end/images/step.png" /></div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+		<div class=" col-sm-4 col-md-4 col-xs-4">
+      <img src="static/front_end/images/take_cash.png" alt="">
+	  </div>
+      <div class="caption col-sm-8 col-md-8 col-xs-8">
+      <h4>Earn and smile</h4>
+      <p style="text-align: left;">Walk away with the best rating, deserved money and get ready to bid & work more.</p>     
+      </div>
+    </div>
+    </div>
+    
+  </div>
+ </div>
+ <!--I want to work close-->
+ 
+</div>
+<!--sec2 close-->
+
+
+
+<!-- -----------------sec2 mac banner close---------------- -->
+
+
+
+
+<!-- -------------------  Sec 3------------------------------- -->
+
+<div class="job_categories">
+
+    <div class="container">
+        
+         <div class="categories">
+            
+            <h2 class="cate_heading" >Skilled, Unskilled and Part time Jobs</h2>
+            <span class="cate_heading_button cate_heading">
+            <a href="#" data-toggle="modal" data-target="#hire_tab"><b>Post a job</b></a>
+            <a href="/findjobs"><b>Find a job</b></a>
+            </span>
+            
+            
+            <div class="row">
+              <div class="col-sm-6 col-md-3" ng-repeat="categories_list_array in categorieslist">
+              <a href="/categorylisting">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url({&categories_list_array.categoryimage&}) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4 ng-bind="categories_list_array.categoryname | capitalize"></h4>
+                    <p ng-bind="categories_list_array.tempData" ellipsis></p>
+                  </div>
+                </div>
+              </a>
+              </div>
+              
+              <!-- <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/removalist.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Packers & Movers</h4>
+                    <p>eg. Pickup & delivery, house moving assistant, assembling furniture and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/it.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Computer & IT Support</h4>
+                    <p>eg. Set up my PC/Laptop, virtual software installation assistant and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/cleaning.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Household Services</h4>
+                    <p>eg. Home cleaning, Duct cleaning , Garden maintenance and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div> -->
+              
+            </div><!--row close-->
+              
+             <!-- <div class="row">
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/pickup.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Part time Jobs</h4>
+                    <p>eg. hospitality, events, promotions, business support and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/online.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Online Work</h4>
+                    <p>eg. design logo, develop website, data entry and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/assembly.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Events</h4>
+                    <p>eg. Bartending, models, catering, DJ, chef, Photography and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/pickup.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Business Support</h4>
+                    <p>eg. Office assistant, accounting, data entry, income tax return help and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              </div> --><!--row close-->
+
+              <!-- <div class="row">
+              
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/garden.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>All season services</h4>
+                    <p>eg. car wash, Dog walking, Laundry service, groceries assistant and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              
+              <div class="col-sm-6 col-md-3">
+                <a href="#">
+                <div class="thumbnail cate_box">
+                  <div class="category-img" style="background:url(static/front_end/images/categories/online.jpg) no-repeat; background-size:cover;"></div>
+                  <div class="caption cate_caption">
+                  <h4>Marketing Services</h4>
+                    <p>eg. Flyer delivery, Pamphlet distribution, data entry, content writers and more…</p>
+                  </div>
+                </div>
+                </a>
+              </div>
+              </div> --><!--row close-->
+             
+            
+            <div class="border-btn">
+              <a href="/categorylisting" class="see-all-btn">See all categories</a>
+            </div>
+              
+              
+            </div><!--row, hire_work close-->
+            
+    </div><!--container-->
+         
+    
+ </div><!--job_categories close-->
+
+<!-- -------------------  Sec 3 close------------------------------- -->
+
+
+
+
+
+<!-- -------------------- sec 4 start ------------------------------ -->
+
+<div class="container want_work">
+        <div class="row white_sec">
+        
+        <h2 class="heading white_sec_heading pullDown" >What can you do through SAVEonJOBS?</h2> 
+        
+        
+            
+        
+          <div class="col-sm-6 col-md-3">
+            <div class="do_jobs">
+			<div class=" col-sm-4 col-md-4 col-xs-4 do_jobs">
+              <img src="static/front_end/images/free_job_posting.png" alt="">
+			  </div>
+              <div class="caption col-sm-8 col-md-8 col-xs-8 ">
+                <h4>FREE Job Posting</h4>
+                <p style="text-align: left;">Hirers can post any number of small/big jobs for FREE!</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="do_jobs">
+			<div class=" col-sm-4 col-md-4 col-xs-4 do_jobs">
+              <img src="static/front_end/images/apply.png" alt="...">
+			  </div>
+              <div class="caption col-sm-8 col-md-8 col-xs-8">
+                <h4>Apply on multiple jobs for FREE</h4>
+                <p style="text-align: left;">Jobbers can Bid on any number of jobs for FREE!</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="do_jobs">
+			<div class=" col-sm-4 col-md-4 col-xs-4 do_jobs">
+              <img src="static/front_end/images/signup.png" alt="...">
+			  </div>
+              <div class="caption col-sm-8 col-md-8 col-xs-8">
+                <h4>Work with Trusted people/company</h4>
+                <p style="text-align: left;">The better a person/company is rated by Hirers, more are the chances of getting hired for jobs.</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="do_jobs">
+			<div class=" col-sm-4 col-md-4 col-xs-4 ">
+              <img src="static/front_end/images/singe_signin.png" alt="">
+			  </div>
+              <div class="caption col-sm-8 col-md-8 col-xs-8">
+                <h4>Skilled/Unskilled jobs</h4>
+                <p style="text-align: left;">Whether you are an expert in a particular field or a jack of all trades, start earning today.</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <span class="cate_heading_button cate_heading">
+            <a href="#" data-toggle="modal" data-target="#hire_tab"><b>Post a job for FREE</b></a>
+            <a href="/findjobs"><b>Start Bidding for FREE</b></a>
+            </span>
+            
+          
+        </div>
+     </div><!--container close-->
+
+    
+<!-- --------------------- sec 4 close ------------------------------- -->     
+
+
+
+
+ <!-- -------------------- sec 5 start-------------------------------- -->
+ 
+ <div class="find_people">
+   <div class="container">
+   
+      <h2 class="cate_heading">Find the Right Person/Company for your Job</h2>
+      
+      
+    <img src="static/front_end/images/right_people.png" alt="Center Align image in bootstrap" class="center-block img-responsive">
+
+    <div class="rightperson_button"> <a href="#" data-toggle="modal" data-target="#Signup">Become a Pro Jobber</a></div>
+  </div>
+
+</div><!--find people close-->
+
+
+ <!-- -------------------- sec 5 close-------------------------------- -->
+    
+
+
+
+
+<!-- --------------------- sec 6 start -------------------------------------- -->
+
+<div class="container Hirers_say">
+<div class="row">
+
+ <h2 class="heading white_sec_heading" style="margin-bottom:0;">What the Hirers Say?</h2> 
+ 
+    <div class="col-md-12" data-wow-delay="1.2s">
+        <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+            <!-- Bottom Carousel Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#quote-carousel" data-slide-to="0" class="active"><img class="img-responsive " src="https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg" alt="">
+                </li>
+                <li data-target="#quote-carousel" data-slide-to="1"><img class="img-responsive" src="https://s3.amazonaws.com/uifaces/faces/twitter/rssems/128.jpg" alt="">
+                </li>
+                <li data-target="#quote-carousel" data-slide-to="2"><img class="img-responsive" src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg" alt="">
+                </li>
+            </ol>
+
+            <!-- Carousel Slides / Quotes -->
+            <div class="carousel-inner text-center">
+
+                <!-- Quote 1 -->
+                <div class="item active">
+                    <blockquote>
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+
+                                <p style="font-size:16px;">Lorem 1 ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat undefineda pariatur. !</p>
+                                <small>Someone famous</small>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+                <!-- Quote 2 -->
+                <div class="item">
+                    <blockquote>
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+
+                                <p style="font-size:16px;">Lorem 2 ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat undefineda pariatur. </p>
+                                <small>Someone famous</small>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+                <!-- Quote 3 -->
+                <div class="item">
+                    <blockquote>
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+
+                                <p style="font-size:16px;">Lorem 3 ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat undefineda pariatur. .</p>
+                                <small>Someone famous</small>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- Carousel Buttons Next/Prev -->
+            <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><img src="static/front_end/images/left.PNG"></a>
+            <a data-slide="next" href="#quote-carousel" class="right carousel-control"><img src="static/front_end/images/right.PNG"></a>
+        </div>
+        
+    </div>
+</div>
+</div>
+
+
+<!-- --------------------- sec 6 close -------------------------------------- -->
+ 
+
+
+<!-- --------------------- sec 7 start -------------------------------------- -->
+
+<div class="why_choose"> 
+  <div class="container">
+        <div class="container">
+        
+        <h2 class="why_choose_heading" >Why work through SAVEonJOBS?</h2>
+        
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+			<div class="col-sm-4 col-md-4 col-xs-4 ">
+              <img src="static/front_end/images/save_time.png" alt="">
+			 </div>
+              <div class="caption col-md-8 col-sm-8 col-xs-8">
+                <h4>Save time</h4>
+                <p style="text-align: left;">Want to work OR want to get any small/big job done, waste no time and start using SAVEonJOBS now!</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+			<div class="col-sm-4 col-md-4 col-xs-4">
+              <img src="static/front_end/images/save_money.png" alt="...">
+			  </div>
+              <div class="caption col-md-8 col-sm-8 col-xs-8">
+                <h4>Save money</h4>
+                <p style="text-align: left;">Want to get work done and have a budget in mind? Just post your job and get the most competitive bids.</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+			<div class="col-sm-4 col-md-4 col-xs-4">
+              <img src="static/front_end/images/easy_to_use.png" alt="...">
+			  </div>
+              <div class="caption col-md-8 col-sm-8 col-xs-8">
+                <h4>Showcase Skills</h4>
+                <p style="text-align: left;">Have special skills and want the world to know it? Showcase your skills, start bidding on jobs matching your skill set and get paid more.</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+			<div class="col-sm-4 col-md-4 col-xs-4 ">
+              <img src="static/front_end/images/Cash_generator.png" alt="">
+			  </div>
+              <div class="caption col-md-8 col-sm-8 col-xs-8">
+                <h4>StartYour Own Business</h4>
+                <p style="text-align: left;">Work smarter, not harder. Start bidding on all possible jobs, get hired and further hire skilled people to complete jobs. Take your due from the Hirer, pay to the Jobber and keep a well deserved ‘smart work’ commission. Go ahead and fulfill your Entrepreneurial dreams.</p>
+                
+              </div>
+            </div>
+          </div>
+          
+          
+            <div class="button join_us"> <a href="#" data-toggle="modal" data-target="#Signup">Join SAVEonJOBS now</a></div>
+            
+        </div>
+        
+      
+        
+        
+     </div>
+ </div><!--why_choose close-->
+    
+ <!-- -------------------- sec 7 close ------------------------------------- -->
+
+
+
+
+<!-- ----------------------- footer ------------------------------------------- -->
+
+{% include "front_saveonjobs/footer_main.html" %}
+
+<!-- ----------------------- footer close------------------------------------------- -->
+<!-- import jQuery -->
+
+    
+<!-- write script to toggle class on scroll -->
+<script>
+//$(window).scroll(function() {
+//    if ($(this).scrollTop() > 1){  
+//        $('header').addClass("sticky");
+//    $('.banner').css("margin-top", "25px");
+//    $('.mac_banner').css("margin-top", "215px");
+//    }
+//    else{
+//        $('header').removeClass("sticky");
+//    $('.banner').css("margin-top", "125px");
+//    $('.mac_banner').css("margin-top", "30px");
+//    }
+//});
+</script>
+
+
+  <script>
+
+    /*function jobshowNextStep(stepNo)
+        {
+          $(".createjob").hide();
+          {% if not session['userid'] %}
+              $("#Postajob").hide();
+              $("#Login").show();
+          {% else %}
+            stepNo++;
+            $(".create_post"+stepNo).show();
+          {% endif %}
+        }*/
+
+    /*function showLogin()
+    {
+      $(".feilds,.Login_button_btn").show();
+      $("#popup2_show_login,.login-title").text("Login");
+      $(".no-account").show();
+    }*/
+
+    function hide_searchbar_options(){
+      $(".ui-searchbar-type-options").slideUp();
+      $("#overlay_index").hide();
+    }
+   
+    function showNextStep()
+        {
+      email = $("#email_signup").val();
+      password = $("#password_signup").val();
+      console.log(email,password);
+      emailValidate = true;
+      passwordValidate = true;
+      if(email == "" || email == undefined || password == "" || password == undefined ){
+        swal("No Email/Password input");
+      }
+      if(email != "" && email != undefined && password != "" && password != undefined){
+      console.log(email,password);
+      $(".Signup_steps").hide();
+      $(".Signup_step2").show();
+        }
+
+      }
+        $(window).scroll(function() {
+                $('#hire_button_animation').each(function(){
+                    var imagePos = $(this).offset().top;
+                    //$(this).removeClass("slideUp");
+                    var topOfWindow = $(window).scrollTop();
+          // console.log(imagePos+"------"+topOfWindow)
+                        if (parseInt(topOfWindow) > 350) {
+              // console.log("I am in")
+              $(this).removeClass("slideLeft");
+                            $(this).addClass("slideLeft");
+                        }
+                });
+         $('#work_button_animation').each(function(){
+                    var imagePos = $(this).offset().top;
+                    //$(this).removeClass("slideUp");
+                    var topOfWindow = $(window).scrollTop();
+          // console.log(imagePos+"------"+topOfWindow)
+                        if (parseInt(topOfWindow) > 550) {
+              // console.log("I am in")
+              $(this).removeClass("slideRight");
+                            $(this).addClass("slideRight");
+                        }
+                });
+        });
+    $(document).ready(function(){
+      
+      /*$("#popup2_show_submit").click(function(){
+        window.location.reload() 
+      })*/
+      /*console.log("length =>",$("#forgot-password-btn").length)  
+      $("#forgot-password-btn").click(function(){
+        alert("got it");
+        $(".feilds").hide();
+        $(".Email").show();
+        $(".Login_button_btn").show();
+        // $("#popup2_show_login").text("Submit");
+        $("#popup2_show_login").show();
+        $("#popup2_show").hide();
+        $(".login-title").text("Forgot Password");
+        $(".no-account").hide();
+      });*/
+
+      $("#post_job_searchbar").show();
+      
+      $(".ui-searchbar-type").click(function(){
+        $(".ui-searchbar-type-options").toggle();
+        $("#overlay_index").show();
+      });
+      $(".ui-searchbar-type-option").click(function(){
+        $(".ui-searchbar-type-options").slideUp();
+      });
+    
+        //rotation speed and timer
+        var speed = 5000;
+        
+        var run = setInterval(rotate, speed);
+        var slides = $('.slide');
+        var container = $('#slides ul');
+        var elm = container.find(':first-child').prop("tagName");
+        var item_width = container.width();
+        var previous = 'prev'; //id of previous button
+        var next = 'next'; //id of next button
+        slides.width(item_width); //set the slides to the correct pixel width
+        container.parent().width(item_width);
+        container.width(slides.length * item_width); //set the slides container to the correct total width
+        container.find(elm + ':first').before(container.find(elm + ':last'));
+        resetSlides();
+        
+        
+        //if user clicked on prev button
+        
+        $('#buttons a').click(function (e) {
+          //slide the item
+          
+          if (container.is(':animated')) {
+            return false;
+          }
+          if (e.target.id == previous) {
+            container.stop().animate({
+              'left': 0
+            }, 1500, function () {
+              container.find(elm + ':first').before(container.find(elm + ':last'));
+              resetSlides();
+            });
+          }
+          
+          if (e.target.id == next) {
+            container.stop().animate({
+              'left': item_width * -2
+            }, 1500, function () {
+              container.find(elm + ':last').after(container.find(elm + ':first'));
+              resetSlides();
+            });
+          }
+          
+          //cancel the link behavior            
+          return false;
+          
+        });
+        
+        //if mouse hover, pause the auto rotation, otherwise rotate it    
+        container.parent().mouseenter(function () {
+          clearInterval(run);
+        }).mouseleave(function () {
+          run = setInterval(rotate, speed);
+        });
+        
+        
+        function resetSlides() {
+          //and adjust the container so current is in the frame
+          container.css({
+            'left': -1 * item_width
+          });
+        }
+    });
+    function rotate() 
+    {
+      $('#next').click();
+    }
+    
+    function autoResizeDiv()
+        {
+           var heigth_value = window.innerHeight +'px';
+       		$("section.module.parallax").height(heigth_value)
+        }       
+        window.onload = autoResizeDiv;
+        autoResizeDiv();
+
+    /*$('#btnUploadCancel').click(function(){
+      $('#forgot-pwd-popup').modal('toggle');
+    });*/
+            
+    </script>
+
+</body>
+
+
+</html>
