@@ -244,7 +244,7 @@ def register():
 
         elif regtype!=0:
             verify=False
-            #return jsonify({"okk":user[0]['registeredfrom']})
+            
             user = list(User.find({"email": email}, {"_id": 0}))
 
             if regtype==1 and user[0]['registeredfrom']=="facebook":
