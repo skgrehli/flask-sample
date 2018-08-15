@@ -20,10 +20,12 @@ def userlogin():
             salt = ""
 
             userdata = User.find_one({"email" :email ,"isadmin" :False})# ,"active" :True,"emailverified":True})
+            if userdata is None:
+                return jsonify({"status": 207, "response": {}, "message": "email id not found", "error": False})
             if userdata['active']==False:
-                return jsonify({"status": 205, "response": {}, "message": "your active is not active", "error": True})
+                return jsonify({"status": 205, "response": {}, "message": "your active is not active", "error": False})
             if userdata['emailverified'] == False:
-                return jsonify({"status": 206, "response": {}, "message": "your email is not verified", "error": True})
+                return jsonify({"status": 206, "response": {}, "message": "your email is not verified", "error": False})
 
             #print (userdata)
             # if userData.count == 0 :
