@@ -44,16 +44,18 @@ def register():
         email=request.json['email']
         regtype=int(request.json['regtype'])
         mobile = request.json['mobile']
-        city = request.json['city']
+        cityid = request.json['city']
         skill = request.json['skill']
-        state = request.json['state']
-        country = request.json['country']
+        stateid = request.json['state']
+        countryid = request.json['country']
         picurl = request.json['picurl']
         gender=request.json['gender']
 
+
+
         if picurl=='':
             picurl="default-image.jpg"
-
+        '''
         if city!="":
             citylist=db.city.find_one({"city":city},{"_id":0,"cityid":1})
             cityid=citylist['cityid']
@@ -71,7 +73,7 @@ def register():
             countryid=countrylist['countryid']
         else:
             countryid=""
-
+'''
         addressJSON = {
             "address1": request.json['address1'],
             "address2": request.json['address2'],
