@@ -20,12 +20,22 @@ def userlogin():
             salt = ""
 
             userdata = User.find_one({"email" :email ,"isadmin" :False})# ,"active" :True,"emailverified":True})
+
+            try:
+
+                if userdata['registeredfrom']!="jobwork":
+                    message="email id is registered from "+userdata['registeredfrom']
+                    return jsonify({"status": 208, "response": {}, "message": message, "error": True})
+            except Exception as e:
+                pass
+
+
             if userdata is None:
-                return jsonify({"status": 207, "response": {}, "message": "email id not found", "error": False})
+                return jsonify({"status": 207, "response": {}, "message": "email id not found", "error": True})
             if userdata['active']==False:
-                return jsonify({"status": 205, "response": {}, "message": "your active is not active", "error": False})
+                return jsonify({"status": 205, "response": {}, "message": "your active is not active", "error": True})
             if userdata['emailverified'] == False:
-                return jsonify({"status": 206, "response": {}, "message": "your email is not verified", "error": False})
+                return jsonify({"status": 206, "response": {}, "message": "your email is not verified", "error": True})
 
             #print (userdata)
             # if userData.count == 0 :
@@ -55,9 +65,9 @@ def userlogin():
                     response =userDataResponse(email)
                     return jsonify({"status": 200, "response": response, "message": "", "error": False})
                 else:
-                    return jsonify({'status' :201 ,"response": {}, 'message' : 'Invalid username and Password.',"error": False})
+                    return jsonify({'status' :201 ,"response": {}, 'message' : 'Invalid username and Password.',"error": True})
             else:
-                return jsonify({'status' :202 ,"response": {}, 'message' : 'Invalid username.',"error": False})
+                return jsonify({'status' :202 ,"response": {}, 'message' : 'Invalid username.',"error": True})
         else:
             return jsonify({'status' :203,"response": {}, 'message' :"Email or Password not be null.","error": False})
 

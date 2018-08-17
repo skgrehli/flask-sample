@@ -173,7 +173,7 @@ def register():
                      "createdatetime": datetime.now(), "updatedatetime": datetime.now()})
 
             return jsonify(
-                    {"status": 200, "response": {}, "message": "verification mail sent", "error": False, "registedfrom": registeredfrom})
+                    {"status": 200, "response": {}, "message": "verification mail sent", "error": True, "registedfrom": registeredfrom})
 
         elif userdata[0]['emailverified'] == False:
             emailhash = CommonUtils.getHashValue()
@@ -257,7 +257,7 @@ def register():
 
             else:
                 message="account already registered from " + user[0]['registeredfrom']
-                return jsonify({"status":200,"messsage":message,"registedfrom":user[0]['registeredfrom'],"response": {},"error":False})
+                return jsonify({"status":200,"messsage":message,"registedfrom":user[0]['registeredfrom'],"response": {},"error":True})
                 #user = list(User.find({"email": email}, {"_id": 0}))
             if verify==True:
 
