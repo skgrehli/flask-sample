@@ -64,11 +64,12 @@ app.register_blueprint(usr_account)
 app.register_blueprint(jw_paypal)
 app.register_blueprint(jw_paypal_web)
 app.register_blueprint(jw_upload)
-app.register_blueprint(user_register_all)
 
 app.register_blueprint(user_login)
 app.register_blueprint(remove_account)
 app.register_blueprint(user_register_jobwork)
+app.register_blueprint(user_register_all)
+
 
 
 CORS(app)
