@@ -65,7 +65,7 @@ def userlogin():
                     response =userDataResponse(email)
                     return jsonify({"status": 200, "response": response, "message": "", "error": False})
                 else:
-                    return jsonify({'status' :201 ,"response": {}, 'message' : 'Invalid username and Password.',"error": True})
+                    return jsonify({'status' :201 ,"response": {}, 'message' : 'Incorrect Password.',"error": True})
             else:
                 return jsonify({'status' :202 ,"response": {}, 'message' : 'Invalid username.',"error": True})
         else:
