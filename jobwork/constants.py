@@ -1,3 +1,4 @@
+import  os
 class Constants(object):
     API_SECRET_KEY = 'AIzaSyD_-qiKP3SyY1bN5GLtL_lGotvrNPoW6D4'
     DEBUG = True
@@ -20,8 +21,9 @@ class Constants(object):
 
     # URL path
     URL = "http://jobwork.io:8080/"
-    IMAGE_PATH = "static/front_end/images/profile/"
+    IMAGE_PATH = "static/userprofilepic/"
     PORTFOLIO_PATH = "static/front_end/images/portfolio/"
+    JOB_DOC="static/jobdocument/"
     DOC_PATH = "static/front_end/images/documents/"
     PROFIL_PIC_STATIC_PATH = URL + IMAGE_PATH
 
@@ -37,3 +39,5 @@ class Constants(object):
     ONBOARD_EMAIL_TEMPLATE = '/emailTemplates/email_verification_template.html'
     BID_ACCTEPED_EMAIL_TEMPLATE = '/emailTemplates/Accept-bid.html'
     BID_REVERSE_EMAIL_TEMPLATE = '/emailTemplates/reverse-bid.html'
+    APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+

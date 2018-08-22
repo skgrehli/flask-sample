@@ -86,23 +86,27 @@ def jobFilter():
         cityList=db.location.find()
         #return jsonify({"status": budgetMin,"lt":budgetMax})
         result=db.jobs.find({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
-               {"$gte":budgetMin,"$lte":budgetMax}}).sort(sortKey,sortVal).skip(page_offset).limit(PageLimit)
+               {"$gte":budgetMin,"$lte":budgetMax}},{"_id":0}).sort(sortKey,sortVal).skip(page_offset).limit(PageLimit)
         count=0
         print("3")
+        response=dict()
         for data in result:
             #return jsonify({"location": data["locationid"],"list":locationList[0]["locationid"]})
+            count=dict()
+            jobdetails=dict()
             if(radius!=""):
                 if(data["locationid"]  in locationList):
                     print(data)
                     count=count+1
-                    allDataCollections.append({"count":count,"data":data})
+                    response.update({str(count):data})
             else:
                 count = count + 1
-                allDataCollections.append({"count": count, "data": data})
+                response.update({str(count): data})
+            response[str(count)]
         if count is 0:
-            return jsonify({"status": 200,"message":"no data"})
+            return jsonify({"status": 200,"message":"no data","error":True,"response":{}})
         else:
             #return jsonify({"count": count})
-            return json.dumps(allDataCollections, indent=4, default=json_util.default)
+            return jsonify({"response":response,"status":200,"error":False,"message":""})
     except Exception as e:
         return json.dumps(e, indent=4, default=json_util.default)

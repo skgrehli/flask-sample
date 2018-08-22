@@ -150,7 +150,7 @@ def user_forgotpassword_email():
             else:
                 return jsonify({"status": 200, "message": "No data."})
         else:
-            return jsonify({"status": 200, "message": "Data is Null."})
+            return jsonify({"status": 200, "message": "email not found."})
 
     except Exception as e:
         print(e)

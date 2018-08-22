@@ -32,6 +32,7 @@ from jobwork.routes.user_login import user_login
 from jobwork.routes.user_register_all import user_register_all
 from jobwork.routes.remove_acount import remove_account
 from jobwork.routes.registration_jobwork import user_register_jobwork
+from jobwork.routes.docs_upload import upload_doc
 app = Flask(__name__)
 
 
@@ -67,7 +68,7 @@ app.register_blueprint(jw_upload)
 
 app.register_blueprint(user_login)
 app.register_blueprint(remove_account)
-app.register_blueprint(user_register_jobwork)
+app.register_blueprint(upload_doc)
 app.register_blueprint(user_register_all)
 
 
