@@ -12,7 +12,7 @@ from pyfcm import FCMNotification
 URL = Constants.URL
 imagePath = Constants.IMAGE_PATH
 
-jw_email=Blueprint('jw_email',__name__,url_prefix='')
+jw_com=Blueprint('jw_com',__name__,url_prefix='')
 
 push_service = FCMNotification(api_key="AAAAtudwsIM:APA91bHK-EizhjQr8D1p60liGYW6glt1y9Y5_OIfELjCnyrJm33kFLjQ0cdVwmyh3z2-6NwUo8nxORgQBe3WfNi-0U_CXHHt1Msq93R4QBsvgwvRpjzmU2gxOKwTI9LdU4VYkMlOFbMm")
 
@@ -26,7 +26,7 @@ def find_FCM_id(userid):
 	except Exception as e:
 		raise e
 
-@jw_email.route('/job/comment/create', methods=['POST'])
+@jw_com.route('/job/comment/create', methods=['POST'])
 def job_comment_create():
     # Check authentications keys
     if request.json.has_key('userid') == False or request.json.has_key('token') == False:
@@ -140,12 +140,12 @@ def job_comment_create():
 
 # ********************************************************* Job Comments List +++++++++++++++++++
 
-@jw_email.route('/job/comment/list', methods=['POST'])
+@jw_com.route('/job/comment/list', methods=['POST'])
 def job_comment_list():
     # Check authentications keys
     jobCommentsList = list(JobComments.find({"jobid" :request.json['jobid'], "active" :True} ,{"_id" :0}))
 
-    if jobCommentsList is not None:
+    if len(jobCommentsList)!=0:
         return jsonify({"status" : 200, "message" :"Job Comments List.", "jobCommentsList" :jobCommentsList,"error":False})
     else:
         return jsonify(
