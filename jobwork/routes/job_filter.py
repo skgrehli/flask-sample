@@ -7,7 +7,7 @@ from jobwork.middleware.authentication import authentication
 filter=Blueprint('filter', __name__, url_prefix='')
 
 @filter.route('/job/filter', methods=['POST'])
-@authentication
+#authentication
 def jobFilter():
     try:
         allDataCollections = []
