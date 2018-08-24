@@ -11,6 +11,7 @@ filter=Blueprint('filter', __name__, url_prefix='')
 def jobFilter():
     try:
         allDataCollections = []
+        userid = int(request.json['userid'])
         sortBy = int(request.json['sortBy'])
         budgetMin = int(request.json['budgetMin'])
         budgetMax = int(request.json['budgetMax'])
