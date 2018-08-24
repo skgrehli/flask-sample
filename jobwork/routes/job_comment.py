@@ -143,19 +143,12 @@ def job_comment_create():
 @jw_email.route('/job/comment/list', methods=['POST'])
 def job_comment_list():
     # Check authentications keys
-    if request.json.has_key('userid') == False or request.json.has_key('token') == False:
-        return jsonify({ "status" :401 ,"message" :"Authentication keys are missing." })
-
-    userid = int(request.json['userid'])
-    token = request.json['token']
-
-    # Authenticate credentials
-    if authentication(userid ,token) ==  False:
-        return jsonify({"status" :400 ,"message" :"Authentication Failed."})
-
-    # jobData = jobs.find({},{"_id":0,"jobid":1})
-
     jobCommentsList = list(JobComments.find({"jobid" :request.json['jobid'], "active" :True} ,{"_id" :0}))
 
-    return jsonify({"status" : 200, "message" :"Job Comments List.", "jobCommentsList" :jobCommentsList})
+    if jobCommentsList is not None:
+        return jsonify({"status" : 200, "message" :"Job Comments List.", "jobCommentsList" :jobCommentsList,"error":False})
+    else:
+        return jsonify(
+            {"status": 200, "message": "Job Comments List empty", "jobCommentsList": [], "error": True})
+
 
