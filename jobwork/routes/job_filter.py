@@ -92,21 +92,19 @@ def jobFilter():
         response=dict()
         for data in result:
             #return jsonify({"location": data["locationid"],"list":locationList[0]["locationid"]})
-            count=dict()
-            jobdetails=dict()
             if(radius!=""):
                 if(data["locationid"]  in locationList):
                     print(data)
                     count=count+1
-                    response.update({str(count):data})
+                    allDataCollections.append(data)
             else:
                 count = count + 1
-                response.update({str(count): data})
-            response[str(count)]
+                allDataCollections.append(data)
+
         if count is 0:
             return jsonify({"status": 200,"message":"no data","error":True,"response":{}})
         else:
             #return jsonify({"count": count})
-            return jsonify({"response":response,"status":200,"error":False,"message":""})
+            return jsonify({"response":allDataCollections,"status":200,"error":False,"message":""})
     except Exception as e:
         return json.dumps(e, indent=4, default=json_util.default)
