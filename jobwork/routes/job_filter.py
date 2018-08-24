@@ -11,7 +11,7 @@ filter=Blueprint('filter', __name__, url_prefix='')
 def jobFilter():
     try:
         allDataCollections = []
-        userid = int(request.json['userid'])
+        userid = (request.json['userid'])
         sortBy = int(request.json['sortBy'])
         budgetMin = int(request.json['budgetMin'])
         budgetMax = int(request.json['budgetMax'])
@@ -50,19 +50,27 @@ def jobFilter():
             cityLat=cityLocation['gpsJSON']['lat']
             cityLng=cityLocation['gpsJSON']["lng"]
             print(cityLat,cityLng)
+            origin=True
         else:
-            cityCity=0
-            valCity={"$ne":city}
-            userCity=db.user.find_one({"userid":userid},{"_id":0,"addressJSON.city":1})
-            cityId=userCity['addressJSON']['city']
-            print(cityId)
-            cityLocation = db.location.find_one({"cityid": int(cityId)}, {"_id": 0, "gpsJSON": 1})
-            cityLat = cityLocation['gpsJSON']['lat']
-            cityLng = cityLocation['gpsJSON']["lng"]
+            if userid!="":
+                userCity=db.user.find_one({"userid":int(userid)},{"_id":0,"addressJSON.city":1})
+                cityId=userCity['addressJSON']['city']
+                valCity=cityId
+                print(cityId)
+                cityLocation = db.location.find_one({"cityid": int(cityId)}, {"_id": 0, "gpsJSON": 1})
+                cityLat = cityLocation['gpsJSON']['lat']
+                cityLng = cityLocation['gpsJSON']["lng"]
+                origin=True
+            else:
+                city = 0
+                valCity = {"$ne": city}
+                print("no city no user")
+                radius=""
+                origin=False
 
         locationList=[]
         print("1")
-        if  radius!="" :
+        if  radius!="" and origin :
             #locations=list(db.location.find({ "gpsJSON" : { "$near" : [cityLat,cityLng],"$maxDistance":int(request.json['radius'] ) } },{"locationid":1,"_id":0} ))
             locations=list(db.location.find({ "gpsJSON.lnglat" : { "$near" :{ "$geometry" : { "type" : "Point" , "coordinates" : [ cityLng , cityLat ] },"$maxDistance" : int(radius) * 1000 }}}))
             print("2")
@@ -83,23 +91,29 @@ def jobFilter():
             sortKey = "distance"
             sortVal = -1
         # db.location.find({ gpsJSON : { $near : [43.8492143,-79.0241784],$maxDistance:1  } } )
-        cityList=db.location.find()
+        #cityList=db.location.find()
         #return jsonify({"status": budgetMin,"lt":budgetMax})
+        listd=(jobTypKey,jobTypVal,valLoc,valCity,budgetMin,budgetMax)
+        #return jsonify({"back":listd})
         result=db.jobs.find({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
                {"$gte":budgetMin,"$lte":budgetMax}},{"_id":0}).sort(sortKey,sortVal).skip(page_offset).limit(PageLimit)
+
         count=0
+        #return jsonify({"back": list(result)})
         print("3")
         response=dict()
         for data in result:
-            #return jsonify({"location": data["locationid"],"list":locationList[0]["locationid"]})
+            #return jsonify({"location": data})
+            bidcount=db.jobbids.count({"jobid":data['jobid']})
+            data.update({"bidcount":bidcount})
             if(radius!=""):
                 if(data["locationid"]  in locationList):
+
                     print(data)
-                    count=count+1
                     allDataCollections.append(data)
             else:
-                count = count + 1
                 allDataCollections.append(data)
+            count=count+1
 
         if count is 0:
             return jsonify({"status": 200,"message":"no data","error":True,"response":{}})
