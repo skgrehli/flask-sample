@@ -8,6 +8,7 @@ from jobwork.models.jobcomments import JobComments
 from jobwork.models.notification import Notifications
 from datetime import datetime
 from pyfcm import FCMNotification
+from jobwork.db_connection import db
 
 URL = Constants.URL
 imagePath = Constants.IMAGE_PATH
@@ -143,10 +144,16 @@ def job_comment_create():
 @jw_com.route('/job/comment/list', methods=['POST'])
 def job_comment_list():
     # Check authentications keys
-    jobCommentsList = list(JobComments.find({"jobid" :request.json['jobid'], "active" :True} ,{"_id" :0}))
+    response=[]
+    jobCommentsList = db.jobcomments.find({"jobid" :request.json['jobid'], "active" :True} ,{"_id" :0})
+    for data in jobCommentsList:
 
-    if len(jobCommentsList)!=0:
-        return jsonify({"status" : 200, "message" :"Job Comments List.", "jobCommentsList" :jobCommentsList,"error":False})
+        userId=User.find_one({"userid":data['userid']})
+        username=userId['firstname']+" "+userId['lastname']
+        data.update({"username":username})
+        response.append(data)
+    if len(response)!=0:
+        return jsonify({"status" : 200, "message" :"Job Comments List.", "jobCommentsList" :response,"error":False})
     else:
         return jsonify(
             {"status": 200, "message": "Job Comments List empty", "jobCommentsList": [], "error": True})

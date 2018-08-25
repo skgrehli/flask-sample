@@ -2,6 +2,7 @@ from bson import json_util, ObjectId
 import json
 from flask import request, Blueprint, make_response, jsonify
 from jobwork.db_connection import db
+from jobwork.models.user import User
 from jobwork.middleware.authentication import authentication
 
 filter=Blueprint('filter', __name__, url_prefix='')
@@ -104,8 +105,19 @@ def jobFilter():
         response=dict()
         for data in result:
             #return jsonify({"location": data})
+            map=dict()
+            location_data=db.location.find_one({"locationid":data['locationid']})
+            #return jsonify({"location": location_data['location_raw']['lon']})
+            map.update({"lon":location_data['location_raw']['lon']})
+            map.update({"lat": location_data['location_raw']['lat']})
+            map.update({"locationname": location_data['locationname']})
+            data.update({"map":map})
             bidcount=db.jobbids.count({"jobid":data['jobid']})
             data.update({"bidcount":bidcount})
+            userId =User.find_one({"userid": data['creatinguserid']})
+            username = userId['firstname'] + " " + userId['lastname']
+            data.update({"username": username})
+
             if(radius!=""):
                 if(data["locationid"]  in locationList):
 
