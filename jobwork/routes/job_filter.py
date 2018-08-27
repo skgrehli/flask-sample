@@ -108,6 +108,13 @@ def jobFilter():
             map=dict()
             location_data=db.location.find_one({"locationid":data['locationid']})
             #return jsonify({"location": location_data['location_raw']['lon']})
+            state=db.state.find_one({"stateid":data['addressJSON']['state']})
+            country = db.country.find_one({"countryid": data['addressJSON']['country']})
+            city = db.city.find_one({"cityid": data['cityid']})
+
+            map.update({"city":city['city']})
+            map.update({"state":state['state']})
+            map.update({"country":country['country']})
             map.update({"lon":location_data['location_raw']['lon']})
             map.update({"lat": location_data['location_raw']['lat']})
             map.update({"locationname": location_data['locationname']})
@@ -116,6 +123,7 @@ def jobFilter():
             data.update({"bidcount":bidcount})
             userId =User.find_one({"userid": data['creatinguserid']})
             username = userId['firstname'] + " " + userId['lastname']
+            data.update({"picurl":userId['picurl']})
             data.update({"username": username})
 
             if(radius!=""):
@@ -134,3 +142,14 @@ def jobFilter():
             return jsonify({"response":allDataCollections,"status":200,"error":False,"message":""})
     except Exception as e:
         return json.dumps(e, indent=4, default=json_util.default)
+
+@filter.route('/job/pic/update', methods=['POST'])
+def updatepic():
+    db.jobs.update({},{"$set": {"jobdocs": {"thumbnails": [
+        "https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p40x40/11267733_843958002346933_2987868632693693653_n.jpg?_nc_cat=0&oh=313c5268835617d52ab444f9d357c66d&oe=5BF9122F",
+        "https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p40x40/11267733_843958002346933_2987868632693693653_n.jpg?_nc_cat=0&oh=313c5268835617d52ab444f9d357c66d&oe=5BF9122F"],
+        "doc":["https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-9/11267733_843958002346933_2987868632693693653_n.jpg?_nc_cat=0&oh=8693467a6344c812c57549c05034745b&oe=5C005569",
+        "https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-9/11267733_843958002346933_2987868632693693653_n.jpg?_nc_cat=0&oh=8693467a6344c812c57549c05034745b&oe=5C005569"]}}},
+        {"upsert": False, "multi": True})
+    return jsonify({"done":200})
+

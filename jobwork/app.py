@@ -34,6 +34,7 @@ from jobwork.routes.remove_acount import remove_account
 from jobwork.routes.registration_jobwork import user_register_jobwork
 from jobwork.routes.docs_upload import upload_doc
 from jobwork.routes.job_comment import jw_com
+from jobwork.routes.job_bid import job_bid
 app = Flask(__name__)
 
 
@@ -67,6 +68,7 @@ app.register_blueprint(jw_paypal)
 app.register_blueprint(jw_paypal_web)
 app.register_blueprint(jw_upload)
 app.register_blueprint(jw_com)
+app.register_blueprint(job_bid)
 
 app.register_blueprint(user_login)
 app.register_blueprint(remove_account)
