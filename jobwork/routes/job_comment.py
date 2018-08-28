@@ -28,18 +28,14 @@ def find_FCM_id(userid):
 		raise e
 
 @jw_com.route('/job/comment/create', methods=['POST'])
+
 def job_comment_create():
     # Check authentications keys
-    if request.json.has_key('userid') == False or request.json.has_key('token') == False:
-        return jsonify({ "status" :401 ,"message" :"Authentication keys are missing." })
-
-    userid = int(request.json['userid'])
+    userid = request.json['userid']
     token = request.json['token']
-
-    # Authenticate credentials
-    if authentication(userid ,token) ==  False:
-        return jsonify({"status" :400 ,"message" :"Authentication Failed."})
-
+    if userid=="" or token=="":
+        return jsonify({"status": 200, "message": "user id or token cannot be empty", "response": [], "error": True})
+    userid=int(userid)
     jobData = Jobs.find_one({"jobid" :int(request.json['jobid'])} ,{"_id" :0})
     if jobData is not None:
         userCollection = User.find_one({"userid" :userid} ,{"_id" :0})
@@ -133,9 +129,9 @@ def job_comment_create():
 
         print (getNewJobComment)
 
-        return jsonify({"status" : 200, "message" :"Comments created.", "getNewJobComment" :getNewJobComment})
+        return jsonify({"status" : 200, "message" :"Comments created.", "response" :getNewJobComment,"error":False})
     else:
-        return jsonify({"status" : 200, "message" :"No Job Found.", "getNewJobComment" :[]})
+        return jsonify({"status" : 200, "message" :"No Job Found.", "response" :[],"error":True})
 
 
 

@@ -207,15 +207,15 @@ def job_bid_create():
                         "No email of bidder."
                     '''
                     update_bid = list(JobBids.find({"bidid": int(request.json['bidid'])}, {"_id": 0}))
-                    return jsonify({"status": 200, "message": "Bid Successfully set.", "bidUpdate": update_bid})
+                    return jsonify({"status": 200, "message": "Bid Successfully set.", "response": update_bid,"error":False})
 
                 else:
                     update_bid = list(JobBids.find({"bidid": int(request.json['bidid'])}, {"_id": 0}))
-                    return jsonify({"status": 200, "message": "status intercepted.", "bidUpdate": update_bid})
+                    return jsonify({"status": 200, "message": "bid update", "Response": update_bid,"error":False})
             else:
-                return jsonify({"status": 200, "message": "Bid not found.", "bidUpdate": []})
+                return jsonify({"status": 200, "message": "Bid not found.", "response": [],"error":True})
 
     else:
-        return jsonify({"status": 402, "message": "Job Not Found.", "bidUpdate": []})
+        return jsonify({"status": 402, "message": "Job Not Found.", "response": [],"error":True})
 
 
