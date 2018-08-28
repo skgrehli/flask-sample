@@ -71,6 +71,7 @@ def reportjob():
     userid = int(request.json['userid'])
     token = request.json['token']
     jobid = request.json['jobid']
+    message=request.json['message']
     reporteddatetime = datetime.now()
     reportresolveddatetime = datetime.now()
 
@@ -82,9 +83,9 @@ def reportjob():
         temp = []
         temp.append(reportedJSON)
         Jobs.update({"jobid": jobid}, {"$set": {"reportedJSON": temp}})
-
-        return jsonify({"status": 200, "message": "Successfully Report Created."})
+        Report.insert({"reportedby":userid,"jobid":jobid,"message":message,"reporttime":datetime.now(),"action":False})
+        return jsonify({"status": 200, "message": "Successfully Report Created.","error":False,"response":[]})
     else:
-        return jsonify({"status": 400, "message": "No Data Recevied."})
+        return jsonify({"status": 400, "message": "No Data Recevied.","error":True,"response":[]})
 
 
