@@ -12,7 +12,7 @@ def authentication(f):
         token = request.json['token']
         result = User.find_one({"userid": int(userid), "token": str(token)})
         if not result:
-            return make_response(jsonify({"status": 401, "message": " No mach found."}), 401)
+            return make_response(jsonify({"status": 401, "message": " No mach found.","error":True,"response":[]}), 401)
         else:
             return f(*args, **kwargs)
 
