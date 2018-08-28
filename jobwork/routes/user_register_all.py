@@ -50,8 +50,10 @@ def register():
         countryid = request.json['country']
         picurl = request.json['picurl']
         gender=request.json['gender']
+        locationid=request.json['locationid']
 
-
+        if locationid!="":
+            locationid=int(locationid)
 
         if picurl=='':
             picurl="default-image.jpg"
@@ -140,6 +142,7 @@ def register():
                          "forgotpasswordJSON": [],
                          "gender": gender,
                          "dob": "",
+                         "locationid": locationid,
                          "aboutme": "",
                          "picurl": picurl,
                          "reportedJSON": [],
@@ -209,6 +212,7 @@ def register():
                          "forgotpasswordJSON": [],
                          "gender": gender,
                          "dob": "",
+                         "locationid": locationid,
                          "aboutme": "",
                          "picurl": picurl,
                          "reportedJSON": [],
