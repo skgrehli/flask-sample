@@ -118,7 +118,7 @@ def job_bid_create():
 
                 if job_bid_detail['status'] == 'pending':
 
-                    finalbidamount = request.json['reversebid']
+                    finalbidamount = float(request.json['reversebid'])
                     # updating bidamount array and reverse bid array
                     reverseBidData = {"reversebidamount": request.json['reversebid'],
                                       "reversebiddatetime": datetime.now()}
