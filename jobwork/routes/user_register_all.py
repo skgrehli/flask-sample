@@ -19,7 +19,6 @@ user_register_all=Blueprint('user_register_all',__name__,url_prefix='')
 msgclient = Client(Constants.MSG_ACCOUNT_SID, Constants.MSG_AUTH_TOKEN)
 msgtrckid = CommonUtils.generateRandomNo(MessageTracks, "messagetrackid")
 
-
 URL=Constants.URL
 app=Flask(__name__)
 mail=Mail()
