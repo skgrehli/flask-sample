@@ -96,8 +96,15 @@ def jobFilter():
         #return jsonify({"status": budgetMin,"lt":budgetMax})
         listd=(jobTypKey,jobTypVal,valLoc,valCity,budgetMin,budgetMax)
         #return jsonify({"back":listd})
-        result=db.jobs.find({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
+        if searchString!="":
+            result=db.jobs.find({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
                {"$gte":budgetMin,"$lte":budgetMax}},{"_id":0}).sort(sortKey,sortVal).skip(page_offset).limit(PageLimit)
+        else:
+            result = db.jobs.find(
+                {jobTypKey: jobTypVal, "locationid": valLoc, "cityid": valCity,
+                 "budget":
+                     {"$gte": budgetMin, "$lte": budgetMax}}, {"_id": 0}).sort(sortKey, sortVal).skip(
+                page_offset).limit(PageLimit)
 
         count=0
         #return jsonify({"back": list(result)})
