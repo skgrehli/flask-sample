@@ -106,7 +106,7 @@ def job_bid_create():
                     "No email of jobber."  '''
 
                 new_bid = list(JobBids.find({"bidid": bidid}, {"_id": 0}))
-                return jsonify({"status": 200, "message": "Successfully created.", "bidUpdate": new_bid})
+                return jsonify({"status": 200, "message": "Successfully created.", "response": new_bid,"error":False})
 
             else:
                 new_bid = list(JobBids.find({"bidid": check_status['bidid']}, {"_id": 0}))
