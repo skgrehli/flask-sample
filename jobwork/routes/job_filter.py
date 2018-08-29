@@ -106,7 +106,8 @@ def jobFilter():
                      {"$gte": budgetMin, "$lte": budgetMax}}, {"_id": 0}).sort(sortKey, sortVal).skip(
                 page_offset).limit(PageLimit)
 
-        count=0
+        count=db.jobs.count({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
+               {"$gte":budgetMin,"$lte":budgetMax}},{"_id":0})
         #return jsonify({"back": list(result)})
         print("3")
         response=dict()
@@ -153,10 +154,10 @@ def jobFilter():
 
             if(radius!=""):
                 if(data["locationid"]  in locationList):
-                    count = count + 1
+                    #count = count + 1
                     allDataCollections.append(data)
             else:
-                count = count + 1
+                #count = count + 1
                 allDataCollections.append(data)
 
 
