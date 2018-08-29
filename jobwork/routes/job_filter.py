@@ -133,7 +133,10 @@ def jobFilter():
             data.update({"bidcount":bidcount})
             userId =User.find_one({"userid": data['creatinguserid']})
             username = userId['firstname'] + " " + userId['lastname']
-            data.update({"picurl":userId['picurl']})
+            try:
+                data.update({"picurl":userId['picurl']})
+            except Exception as e:
+                data.update({"picurl":"no pic url field in db"})
             data.update({"username": username})
 
             if(radius!=""):
