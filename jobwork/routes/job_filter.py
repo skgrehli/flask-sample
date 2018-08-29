@@ -107,7 +107,7 @@ def jobFilter():
                 page_offset).limit(PageLimit)
 
         count=db.jobs.count({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
-               {"$gte":budgetMin,"$lte":budgetMax}},{"_id":0})
+               {"$gte":budgetMin,"$lte":budgetMax}})
         #return jsonify({"back": list(result)})
         print("3")
         response=dict()
