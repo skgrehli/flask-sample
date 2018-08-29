@@ -40,8 +40,8 @@ def bids():
 
 
 
-        return jsonify({"count":count,"data":data})
+        return jsonify({"status":200,"response":"ok","message":count,"data":data,"error":False})
     except Exception as e:
         print(e)
-        return jsonify({"data":"error"})
+        return jsonify({"error":True,"response":[],"message":"unknown error","status":400})
 
