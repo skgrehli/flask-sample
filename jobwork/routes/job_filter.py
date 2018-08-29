@@ -107,7 +107,7 @@ def jobFilter():
                 page_offset).limit(PageLimit)
 
         count=0
-        #return jsonify({"back": list(result)})
+        return jsonify({"back": list(result)})
         print("3")
         response=dict()
         for data in result:
