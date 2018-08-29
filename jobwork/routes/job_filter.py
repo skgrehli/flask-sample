@@ -133,8 +133,9 @@ def jobFilter():
             data.update({"bidcount":bidcount})
 
             userId =User.find_one({"userid": data['creatinguserid']})
-            username = userId['firstname'] + " " + userId['lastname']
             '''
+
+            username = userId['firstname'] + " " + userId['lastname']
             data.update({"username": username})
 
             try:
