@@ -77,7 +77,7 @@ def jobFilter():
             print("2")
             for data in locations:
                 locationList.append(data["locationid"])
-        #return jsonify({"status": "ok"})
+        #return jsonify({"status": locationList})
 
         if(sortBy==0):
             sortKey="publisheddatetime"
@@ -96,18 +96,22 @@ def jobFilter():
         #return jsonify({"status": budgetMin,"lt":budgetMax})
         listd=(jobTypKey,jobTypVal,valLoc,valCity,budgetMin,budgetMax)
         #return jsonify({"back":listd})
-        if searchString!="":
-            result=db.jobs.find({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
-               {"$gte":budgetMin,"$lte":budgetMax}},{"_id":0}).sort(sortKey,sortVal).skip(page_offset).limit(PageLimit)
+        if len(locationList)!=0:
+            result=db.jobs.find({"description": { "$regex": searchString},jobTypKey:jobTypVal,"cityid":valCity,
+                                 "budget":{"$gte":budgetMin,"$lte":budgetMax},"locationid":{"$in":locationList}                                },
+                                {"_id":0}).sort(sortKey,sortVal).skip(page_offset).limit(PageLimit)
+            #return jsonify({"status": locationList,"result":list(result)})
+
         else:
             result = db.jobs.find(
-                {jobTypKey: jobTypVal, "locationid": valLoc, "cityid": valCity,
+                {"description": { "$regex": searchString},jobTypKey: jobTypVal,  "cityid": valCity,
                  "budget":
                      {"$gte": budgetMin, "$lte": budgetMax}}, {"_id": 0}).sort(sortKey, sortVal).skip(
                 page_offset).limit(PageLimit)
 
-        count=db.jobs.count({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,"budget":
-               {"$gte":budgetMin,"$lte":budgetMax}})
+        count=db.jobs.count({"description": { "$regex": searchString},jobTypKey:jobTypVal,"locationid":valLoc,"cityid":valCity,
+                                 "budget":{"$gte":budgetMin,"$lte":budgetMax},"locationid":{"$in":locationList}                                 },
+                                )
         #return jsonify({"back": list(result)})
         print("3")
         response=dict()
