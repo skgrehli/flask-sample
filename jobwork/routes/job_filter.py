@@ -134,9 +134,9 @@ def jobFilter():
 
             userId =User.find_one({"userid": data['creatinguserid']})
             username = userId['firstname'] + " " + userId['lastname']
+            '''
             data.update({"username": username})
 
-            '''
             try:
                 data.update({"picurl":userId['picurl']})
             except Exception as e:
