@@ -133,16 +133,24 @@ def jobFilter():
             data.update({"bidcount":bidcount})
 
             userId =User.find_one({"userid": data['creatinguserid']})
-            '''
-
-            username = userId['firstname'] + " " + userId['lastname']
+            try:
+                fname=userId['firstname']
+                space=" "
+            except Exception as e:
+                fname=""
+                space=""
+            try:
+                lname=userId['lastname']
+            except Exception as e :
+                lname=""
+            username =  fname+ space + lname
             data.update({"username": username})
 
             try:
                 data.update({"picurl":userId['picurl']})
             except Exception as e:
                 data.update({"picurl":"no pic url field in db"})
-            '''
+
             if(radius!=""):
                 if(data["locationid"]  in locationList):
                     count = count + 1
