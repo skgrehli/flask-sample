@@ -113,11 +113,14 @@ def jobFilter():
         for data in result:
             #return jsonify({"location": data})
             map=dict()
-            location_data=db.location.find_one({"locationid":data['locationid']})
-            #return jsonify({"location": location_data['location_raw']['lon']})
-            state=db.state.find_one({"stateid":data['addressJSON']['state']})
-            country = db.country.find_one({"countryid": data['addressJSON']['country']})
-            city = db.city.find_one({"cityid": data['cityid']})
+            if(data['locationid']!=""):
+                location_data=db.location.find_one({"locationid":data['locationid']})
+            if(data['addressJSON']['state']!=""):
+                state=db.state.find_one({"stateid":data['addressJSON']['state']})
+            if(data['addressJSON']['country']!=""):
+                country = db.country.find_one({"countryid": data['addressJSON']['country']})
+            if(data['cityid']!=""):
+                city = db.city.find_one({"cityid": data['cityid']})
 
             map.update({"city":city['city']})
             map.update({"state":state['state']})
