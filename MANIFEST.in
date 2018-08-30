@@ -1,2 +1,2 @@
-recursive-include jobwork.io/templates *
-recursive-include jobwork.io/static *
+recursive-include  jobwork.io-master-test/templates *
+recursive-include  jobwork.io-master-test/static *
