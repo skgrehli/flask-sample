@@ -141,12 +141,19 @@ def job_comment_create():
 def job_comment_list():
     # Check authentications keys
     response=[]
-    jobCommentsList = db.jobcomments.find({"jobid" :request.json['jobid'], "active" :True} ,{"_id" :0})
+    jobid=int(request.json['jobid'])
+    jobCommentsList = db.jobcomments.find({"jobid" :jobid, "active" :True} ,{"_id" :0})
+    job=Jobs.find_one({"jobid":jobid})
+    jobowner=job['creatinguserid']
     for data in jobCommentsList:
 
         userId=User.find_one({"userid":data['userid']})
         username=userId['firstname']+" "+userId['lastname']
         data.update({"username":username})
+        if(data['userid']==jobowner):
+            data.update({"jobowner":True})
+        else:
+            data.update({"jobowner":False})
         response.append(data)
     if len(response)!=0:
         return jsonify({"status" : 200, "message" :"Job Comments List.", "jobCommentsList" :response,"error":False})

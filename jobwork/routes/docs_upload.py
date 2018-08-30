@@ -25,7 +25,7 @@ def upload_file():
         #file = request.files['file']
         index=0
         userid=request.form['userid']
-        token=request.form['token']
+        #token=request.form['token']
         jobtitle=request.form['jobtitle']
         jobdescription=request.form['description']
         personseleted=request.form['personselected']
@@ -37,6 +37,7 @@ def upload_file():
         date=request.form['date']
 
         print(jobtitle)
+        filelist=[]
         for file in request.files.getlist("file"):
 
             print(file)
@@ -46,4 +47,5 @@ def upload_file():
             destination="/".join([target,filename])
             file.save(destination)
             index=index+1
-        return 'file uploaded successfully'
+            filelist.append(destination)
+        return jsonify({"status": 200, "path": filelist})

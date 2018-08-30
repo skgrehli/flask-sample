@@ -80,14 +80,14 @@ def draft():
             data.append(d)
             #data["job"].update({"bid":jobbids})
             count=count+1
-        if jobdraftdata is None:
-            return jsonify({"data": "empty"})
+        if len(data)==0:
+            return jsonify({"message": "empty","status":200,"error":True,"response":[]})
         else:
-            return jsonify({"count":count,"data":data})
+            return jsonify({"message":count,"response":data,"error":False,"status":200})
             #return json.dumps(data, indent=4, default=json_util.default)
     except Exception as e:
         print(e)
-        return jsonify({"data":"error"})
+        return jsonify({"message":"error","status":400,"error":True,"response":[]})
 
 @draft_job.route('/deletejobs',methods=['POST'])
 @authentication
@@ -96,7 +96,7 @@ def jobdelete():
     jobid = int(request.json['jobid'])
     try:
         db.jobs.remove({"jobid":jobid})
-        return jsonify({"status":"done"})
+        return jsonify({"status":200,"error":False,"message":"done","response":[]})
     except Exception as e:
         print(e)
-        return jsonify({"status":"error"})
+        return jsonify({"status":400,"error":True,"message":"error","response":[]})
