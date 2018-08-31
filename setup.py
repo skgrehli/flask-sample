@@ -8,7 +8,8 @@ setup(
               'build.lib.jobwork.models', 'build.lib.jobwork.routes', 'build.lib.jobwork.middleware', 'jobwork',
               'jobwork.auth', 'jobwork.auth.settings', 'jobwork.conf', 'jobwork.utils', 'jobwork.views',
               'jobwork.models', 'jobwork.routes', 'jobwork.templates', 'jobwork.templates.emailTemplates',
-              'jobwork.templates.front_saveonjobs', 'jobwork.middleware'],
+              'jobwork.templates.front_saveonjobs', 'jobwork.middleware','jobwork.static.jobdocument.original','jobwork.static.jobdocument.thumbnail',
+              'jobwork.static.userprofilepic.thumbnail'],
 
 
     include_package_data=True,
