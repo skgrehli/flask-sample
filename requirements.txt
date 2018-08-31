@@ -16,4 +16,6 @@ geopy
 http.cookies
 jinja2
 
+Image
+
 datetime
