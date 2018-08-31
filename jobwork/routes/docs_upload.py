@@ -183,7 +183,7 @@ def jobadd():
                     background.paste(
                         im, (int((size[0] - im.size[0]) / 2), int((size[1] - im.size[1]) / 2))
                     )
-                    tname = "static/jobdocument/thumbnail/" +str(jobidno)+"_"+str(index) + ".png"
+                    tname = target+"/thumbnail/" +str(jobidno)+"_"+str(index) + ".png"
                     background.save(tname)
                     thumblist.append(tname)
 
@@ -191,13 +191,15 @@ def jobadd():
                     fname=str(jobidno)+"_"+str(index)+file.filename
                     destination = "original/".join([target,fname ])
                     file.save(destination)
+                    tname = target + "/thumbnail/pdf.png"
+                    thumblist.append(tname)
 
                 #thumblist.append(tpath)
 
                 filelist.append(destination)
 
 
-            return jsonify({"t":thumblist,"l":filelist})
+            #return jsonify({"t":thumblist,"l":filelist})
             print("10")
             jobdocs={}
             jobdocs.update({"thumbnails":thumblist})
